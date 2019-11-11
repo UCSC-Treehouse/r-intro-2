@@ -1,6 +1,6 @@
 # r-intro-2
 
-Introduction to R workshop material. This is an updated full day workshop.
+Introduction to R workshop material. This is an updated full day workshop closely based on the Monash Univeristy Data Fluency workshop (https://github.com/MonashDataFluency/r-intro-2) 
 
 This workshop material uses the `bookdown` R package.
 
@@ -22,14 +22,7 @@ make ingest
 ```
 10:00am   Welcome overview, Starting out in R, Data frames 
 12.30pm   Lunch Break 
-1.30pm    Data frames, Plotting with ggplot2 
-3.00pm    Tea break 
-3.15pm    Plotting with ggplot2, Summarizing data, Thinking in R 
-5.00pm    End Workshop
+1.30pm    Plotting with ggplot2, Summarizing data, Thinking in R 
+3.00pm    End Workshop
 ```
 
-`opening_slides_template.pptx` can be used as a template for an opening slideshow. Fill in instructor names and the location of your workshop etherpad. The workshop etherpad serves as the central jumping off point for the workshop, and should list at the top:
-
-* schedule
-* link to this workshop material
-* link to RStudio Cloud
