@@ -15,7 +15,7 @@ header-includes:
 
 <img src="figures/R.jpg" width="25%" style="display: block; margin: auto auto auto 0;" />
 
-These are course notes for the "Introduction to R" course given by the [Monash Bioinformatics Platform](https://www.monash.edu/researchinfrastructure/bioinformatics) for the [Monash Data Fluency](https://monashdatafluency.github.io/) initiative. Our teaching style is based on the style of [The Carpentries](https://carpentries.org/). This is a new version of the course focussing on the modern [Tidyverse](https://www.tidyverse.org/) set of packages. We believe this is currently the quickest route to being productive in R.
+These are course notes for the "Introduction to R" course given by Treehouse and the Vaske lab. The class was developed by the [Monash Bioinformatics Platform](https://www.monash.edu/researchinfrastructure/bioinformatics) for the [Monash Data Fluency](https://monashdatafluency.github.io/) initiative. The teaching style is based on the style of [The Carpentries](https://carpentries.org/). This is a new version of the course focussing on the modern [Tidyverse](https://www.tidyverse.org/) set of packages. We believe this is currently the quickest route to being productive in R.
 
 * [PDF version for printing](https://monashdatafluency.github.io/r-intro-2/r-intro-2.pdf)
 * [ZIP of data files used in this workshop](https://monashdatafluency.github.io/r-intro-2/r-intro-2-files.zip)
