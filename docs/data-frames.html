@@ -144,10 +144,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5" data-path="data-frames.html"><a href="data-frames.html#columns-are-vectors"><i class="fa fa-check"></i><b>2.5</b> Columns are vectors</a></li>
 <li class="chapter" data-level="2.6" data-path="data-frames.html"><a href="data-frames.html#logical-indexing"><i class="fa fa-check"></i><b>2.6</b> Logical indexing</a></li>
 <li class="chapter" data-level="2.7" data-path="data-frames.html"><a href="data-frames.html#factors"><i class="fa fa-check"></i><b>2.7</b> Factors</a></li>
-<li class="chapter" data-level="2.8" data-path="data-frames.html"><a href="data-frames.html#readability-vs-tidyness"><i class="fa fa-check"></i><b>2.8</b> Readability vs tidyness</a></li>
-<li class="chapter" data-level="2.9" data-path="data-frames.html"><a href="data-frames.html#sorting"><i class="fa fa-check"></i><b>2.9</b> Sorting</a></li>
-<li class="chapter" data-level="2.10" data-path="data-frames.html"><a href="data-frames.html#joining-data-frames"><i class="fa fa-check"></i><b>2.10</b> Joining data frames</a></li>
-<li class="chapter" data-level="2.11" data-path="data-frames.html"><a href="data-frames.html#further-reading"><i class="fa fa-check"></i><b>2.11</b> Further reading</a></li>
+<li class="chapter" data-level="2.8" data-path="data-frames.html"><a href="data-frames.html#sorting"><i class="fa fa-check"></i><b>2.8</b> Sorting</a></li>
+<li class="chapter" data-level="2.9" data-path="data-frames.html"><a href="data-frames.html#joining-data-frames"><i class="fa fa-check"></i><b>2.9</b> Joining data frames</a></li>
+<li class="chapter" data-level="2.10" data-path="data-frames.html"><a href="data-frames.html#further-reading"><i class="fa fa-check"></i><b>2.10</b> Further reading</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="plotting-with-ggplot2.html"><a href="plotting-with-ggplot2.html"><i class="fa fa-check"></i><b>3</b> Plotting with ggplot2</a><ul>
 <li class="chapter" data-level="3.1" data-path="plotting-with-ggplot2.html"><a href="plotting-with-ggplot2.html#elements-of-a-ggplot"><i class="fa fa-check"></i><b>3.1</b> Elements of a ggplot</a></li>
@@ -228,40 +227,26 @@ Albania,europe,FALSE,FALSE,41,20,upper_mid
 Algeria,africa,FALSE,TRUE,28,3,upper_mid
 Andorra,europe,FALSE,FALSE,42.50779,1.52109,high
 Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">geo &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;r-intro-2-files/geo.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
-##   name = col_character(),
-##   region = col_character(),
-##   oecd = col_logical(),
-##   g77 = col_logical(),
-##   lat = col_double(),
-##   long = col_double(),
-##   income2017 = col_character()
+##   th_sampleid = col_character(),
+##   disease = col_character(),
+##   age_at_dx = col_double(),
+##   pedaya = col_character(),
+##   gender = col_character(),
+##   site_id = col_character(),
+##   site_donor_id = col_character(),
+##   site_sampleid = col_character()
 ## )</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">geo</a></code></pre></div>
-<pre><code>## # A tibble: 196 x 7
-##    name                region   oecd  g77     lat   long income2017
-##    &lt;chr&gt;               &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
-##  1 Afghanistan         asia     FALSE TRUE   33    66    low       
-##  2 Albania             europe   FALSE FALSE  41    20    upper_mid 
-##  3 Algeria             africa   FALSE TRUE   28     3    upper_mid 
-##  4 Andorra             europe   FALSE FALSE  42.5   1.52 high      
-##  5 Angola              africa   FALSE TRUE  -12.5  18.5  lower_mid 
-##  6 Antigua and Barbuda americas FALSE TRUE   17.0 -61.8  high      
-##  7 Argentina           americas FALSE TRUE  -34   -64    upper_mid 
-##  8 Armenia             europe   FALSE FALSE  40.2  45    lower_mid 
-##  9 Australia           asia     TRUE  FALSE -25   135    high      
-## 10 Austria             europe   TRUE  FALSE  47.3  13.3  high      
-## # … with 186 more rows</code></pre>
-<p><code>read_csv</code> has guessed the type of data each column holds:</p>
+<p><code>read_tsv</code> has guessed the type of data each column holds:</p>
 <ul>
 <li><code>&lt;chr&gt;</code> - character strings</li>
 <li><code>&lt;dbl&gt;</code> - numerical values. Technically these are “doubles”, which is a way of storing numbers with 15 digits precision.</li>
-<li><code>&lt;lgl&gt;</code> - logical values, <code>TRUE</code> or <code>FALSE</code>.</li>
 </ul>
 <p>We will also encounter:</p>
 <ul>
+<li><code>&lt;lgl&gt;</code> - logical values, <code>TRUE</code> or <code>FALSE</code>.</li>
 <li><code>&lt;int&gt;</code> - integers, a fancy name for whole numbers.</li>
 <li><code>&lt;fct&gt;</code> - factors, categorical data. We will get to this shortly.</li>
 </ul>
@@ -269,7 +254,7 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 <div id="tip-1" class="section level3 unnumbered tip">
 <h3>Tip</h3>
 <p>A data frame can also be created from vectors, with the <code>tibble</code> function. (See also <code>data.frame</code> in base R.) For example:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     foo bar  
 ##   &lt;dbl&gt; &lt;chr&gt;
@@ -280,7 +265,7 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 </div>
 <div id="tip-2" class="section level3 unnumbered tip">
 <h3>Tip</h3>
-<p>The <em>path</em> to the file on our server is <code>&quot;r-intro-2-files/geo.csv&quot;</code>. This says, starting from your working directory, look in the directory <code>r-intro-2-files</code> for the file <code>geo.csv</code>. The steps in the path are separated by <code>/</code>. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.</p>
+<p>The <em>path</em> to the file on our server is <code>&quot;download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv&quot;</code>. This says, starting from your working directory, look in the directory <code>download</code> for the file <code>clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv</code>. The steps in the path are separated by <code>/</code>. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.</p>
 <p>One way to work out the correct path is to find the file in the file browser pane, click on it and select “Import Dataset…”.</p>
 <p><img src="figures/import.png" width="50%" style="display: block; margin: auto auto auto 0;" /></p>
 </div>
@@ -288,141 +273,162 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 <div id="exploring" class="section level2">
 <h2><span class="header-section-number">2.3</span> Exploring</h2>
 <p>The <code>View</code> function gives us a spreadsheet-like view of the data frame.</p>
-<pre><code>View(geo)</code></pre>
+<pre><code>View(sample_metadata)</code></pre>
 <p><code>print</code> with the <code>n</code> argument can be used to show more than the first 10 rows on the console.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">print</span>(geo, <span class="dt">n=</span><span class="dv">200</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">print</span>(sample_metadata, <span class="dt">n=</span><span class="dv">200</span>)</a></code></pre></div>
 <p>We can extract details of the data frame with further functions:</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">nrow</span>(geo)</a></code></pre></div>
-<pre><code>## [1] 196</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">ncol</span>(geo)</a></code></pre></div>
-<pre><code>## [1] 7</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="kw">colnames</span>(geo)</a></code></pre></div>
-<pre><code>## [1] &quot;name&quot;       &quot;region&quot;     &quot;oecd&quot;       &quot;g77&quot;        &quot;lat&quot;       
-## [6] &quot;long&quot;       &quot;income2017&quot;</code></pre>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">summary</span>(geo)</a></code></pre></div>
-<pre><code>##      name              region             oecd            g77         
-##  Length:196         Length:196         Mode :logical   Mode :logical  
-##  Class :character   Class :character   FALSE:165       FALSE:65       
-##  Mode  :character   Mode  :character   TRUE :31        TRUE :131      
-##                                                                       
-##                                                                       
-##                                                                       
-##       lat              long           income2017       
-##  Min.   :-42.00   Min.   :-175.000   Length:196        
-##  1st Qu.:  4.00   1st Qu.:  -5.625   Class :character  
-##  Median : 17.42   Median :  21.875   Mode  :character  
-##  Mean   : 19.03   Mean   :  23.004                     
-##  3rd Qu.: 39.82   3rd Qu.:  51.892                     
-##  Max.   : 65.00   Max.   : 179.145</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">nrow</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] 12236</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">ncol</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">colnames</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] &quot;th_sampleid&quot;   &quot;disease&quot;       &quot;age_at_dx&quot;     &quot;pedaya&quot;       
+## [5] &quot;gender&quot;        &quot;site_id&quot;       &quot;site_donor_id&quot; &quot;site_sampleid&quot;</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1"><span class="kw">summary</span>(sample_metadata)</a></code></pre></div>
+<pre><code>##  th_sampleid          disease            age_at_dx       pedaya         
+##  Length:12236       Length:12236       Min.   : 0.0   Length:12236      
+##  Class :character   Class :character   1st Qu.:39.0   Class :character  
+##  Mode  :character   Mode  :character   Median :57.0   Mode  :character  
+##                                        Mean   :50.7                     
+##                                        3rd Qu.:68.0                     
+##                                        Max.   :90.0                     
+##                                        NA&#39;s   :624                      
+##     gender            site_id          site_donor_id     
+##  Length:12236       Length:12236       Length:12236      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##                                                          
+##  site_sampleid     
+##  Length:12236      
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## </code></pre>
 </div>
 <div id="indexing-data-frames" class="section level2">
 <h2><span class="header-section-number">2.4</span> Indexing data frames</h2>
 <p>Data frames can be subset using <code>[row,column]</code> syntax.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">geo[<span class="dv">4</span>,<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
-##   region
-##   &lt;chr&gt; 
-## 1 europe</code></pre>
+##   disease        
+##   &lt;chr&gt;          
+## 1 medulloblastoma</code></pre>
 <p>Note that while this is a single value, it is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.) More on this in a moment.</p>
 <p>Columns can be given by name.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">geo[<span class="dv">4</span>,<span class="st">&quot;region&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
-##   region
-##   &lt;chr&gt; 
-## 1 europe</code></pre>
+##   disease        
+##   &lt;chr&gt;          
+## 1 medulloblastoma</code></pre>
 <p>The column or row may be omitted, thereby retrieving the entire row or column.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">geo[<span class="dv">4</span>,]</a></code></pre></div>
-<pre><code>## # A tibble: 1 x 7
-##   name    region oecd  g77     lat  long income2017
-##   &lt;chr&gt;   &lt;chr&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-## 1 Andorra europe FALSE FALSE  42.5  1.52 high</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">geo[,<span class="st">&quot;region&quot;</span>]</a></code></pre></div>
-<pre><code>## # A tibble: 196 x 1
-##    region  
-##    &lt;chr&gt;   
-##  1 asia    
-##  2 europe  
-##  3 africa  
-##  4 europe  
-##  5 africa  
-##  6 americas
-##  7 americas
-##  8 europe  
-##  9 asia    
-## 10 europe  
-## # … with 186 more rows</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,]</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+## 1 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+## # … with 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">sample_metadata[,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
+<pre><code>## # A tibble: 12,236 x 1
+##    disease                            
+##    &lt;chr&gt;                              
+##  1 acute leukemia of ambiguous lineage
+##  2 acute leukemia of ambiguous lineage
+##  3 medulloblastoma                    
+##  4 medulloblastoma                    
+##  5 medulloblastoma                    
+##  6 medulloblastoma                    
+##  7 medulloblastoma                    
+##  8 medulloblastoma                    
+##  9 medulloblastoma                    
+## 10 medulloblastoma                    
+## # … with 12,226 more rows</code></pre>
 <p>Multiple rows or columns may be retrieved using a vector.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb92-2" data-line-number="2">geo[rows_wanted,]</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 7
-##   name        region oecd  g77     lat  long income2017
-##   &lt;chr&gt;       &lt;chr&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-## 1 Afghanistan asia   FALSE TRUE   33    66   low       
-## 2 Algeria     africa FALSE TRUE   28     3   upper_mid 
-## 3 Angola      africa FALSE TRUE  -12.5  18.5 lower_mid</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb90-2" data-line-number="2">sample_metadata[rows_wanted,]</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 3 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## # … with 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
 <p>Vector indexing can also be written on a single line.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">geo[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 7
-##   name        region oecd  g77     lat  long income2017
-##   &lt;chr&gt;       &lt;chr&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-## 1 Afghanistan asia   FALSE TRUE   33    66   low       
-## 2 Algeria     africa FALSE TRUE   28     3   upper_mid 
-## 3 Angola      africa FALSE TRUE  -12.5  18.5 lower_mid</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">geo[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</a></code></pre></div>
-<pre><code>## # A tibble: 7 x 7
-##   name                region   oecd  g77     lat   long income2017
-##   &lt;chr&gt;               &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
-## 1 Afghanistan         asia     FALSE TRUE   33    66    low       
-## 2 Albania             europe   FALSE FALSE  41    20    upper_mid 
-## 3 Algeria             africa   FALSE TRUE   28     3    upper_mid 
-## 4 Andorra             europe   FALSE FALSE  42.5   1.52 high      
-## 5 Angola              africa   FALSE TRUE  -12.5  18.5  lower_mid 
-## 6 Antigua and Barbuda americas FALSE TRUE   17.0 -61.8  high      
-## 7 Argentina           americas FALSE TRUE  -34   -64    upper_mid</code></pre>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">sample_metadata[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 3 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## # … with 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">sample_metadata[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 3 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 4 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+## 5 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## 6 THR33_1003… medull…         3 Yes, … female THR33   N/A          
+## 7 THR33_1004… medull…        26 Yes, … male   THR33   N/A          
+## # … with 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
 </div>
 <div id="columns-are-vectors" class="section level2">
 <h2><span class="header-section-number">2.5</span> Columns are vectors</h2>
 <p>Ok, so how do we actually get data out of a data frame?</p>
 <p>Under the hood, a data frame is a list of column vectors. We can use <code>$</code> to retrieve columns. Occasionally it is also useful to use <code>[[ ]]</code> to retrieve columns, for example if the column name we want is stored in a variable.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">head</span>( geo<span class="op">$</span>region )</a></code></pre></div>
-<pre><code>## [1] &quot;asia&quot;     &quot;europe&quot;   &quot;africa&quot;   &quot;europe&quot;   &quot;africa&quot;   &quot;americas&quot;</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">head</span>( geo[[<span class="st">&quot;region&quot;</span>]] )</a></code></pre></div>
-<pre><code>## [1] &quot;asia&quot;     &quot;europe&quot;   &quot;africa&quot;   &quot;europe&quot;   &quot;africa&quot;   &quot;americas&quot;</code></pre>
-<p>To get the “region” value of the 4th row as above, but unwrapped, we can use:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">geo<span class="op">$</span>region[<span class="dv">4</span>]</a></code></pre></div>
-<pre><code>## [1] &quot;europe&quot;</code></pre>
-<p>For example, to plot the longitudes and latitudes we could use:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">plot</span>(geo<span class="op">$</span>long, geo<span class="op">$</span>lat)</a></code></pre></div>
-<p><img src="data_frames_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">head</span>( sample_metadata<span class="op">$</span>disease )</a></code></pre></div>
+<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;
+## [2] &quot;acute leukemia of ambiguous lineage&quot;
+## [3] &quot;medulloblastoma&quot;                    
+## [4] &quot;medulloblastoma&quot;                    
+## [5] &quot;medulloblastoma&quot;                    
+## [6] &quot;medulloblastoma&quot;</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">head</span>( sample_metadata[[<span class="st">&quot;disease&quot;</span>]] )</a></code></pre></div>
+<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;
+## [2] &quot;acute leukemia of ambiguous lineage&quot;
+## [3] &quot;medulloblastoma&quot;                    
+## [4] &quot;medulloblastoma&quot;                    
+## [5] &quot;medulloblastoma&quot;                    
+## [6] &quot;medulloblastoma&quot;</code></pre>
+<p>To get the “disease” value of the 4th row as above, but unwrapped, we can use:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">sample_metadata<span class="op">$</span>disease[<span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] &quot;medulloblastoma&quot;</code></pre>
 </div>
 <div id="logical-indexing" class="section level2">
 <h2><span class="header-section-number">2.6</span> Logical indexing</h2>
 <p>A method of indexing that we haven’t discussed yet is logical indexing. Instead of specifying the row number or numbers that we want, we can give a logical vector which is <code>TRUE</code> for the rows we want and <code>FALSE</code> otherwise. This can also be used with vectors.</p>
 <p>We will first do this in a slightly verbose way in order to understand it, then learn a more concise way to do this using the <code>dplyr</code> package.</p>
 <p>Southern countries have latitude less than zero.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">is_southern &lt;-<span class="st"> </span>geo<span class="op">$</span>lat <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span></a>
-<a class="sourceLine" id="cb105-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="kw">head</span>(is_southern)</a></code></pre></div>
-<pre><code>## [1] FALSE FALSE FALSE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="kw">sum</span>(is_southern)</a></code></pre></div>
-<pre><code>## [1] 40</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">is_glioma &lt;-<span class="st"> </span>sample_metadata<span class="op">$</span>disease <span class="op">==</span><span class="st"> &quot;glioma&quot;</span></a>
+<a class="sourceLine" id="cb102-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb102-3" data-line-number="3"><span class="kw">head</span>(is_glioma)</a></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">sum</span>(is_glioma)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
 <p><code>sum</code> treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.</p>
-<p>We can use this logical vector to get the southern countries from <code>geo</code>:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1">geo[is_southern,]</a></code></pre></div>
-<pre><code>## # A tibble: 40 x 7
-##    name             region   oecd  g77     lat  long income2017
-##    &lt;chr&gt;            &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-##  1 Angola           africa   FALSE TRUE  -12.5  18.5 lower_mid 
-##  2 Argentina        americas FALSE TRUE  -34   -64   upper_mid 
-##  3 Australia        asia     TRUE  FALSE -25   135   high      
-##  4 Bolivia          americas FALSE TRUE  -17   -65   lower_mid 
-##  5 Botswana         africa   FALSE TRUE  -22    24   upper_mid 
-##  6 Brazil           americas FALSE TRUE  -10   -55   upper_mid 
-##  7 Burundi          africa   FALSE TRUE   -3.5  30   low       
-##  8 Chile            americas TRUE  TRUE  -33.5 -70.6 high      
-##  9 Comoros          africa   FALSE TRUE  -12.2  44.4 low       
-## 10 Congo, Dem. Rep. africa   FALSE TRUE   -2.5  23.5 low       
-## # … with 30 more rows</code></pre>
+<p>We can use this logical vector to get the southern countries from <code>sample_metadata</code>:</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">sample_metadata[is_glioma,]</a></code></pre></div>
+<pre><code>## # A tibble: 756 x 8
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 TH03_0117_… glioma       0.9  Yes, … not r… TH03    N/A          
+##  2 TH06_1175_… glioma      17    Yes, … female TH06    N/A          
+##  3 TH27_1241_… glioma      NA    Unkno… unkno… TH27    N/A          
+##  4 TH38_1311_… glioma      13    Yes, … male   TH38    N/A          
+##  5 TH38_1346_… glioma      11    Yes, … female TH38    N/A          
+##  6 TH34_1445_… glioma       7    Yes, … female TH34    N/A          
+##  7 &lt;NA&gt;        &lt;NA&gt;        NA    &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  8 THR24_1924… glioma       5.33 Yes, … female THR24   SJHGG001     
+##  9 THR24_1925… glioma      15.0  Yes, … female THR24   SJHGG002     
+## 10 THR24_1925… glioma      15.0  Yes, … female THR24   SJHGG002     
+## # … with 746 more rows, and 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
 <p>Comparison operators available are:</p>
 <ul>
 <li><code>x == y</code> – “equal to”</li>
@@ -438,34 +444,43 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 <li><code>a | b</code> – “or”, TRUE if either <code>a</code> or <code>b</code> or both are TRUE.</li>
 <li><code>! a</code> – “not” , TRUE if <code>a</code> is FALSE, and FALSE if <code>a</code> is TRUE.</li>
 </ul>
-<p>The <code>oecd</code> column of <code>geo</code> tells which countries are in the Organisation for Economic Co-operation and Development, and the <code>g77</code> column tells which countries are in the Group of 77 (an alliance of developing nations). We could see which OECD countries are in the southern hemisphere with:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1">southern_oecd &lt;-<span class="st"> </span>is_southern <span class="op">&amp;</span><span class="st"> </span>geo<span class="op">$</span>oecd</a>
-<a class="sourceLine" id="cb111-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb111-3" data-line-number="3">geo[southern_oecd,]</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 7
-##   name        region   oecd  g77     lat  long income2017
-##   &lt;chr&gt;       &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     
-## 1 Australia   asia     TRUE  FALSE -25   135   high      
-## 2 Chile       americas TRUE  TRUE  -33.5 -70.6 high      
-## 3 New Zealand asia     TRUE  FALSE -42   174   high</code></pre>
-<p><code>is_southern</code> seems like it should be kept within our <code>geo</code> data frame for future use. We can add it as a new column of the data frame with:</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1">geo<span class="op">$</span>southern &lt;-<span class="st"> </span>is_southern</a>
-<a class="sourceLine" id="cb113-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb113-3" data-line-number="3">geo</a></code></pre></div>
-<pre><code>## # A tibble: 196 x 8
-##    name                region  oecd  g77     lat   long income2017 southern
-##    &lt;chr&gt;               &lt;chr&gt;   &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;      &lt;lgl&gt;   
-##  1 Afghanistan         asia    FALSE TRUE   33    66    low        FALSE   
-##  2 Albania             europe  FALSE FALSE  41    20    upper_mid  FALSE   
-##  3 Algeria             africa  FALSE TRUE   28     3    upper_mid  FALSE   
-##  4 Andorra             europe  FALSE FALSE  42.5   1.52 high       FALSE   
-##  5 Angola              africa  FALSE TRUE  -12.5  18.5  lower_mid  TRUE    
-##  6 Antigua and Barbuda americ… FALSE TRUE   17.0 -61.8  high       FALSE   
-##  7 Argentina           americ… FALSE TRUE  -34   -64    upper_mid  TRUE    
-##  8 Armenia             europe  FALSE FALSE  40.2  45    lower_mid  FALSE   
-##  9 Australia           asia    TRUE  FALSE -25   135    high       TRUE    
-## 10 Austria             europe  TRUE  FALSE  47.3  13.3  high       FALSE   
-## # … with 186 more rows</code></pre>
+<p>The <code>blash</code> column of <code>sample_metadata</code> tells which countries are in the Organisation for Economic Co-operation and Development, and the <code>g77</code> column tells which countries are in the Group of 77 (an alliance of developing nations). We could see which OECD countries are in the southern hemisphere with:</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">senior_gliomas &lt;-<span class="st"> </span>is_glioma <span class="op">&amp;</span><span class="st"> </span>sample_metadata<span class="op">$</span>age_at_dx <span class="op">&gt;</span><span class="dv">65</span></a>
+<a class="sourceLine" id="cb108-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb108-3" data-line-number="3">sample_metadata[senior_gliomas,]</a></code></pre></div>
+<pre><code>## # A tibble: 86 x 8
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  2 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  3 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  4 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  5 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  6 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  7 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  8 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+##  9 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+## 10 &lt;NA&gt;        &lt;NA&gt;           NA &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt;         
+## # … with 76 more rows, and 1 more variable: site_sampleid &lt;chr&gt;</code></pre>
+<p><code>senior_gliomas</code> seems like it should be kept within our <code>sample_metadata</code> data frame for future use. We can add it as a new column of the data frame with:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1">sample_metadata<span class="op">$</span>senior_glioma &lt;-<span class="st"> </span>senior_gliomas</a>
+<a class="sourceLine" id="cb110-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb110-3" data-line-number="3">sample_metadata</a></code></pre></div>
+<pre><code>## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+##  2 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+##  3 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+##  4 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+##  5 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+##  6 THR33_1003… medull…         3 Yes, … female THR33   N/A          
+##  7 THR33_1004… medull…        26 Yes, … male   THR33   N/A          
+##  8 THR33_1005… medull…        10 Yes, … male   THR33   N/A          
+##  9 THR33_1006… medull…         3 Yes, … male   THR33   N/A          
+## 10 THR33_1007… medull…        27 Yes, … male   THR33   N/A          
+## # … with 12,226 more rows, and 2 more variables: site_sampleid &lt;chr&gt;,
+## #   senior_glioma &lt;lgl&gt;</code></pre>
 <div id="challenge-logical-indexing" class="section level3 unnumbered challenge">
 <h3>Challenge: logical indexing</h3>
 <ol style="list-style-type: decimal">
@@ -477,154 +492,158 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 <div id="a-dplyr-shorthand" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> A <code>dplyr</code> shorthand</h3>
 <p>The above method is a little laborious. We have to keep mentioning the name of the data frame, and there is a lot of punctuation to keep track of. <code>dplyr</code> provides a slightly magical function called <code>filter</code> which lets us write more concisely. For example:</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">filter</span>(geo, lat <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>oecd)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 8
-##   name        region   oecd  g77     lat  long income2017 southern
-##   &lt;chr&gt;       &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;lgl&gt;   
-## 1 Australia   asia     TRUE  FALSE -25   135   high       TRUE    
-## 2 Chile       americas TRUE  TRUE  -33.5 -70.6 high       TRUE    
-## 3 New Zealand asia     TRUE  FALSE -42   174   high       TRUE</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">filter</span>(sample_metadata, sample_metadata<span class="op">$</span>age_at_dx <span class="op">&gt;</span><span class="dv">65</span> <span class="op">&amp;</span><span class="st"> </span>disease <span class="op">==</span><span class="st"> &quot;glioma&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 33 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 TCGA-CS-49… glioma         67 No     male   TCGA    TCGA-CS-4941 
+##  2 TCGA-DB-A6… glioma         67 No     female TCGA    TCGA-DB-A64L 
+##  3 TCGA-DH-A6… glioma         70 No     male   TCGA    TCGA-DH-A669 
+##  4 TCGA-DH-A6… glioma         70 No     male   TCGA    TCGA-DH-A669 
+##  5 TCGA-DU-63… glioma         66 No     male   TCGA    TCGA-DU-6393 
+##  6 TCGA-DU-64… glioma         66 No     female TCGA    TCGA-DU-6400 
+##  7 TCGA-DU-70… glioma         74 No     female TCGA    TCGA-DU-7012 
+##  8 TCGA-DU-72… glioma         69 No     male   TCGA    TCGA-DU-7292 
+##  9 TCGA-DU-73… glioma         67 No     male   TCGA    TCGA-DU-7306 
+## 10 TCGA-DU-81… glioma         69 No     female TCGA    TCGA-DU-8167 
+## # … with 23 more rows, and 2 more variables: site_sampleid &lt;chr&gt;,
+## #   senior_glioma &lt;lgl&gt;</code></pre>
 <p>In the second argument, we are able to refer to columns of the data frame as though they were variables. The code is beautiful, but also opaque. It’s important to understand that under the hood we are creating and combining logical vectors.</p>
 </div>
 </div>
 <div id="factors" class="section level2">
 <h2><span class="header-section-number">2.7</span> Factors</h2>
 <p>The <code>count</code> function from <code>dplyr</code> can help us understand the contents of some of the columns in <code>geo</code>. <code>count</code> is also <em>magical</em>, we can refer to columns of the data frame directly in the arguments to <code>count</code>.</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">count</span>(geo, region)</a></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, disease)</a></code></pre></div>
+<pre><code>## # A tibble: 103 x 2
+##    disease                                 n
+##    &lt;chr&gt;                               &lt;int&gt;
+##  1 acinar cell carcinoma                   1
+##  2 acute leukemia                          7
+##  3 acute leukemia of ambiguous lineage     2
+##  4 acute lymphoblastic leukemia          549
+##  5 acute megakaryoblastic leukemia        92
+##  6 acute myeloid leukemia                463
+##  7 acute undifferentiated leukemia         1
+##  8 adrenocortical adenoma                  1
+##  9 adrenocortical cancer                  78
+## 10 adrenocortical carcinoma               18
+## # … with 93 more rows</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
 <pre><code>## # A tibble: 4 x 2
-##   region       n
-##   &lt;chr&gt;    &lt;int&gt;
-## 1 africa      54
-## 2 americas    35
-## 3 asia        59
-## 4 europe      48</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">count</span>(geo, income2017)</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 2
-##   income2017     n
-##   &lt;chr&gt;      &lt;int&gt;
-## 1 high          58
-## 2 low           31
-## 3 lower_mid     52
-## 4 upper_mid     55</code></pre>
-<p>One annoyance here is that the different categories in <code>income2017</code> aren’t in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R’s solution is a further type of vector called a <em>factor</em> (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of <em>levels</em>. It is otherwise quite similar to a character vector.</p>
+##   pedaya                  n
+##   &lt;chr&gt;               &lt;int&gt;
+## 1 No                   9426
+## 2 Unknown                82
+## 3 Yes, age &lt; 30 years  2702
+## 4 &lt;NA&gt;                   26</code></pre>
+<p>One annoyance here is that the different categories in <code>pedaya</code> aren’t in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R’s solution is a further type of vector called a <em>factor</em> (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of <em>levels</em>. It is otherwise quite similar to a character vector.</p>
 <p>Any sort of vector can be converted to a factor using the <code>factor</code> function. This function defaults to placing the levels in alphabetical order, but takes a <code>levels</code> argument that can override this.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">head</span>( <span class="kw">factor</span>(geo<span class="op">$</span>income2017, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;lower_mid&quot;</span>,<span class="st">&quot;upper_mid&quot;</span>,<span class="st">&quot;high&quot;</span>)) )</a></code></pre></div>
-<pre><code>## [1] low       upper_mid upper_mid high      lower_mid high     
-## Levels: low lower_mid upper_mid high</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">head</span>( <span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Unknown&quot;</span>)) )</a></code></pre></div>
+<pre><code>## [1] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
+## [4] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
+## Levels: Yes, age &lt; 30 years No Unknown</code></pre>
 <p>We should modify the <code>income2017</code> column of the <code>geo</code> table in order to use this:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">geo<span class="op">$</span>income2017 &lt;-<span class="st"> </span><span class="kw">factor</span>(geo<span class="op">$</span>income2017, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;lower_mid&quot;</span>,<span class="st">&quot;upper_mid&quot;</span>,<span class="st">&quot;high&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">sample_metadata<span class="op">$</span>pedaya &lt;-<span class="st"> </span><span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya,</a>
+<a class="sourceLine" id="cb120-2" data-line-number="2">                                 <span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Unknown&quot;</span>))</a></code></pre></div>
 <p><code>count</code> now produces the desired order of output:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">count</span>(geo, income2017)</a></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
+<pre><code>## Warning: Factor `pedaya` contains implicit NA, consider using
+## `forcats::fct_explicit_na`</code></pre>
 <pre><code>## # A tibble: 4 x 2
-##   income2017     n
-##   &lt;fct&gt;      &lt;int&gt;
-## 1 low           31
-## 2 lower_mid     52
-## 3 upper_mid     55
-## 4 high          58</code></pre>
-<p>When <code>plot</code> is given a factor, it shows a bar plot:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">plot</span>(geo<span class="op">$</span>income2017)</a></code></pre></div>
-<p><img src="data_frames_files/figure-html/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>When given two factors, it shows a mosaic plot:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="kw">plot</span>(geo<span class="op">$</span>income2017, <span class="kw">factor</span>(geo<span class="op">$</span>oecd))</a></code></pre></div>
-<p><img src="data_frames_files/figure-html/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Similarly we can count two categorical columns at once.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">count</span>(geo, income2017, oecd)</a></code></pre></div>
-<pre><code>## # A tibble: 6 x 3
-##   income2017 oecd      n
-##   &lt;fct&gt;      &lt;lgl&gt; &lt;int&gt;
-## 1 low        FALSE    31
-## 2 lower_mid  FALSE    52
-## 3 upper_mid  FALSE    53
-## 4 upper_mid  TRUE      2
-## 5 high       FALSE    29
-## 6 high       TRUE     29</code></pre>
-</div>
-<div id="readability-vs-tidyness" class="section level2">
-<h2><span class="header-section-number">2.8</span> Readability vs tidyness</h2>
-<p>The counts we obtained counting <code>income2017</code> vs <code>oecd</code> were properly tidy in the sense of containing a single unit of observation per row. However to view the data, it would be more convenient to have income as columns and OECD membership as rows. We can use the <code>spread</code> function from <code>tidyr</code> to achieve this.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">counts &lt;-<span class="st"> </span><span class="kw">count</span>(geo, income2017, oecd)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="kw">spread</span>(counts, <span class="dt">key=</span>income2017, <span class="dt">value=</span>n, <span class="dt">fill=</span><span class="dv">0</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 2 x 5
-##   oecd    low lower_mid upper_mid  high
-##   &lt;lgl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-## 1 FALSE    31        52        53    29
-## 2 TRUE      0         0         2    29</code></pre>
-<p>Here:</p>
-<ul>
-<li>The <code>key</code> column became column names.</li>
-<li>The <code>value</code> column became the values in the new columns.</li>
-<li>The <code>fill</code> value is used to fill in any missing values.</li>
-</ul>
-<div id="tip-3" class="section level3 unnumbered tip">
-<h3>Tip</h3>
-<p>Tidying is often the first step when exploring a data-set. The <a href="http://tidyr.tidyverse.org/">tidyr</a> package contains a number of useful functions that help tidy (or un-tidy!) data. We’ve just seen <code>spread</code> which spreads two columns into multiple columns. The inverse of <code>spread</code> is <code>gather</code>, which gathers multiple columns into two columns: a column of column names, and a column of values.</p>
-</div>
+##   pedaya                  n
+##   &lt;fct&gt;               &lt;int&gt;
+## 1 Yes, age &lt; 30 years  2702
+## 2 No                   9426
+## 3 Unknown                82
+## 4 &lt;NA&gt;                   26</code></pre>
+<p>We can count two categorical columns at once.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya, disease)</a></code></pre></div>
+<pre><code>## Warning: Factor `pedaya` contains implicit NA, consider using
+## `forcats::fct_explicit_na`</code></pre>
+<pre><code>## # A tibble: 163 x 3
+##    pedaya              disease                                 n
+##    &lt;fct&gt;               &lt;chr&gt;                               &lt;int&gt;
+##  1 Yes, age &lt; 30 years acinar cell carcinoma                   1
+##  2 Yes, age &lt; 30 years acute leukemia                          1
+##  3 Yes, age &lt; 30 years acute leukemia of ambiguous lineage     2
+##  4 Yes, age &lt; 30 years acute lymphoblastic leukemia          549
+##  5 Yes, age &lt; 30 years acute megakaryoblastic leukemia        92
+##  6 Yes, age &lt; 30 years acute myeloid leukemia                303
+##  7 Yes, age &lt; 30 years acute undifferentiated leukemia         1
+##  8 Yes, age &lt; 30 years adrenocortical adenoma                  1
+##  9 Yes, age &lt; 30 years adrenocortical cancer                  15
+## 10 Yes, age &lt; 30 years adrenocortical carcinoma               18
+## # … with 153 more rows</code></pre>
 <div id="challenge-counting" class="section level3 unnumbered challenge">
 <h3>Challenge: counting</h3>
-<p>Investigate how many OECD and non-OECD nations come from the northern and southern hemispheres.</p>
+<p>Investigate how many OECD and non-OECD nations come from the northern and southern hemispheres using <code>count</code></p>
 <ol style="list-style-type: decimal">
 <li>Using <code>count</code>.</li>
 <li>By making a mosaic plot.</li>
 </ol>
 <p>Remember you may need to convert columns to factors for <code>plot</code> to work, and that a <code>southern</code> column could be added to <code>geo</code> with:</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">geo<span class="op">$</span>southern &lt;-<span class="st"> </span>geo<span class="op">$</span>lat <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span></a></code></pre></div>
+<p>HCB: consider adding leukemia as the example with a grep</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="co"># geo$southern &lt;- geo$lat &lt; 0</span></a></code></pre></div>
 </div>
 </div>
 <div id="sorting" class="section level2">
-<h2><span class="header-section-number">2.9</span> Sorting</h2>
+<h2><span class="header-section-number">2.8</span> Sorting</h2>
 <p>Data frames can be sorted using the <code>arrange</code> function in <code>dplyr</code>.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">arrange</span>(geo, lat)</a></code></pre></div>
-<pre><code>## # A tibble: 196 x 8
-##    name         region   oecd  g77     lat  long income2017 southern
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;      &lt;lgl&gt;   
-##  1 New Zealand  asia     TRUE  FALSE -42   174   high       TRUE    
-##  2 Argentina    americas FALSE TRUE  -34   -64   upper_mid  TRUE    
-##  3 Chile        americas TRUE  TRUE  -33.5 -70.6 high       TRUE    
-##  4 Uruguay      americas FALSE TRUE  -33   -56   high       TRUE    
-##  5 Lesotho      africa   FALSE TRUE  -29.5  28.2 lower_mid  TRUE    
-##  6 South Africa africa   FALSE TRUE  -29    24   upper_mid  TRUE    
-##  7 Swaziland    africa   FALSE TRUE  -26.5  31.5 lower_mid  TRUE    
-##  8 Australia    asia     TRUE  FALSE -25   135   high       TRUE    
-##  9 Paraguay     americas FALSE TRUE  -23.3 -58   upper_mid  TRUE    
-## 10 Botswana     africa   FALSE TRUE  -22    24   upper_mid  TRUE    
-## # … with 186 more rows</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, age_at_dx)</a></code></pre></div>
+<pre><code>## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 THR08_0168… acute …         0 Yes, … unkno… THR08   SJINF009     
+##  2 THR08_0169… acute …         0 Yes, … unkno… THR08   SJINF010     
+##  3 TH06_0613_… atypic…         0 Yes, … male   TH06    N/A          
+##  4 TH06_0613_… atypic…         0 Yes, … male   TH06    N/A          
+##  5 TH06_0627_… gliobl…         0 Yes, … female TH06    N/A          
+##  6 THR29_0744… rhabdo…         0 Yes, … female THR29   RMS_2049     
+##  7 THR29_0748… embryo…         0 Yes, … male   THR29   RMS_2053     
+##  8 THR29_0753… alveol…         0 Yes, … male   THR29   RMS_2061     
+##  9 THR29_0754… alveol…         0 Yes, … male   THR29   RMS_2063     
+## 10 THR29_0782… embryo…         0 Yes, … female THR29   RMS_212      
+## # … with 12,226 more rows, and 2 more variables: site_sampleid &lt;chr&gt;,
+## #   senior_glioma &lt;lgl&gt;</code></pre>
 <p>Numeric columns are sorted in numeric order. Character columns will be sorted in alphabetical order. Factor columns are sorted in order of their levels. The <code>desc</code> helper function can be used to sort in descending order.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw">arrange</span>(geo, <span class="kw">desc</span>(name))</a></code></pre></div>
-<pre><code>## # A tibble: 196 x 8
-##    name           region   oecd  g77     lat   long income2017 southern
-##    &lt;chr&gt;          &lt;chr&gt;    &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;fct&gt;      &lt;lgl&gt;   
-##  1 Zimbabwe       africa   FALSE TRUE  -19    29.8  low        TRUE    
-##  2 Zambia         africa   FALSE TRUE  -14.3  28.5  lower_mid  TRUE    
-##  3 Yemen          asia     FALSE TRUE   15.5  47.5  lower_mid  FALSE   
-##  4 Vietnam        asia     FALSE TRUE   16.2 108.   lower_mid  FALSE   
-##  5 Venezuela      americas FALSE TRUE    8   -66    upper_mid  FALSE   
-##  6 Vanuatu        asia     FALSE TRUE  -16   167    lower_mid  TRUE    
-##  7 Uzbekistan     asia     FALSE FALSE  41.7  63.8  lower_mid  FALSE   
-##  8 Uruguay        americas FALSE TRUE  -33   -56    high       TRUE    
-##  9 United States  americas TRUE  FALSE  39.8 -98.5  high       FALSE   
-## 10 United Kingdom europe   TRUE  FALSE  54.8  -2.70 high       FALSE   
-## # … with 186 more rows</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, <span class="kw">desc</span>(disease))</a></code></pre></div>
+<pre><code>## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;        
+##  1 TH03_0012_… wilms …     18    Yes, … male   TH03    N/A          
+##  2 TH03_0012_… wilms …     18    Yes, … male   TH03    N/A          
+##  3 TH27_1405_… wilms …     NA    &lt;NA&gt;   male   TH27    N/A          
+##  4 TH03_0144_… wilms …      6    Yes, … male   TH03    N/A          
+##  5 TH27_2189_… wilms …      5    Yes, … female TH27    N/A          
+##  6 TH06_0632_… wilms …      4    Yes, … female TH06    N/A          
+##  7 THR31_0876… wilms …     NA    Yes, … male   THR31   N/A          
+##  8 TARGET-50-… wilms …      6.15 Yes, … female TARGET  TARGET-50-CA…
+##  9 TARGET-50-… wilms …      4.68 Yes, … female TARGET  TARGET-50-CA…
+## 10 TARGET-50-… wilms …      1.1  Yes, … female TARGET  TARGET-50-CA…
+## # … with 12,226 more rows, and 2 more variables: site_sampleid &lt;chr&gt;,
+## #   senior_glioma &lt;lgl&gt;</code></pre>
 </div>
 <div id="joining-data-frames" class="section level2">
-<h2><span class="header-section-number">2.10</span> Joining data frames</h2>
+<h2><span class="header-section-number">2.9</span> Joining data frames</h2>
 <p>Let’s move on to a larger data set. This is from the <a href="https://www.gapminder.org">Gapminder</a> project and contains information about countries over time.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">gap &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;r-intro-2-files/gap-minder.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb137-2" data-line-number="2">gap</a></code></pre></div>
-<pre><code>## # A tibble: 4,312 x 5
-##    name                 year population gdp_percap life_exp
-##    &lt;chr&gt;               &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
-##  1 Afghanistan          1800    3280000        603     28.2
-##  2 Albania              1800     410445        667     35.4
-##  3 Algeria              1800    2503218        715     28.8
-##  4 Andorra              1800       2654       1197     NA  
-##  5 Angola               1800    1567028        618     27.0
-##  6 Antigua and Barbuda  1800      37000        757     33.5
-##  7 Argentina            1800     534000       1507     33.2
-##  8 Armenia              1800     413326        514     34  
-##  9 Australia            1800     351014        814     34.0
-## 10 Austria              1800    3205587       1847     34.4
-## # … with 4,302 more rows</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;expression_data_for_MAP2K1_HRAS_v9_.tsv&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(sample, expression, <span class="op">-</span>Gene)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">expression_values</a></code></pre></div>
+<pre><code>## # A tibble: 22,908 x 3
+##    Gene   sample         expression
+##    &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;
+##  1 HRAS   THR15_0330_S01       5.77
+##  2 MAP2K1 THR15_0330_S01       4.53
+##  3 HRAS   THR29_0776_S01       6.99
+##  4 MAP2K1 THR29_0776_S01       4.51
+##  5 HRAS   THR11_0247_S01       6.10
+##  6 MAP2K1 THR11_0247_S01       5.75
+##  7 HRAS   THR08_0162_S01       4.48
+##  8 MAP2K1 THR08_0162_S01       6.42
+##  9 HRAS   TH27_1241_S01        6.41
+## 10 MAP2K1 TH27_1241_S01        5.39
+## # … with 22,898 more rows</code></pre>
 <div id="quiz" class="section level3 challenge unnumbered">
 <h3>Quiz</h3>
 <p>What is the unit of observation in this new data frame?</p>
@@ -632,29 +651,28 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid</code></pre>
 <div id="section-1" class="section level3 unnumbered">
 <h3></h3>
 <p>It would be useful to have general information about countries from <code>geo</code> available as columns when we use this data frame. <code>gap</code> and <code>geo</code> share a column called <code>name</code> which can be used to match rows from one to the other.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">gap_geo &lt;-<span class="st"> </span><span class="kw">left_join</span>(gap, geo, <span class="dt">by=</span><span class="st">&quot;name&quot;</span>)</a>
-<a class="sourceLine" id="cb139-2" data-line-number="2">gap_geo</a></code></pre></div>
-<pre><code>## # A tibble: 4,312 x 12
-##    name   year population gdp_percap life_exp region oecd  g77     lat
-##    &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;  &lt;lgl&gt; &lt;lgl&gt; &lt;dbl&gt;
-##  1 Afgh…  1800    3280000        603     28.2 asia   FALSE TRUE   33  
-##  2 Alba…  1800     410445        667     35.4 europe FALSE FALSE  41  
-##  3 Alge…  1800    2503218        715     28.8 africa FALSE TRUE   28  
-##  4 Ando…  1800       2654       1197     NA   europe FALSE FALSE  42.5
-##  5 Ango…  1800    1567028        618     27.0 africa FALSE TRUE  -12.5
-##  6 Anti…  1800      37000        757     33.5 ameri… FALSE TRUE   17.0
-##  7 Arge…  1800     534000       1507     33.2 ameri… FALSE TRUE  -34  
-##  8 Arme…  1800     413326        514     34   europe FALSE FALSE  40.2
-##  9 Aust…  1800     351014        814     34.0 asia   TRUE  FALSE -25  
-## 10 Aust…  1800    3205587       1847     34.4 europe TRUE  FALSE  47.3
-## # … with 4,302 more rows, and 3 more variables: long &lt;dbl&gt;,
-## #   income2017 &lt;fct&gt;, southern &lt;lgl&gt;</code></pre>
-<p>The output contains all ways of pairing up rows by <code>name</code>. In this case each row of <code>geo</code> pairs up with multiple rows of <code>gap</code>.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>=<span class="st">&quot;th_sampleid&quot;</span>))</a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">expression_by_disease</a></code></pre></div>
+<pre><code>## # A tibble: 22,908 x 11
+##    Gene  sample expression disease age_at_dx pedaya gender site_id
+##    &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt;  
+##  1 HRAS  THR15…       5.77 osteos…      NA   Yes, … female THR15  
+##  2 MAP2… THR15…       4.53 osteos…      NA   Yes, … female THR15  
+##  3 HRAS  THR29…       6.99 rhabdo…      20   Yes, … male   THR29  
+##  4 MAP2… THR29…       4.51 rhabdo…      20   Yes, … male   THR29  
+##  5 HRAS  THR11…       6.10 glioma       13   Yes, … male   THR11  
+##  6 MAP2… THR11…       5.75 glioma       13   Yes, … male   THR11  
+##  7 HRAS  THR08…       4.48 acute …       0.6 Yes, … unkno… THR08  
+##  8 MAP2… THR08…       6.42 acute …       0.6 Yes, … unkno… THR08  
+##  9 HRAS  TH27_…       6.41 glioma       NA   Unkno… unkno… TH27   
+## 10 MAP2… TH27_…       5.39 glioma       NA   Unkno… unkno… TH27   
+## # … with 22,898 more rows, and 3 more variables: site_donor_id &lt;chr&gt;,
+## #   site_sampleid &lt;chr&gt;, senior_glioma &lt;lgl&gt;</code></pre>
 <p>The “left” in “left join” refers to how rows that can’t be paired up are handled. <code>left_join</code> keeps all rows from the first data frame but not the second. This is a good default when the intent is to attaching some extra information to a data frame. <code>inner_join</code> discard all rows that can’t be paired up. <code>full_join</code> keeps all rows from both data frames.</p>
 </div>
 </div>
 <div id="further-reading" class="section level2">
-<h2><span class="header-section-number">2.11</span> Further reading</h2>
+<h2><span class="header-section-number">2.10</span> Further reading</h2>
 <p>We’ve covered the fundamentals of dplyr and data frames, but there is much more to learn. Notably, we haven’t covered the use of the pipe <code>%&gt;%</code> to chain <code>dplyr</code> verbs together. The <a href="http://r4ds.had.co.nz/">“R for Data Science” book</a> is an excellent source to learn more. The Monash Data Fluency <a href="https://monashdatafluency.github.io/r-progtidy/">“Programming and Tidy data analysis in R” course</a> also covers this.</p>
 
 </div>

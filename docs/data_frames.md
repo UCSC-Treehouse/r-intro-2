@@ -65,51 +65,31 @@ Angola,africa,FALSE,TRUE,-12.5,18.5,lower_mid
 
 
 ```r
-geo <- read_csv("r-intro-2-files/geo.csv")
+sample_metadata <- read_tsv("https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv")
 ```
 
 ```
 ## Parsed with column specification:
 ## cols(
-##   name = col_character(),
-##   region = col_character(),
-##   oecd = col_logical(),
-##   g77 = col_logical(),
-##   lat = col_double(),
-##   long = col_double(),
-##   income2017 = col_character()
+##   th_sampleid = col_character(),
+##   disease = col_character(),
+##   age_at_dx = col_double(),
+##   pedaya = col_character(),
+##   gender = col_character(),
+##   site_id = col_character(),
+##   site_donor_id = col_character(),
+##   site_sampleid = col_character()
 ## )
 ```
 
-```r
-geo
-```
-
-```
-## # A tibble: 196 x 7
-##    name                region   oecd  g77     lat   long income2017
-##    <chr>               <chr>    <lgl> <lgl> <dbl>  <dbl> <chr>     
-##  1 Afghanistan         asia     FALSE TRUE   33    66    low       
-##  2 Albania             europe   FALSE FALSE  41    20    upper_mid 
-##  3 Algeria             africa   FALSE TRUE   28     3    upper_mid 
-##  4 Andorra             europe   FALSE FALSE  42.5   1.52 high      
-##  5 Angola              africa   FALSE TRUE  -12.5  18.5  lower_mid 
-##  6 Antigua and Barbuda americas FALSE TRUE   17.0 -61.8  high      
-##  7 Argentina           americas FALSE TRUE  -34   -64    upper_mid 
-##  8 Armenia             europe   FALSE FALSE  40.2  45    lower_mid 
-##  9 Australia           asia     TRUE  FALSE -25   135    high      
-## 10 Austria             europe   TRUE  FALSE  47.3  13.3  high      
-## # … with 186 more rows
-```
-
-`read_csv` has guessed the type of data each column holds:
+`read_tsv` has guessed the type of data each column holds:
 
 * `<chr>` - character strings
 * `<dbl>` - numerical values. Technically these are "doubles", which is a way of storing numbers with 15 digits precision.
-* `<lgl>` - logical values, `TRUE` or `FALSE`.
 
 We will also encounter:
 
+* `<lgl>` - logical values, `TRUE` or `FALSE`.
 * `<int>` - integers, a fancy name for whole numbers.
 * `<fct>` - factors, categorical data. We will get to this shortly.
 
@@ -139,7 +119,7 @@ The argument names become column names in the data frame.
 
 ### Tip {- .tip}
 
-The *path* to the file on our server is `"r-intro-2-files/geo.csv"`. This says, starting from your working directory, look in the directory `r-intro-2-files` for the file `geo.csv`. The steps in the path are separated by `/`. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.
+The *path* to the file on our server is `"download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv"`. This says, starting from your working directory, look in the directory `download` for the file `clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv`. The steps in the path are separated by `/`. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.
 
 One way to work out the correct path is to find the file in the file browser pane, click on it and select "Import Dataset...".
 
@@ -151,63 +131,73 @@ One way to work out the correct path is to find the file in the file browser pan
 The `View` function gives us a spreadsheet-like view of the data frame.
 
 ```
-View(geo)
+View(sample_metadata)
 ```
 
 `print` with the `n` argument can be used to show more than the first 10 rows on the console.
 
 
 ```r
-print(geo, n=200)
+print(sample_metadata, n=200)
 ```
 
 We can extract details of the data frame with further functions:
 
 
 ```r
-nrow(geo)
+nrow(sample_metadata)
 ```
 
 ```
-## [1] 196
-```
-
-```r
-ncol(geo)
-```
-
-```
-## [1] 7
+## [1] 12236
 ```
 
 ```r
-colnames(geo)
+ncol(sample_metadata)
 ```
 
 ```
-## [1] "name"       "region"     "oecd"       "g77"        "lat"       
-## [6] "long"       "income2017"
+## [1] 8
 ```
 
 ```r
-summary(geo)
+colnames(sample_metadata)
 ```
 
 ```
-##      name              region             oecd            g77         
-##  Length:196         Length:196         Mode :logical   Mode :logical  
-##  Class :character   Class :character   FALSE:165       FALSE:65       
-##  Mode  :character   Mode  :character   TRUE :31        TRUE :131      
-##                                                                       
-##                                                                       
-##                                                                       
-##       lat              long           income2017       
-##  Min.   :-42.00   Min.   :-175.000   Length:196        
-##  1st Qu.:  4.00   1st Qu.:  -5.625   Class :character  
-##  Median : 17.42   Median :  21.875   Mode  :character  
-##  Mean   : 19.03   Mean   :  23.004                     
-##  3rd Qu.: 39.82   3rd Qu.:  51.892                     
-##  Max.   : 65.00   Max.   : 179.145
+## [1] "th_sampleid"   "disease"       "age_at_dx"     "pedaya"       
+## [5] "gender"        "site_id"       "site_donor_id" "site_sampleid"
+```
+
+```r
+summary(sample_metadata)
+```
+
+```
+##  th_sampleid          disease            age_at_dx       pedaya         
+##  Length:12236       Length:12236       Min.   : 0.0   Length:12236      
+##  Class :character   Class :character   1st Qu.:39.0   Class :character  
+##  Mode  :character   Mode  :character   Median :57.0   Mode  :character  
+##                                        Mean   :50.7                     
+##                                        3rd Qu.:68.0                     
+##                                        Max.   :90.0                     
+##                                        NA's   :624                      
+##     gender            site_id          site_donor_id     
+##  Length:12236       Length:12236       Length:12236      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##                                                          
+##                                                          
+##                                                          
+##                                                          
+##  site_sampleid     
+##  Length:12236      
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## 
 ```
 
 
@@ -217,14 +207,14 @@ Data frames can be subset using `[row,column]` syntax.
 
 
 ```r
-geo[4,2]
+sample_metadata[4,2]
 ```
 
 ```
 ## # A tibble: 1 x 1
-##   region
-##   <chr> 
-## 1 europe
+##   disease        
+##   <chr>          
+## 1 medulloblastoma
 ```
 
 Note that while this is a single value, it is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.) More on this in a moment.
@@ -233,49 +223,50 @@ Columns can be given by name.
 
 
 ```r
-geo[4,"region"]
+sample_metadata[4,"disease"]
 ```
 
 ```
 ## # A tibble: 1 x 1
-##   region
-##   <chr> 
-## 1 europe
+##   disease        
+##   <chr>          
+## 1 medulloblastoma
 ```
 
 The column or row may be omitted, thereby retrieving the entire row or column.
 
 
 ```r
-geo[4,]
+sample_metadata[4,]
 ```
 
 ```
-## # A tibble: 1 x 7
-##   name    region oecd  g77     lat  long income2017
-##   <chr>   <chr>  <lgl> <lgl> <dbl> <dbl> <chr>     
-## 1 Andorra europe FALSE FALSE  42.5  1.52 high
+## # A tibble: 1 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+## 1 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+## # … with 1 more variable: site_sampleid <chr>
 ```
 
 ```r
-geo[,"region"]
+sample_metadata[,"disease"]
 ```
 
 ```
-## # A tibble: 196 x 1
-##    region  
-##    <chr>   
-##  1 asia    
-##  2 europe  
-##  3 africa  
-##  4 europe  
-##  5 africa  
-##  6 americas
-##  7 americas
-##  8 europe  
-##  9 asia    
-## 10 europe  
-## # … with 186 more rows
+## # A tibble: 12,236 x 1
+##    disease                            
+##    <chr>                              
+##  1 acute leukemia of ambiguous lineage
+##  2 acute leukemia of ambiguous lineage
+##  3 medulloblastoma                    
+##  4 medulloblastoma                    
+##  5 medulloblastoma                    
+##  6 medulloblastoma                    
+##  7 medulloblastoma                    
+##  8 medulloblastoma                    
+##  9 medulloblastoma                    
+## 10 medulloblastoma                    
+## # … with 12,226 more rows
 ```
 
 Multiple rows or columns may be retrieved using a vector.
@@ -283,49 +274,52 @@ Multiple rows or columns may be retrieved using a vector.
 
 ```r
 rows_wanted <- c(1,3,5)
-geo[rows_wanted,]
+sample_metadata[rows_wanted,]
 ```
 
 ```
-## # A tibble: 3 x 7
-##   name        region oecd  g77     lat  long income2017
-##   <chr>       <chr>  <lgl> <lgl> <dbl> <dbl> <chr>     
-## 1 Afghanistan asia   FALSE TRUE   33    66   low       
-## 2 Algeria     africa FALSE TRUE   28     3   upper_mid 
-## 3 Angola      africa FALSE TRUE  -12.5  18.5 lower_mid
+## # A tibble: 3 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 3 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## # … with 1 more variable: site_sampleid <chr>
 ```
 
 Vector indexing can also be written on a single line.
 
 
 ```r
-geo[c(1,3,5),]
+sample_metadata[c(1,3,5),]
 ```
 
 ```
-## # A tibble: 3 x 7
-##   name        region oecd  g77     lat  long income2017
-##   <chr>       <chr>  <lgl> <lgl> <dbl> <dbl> <chr>     
-## 1 Afghanistan asia   FALSE TRUE   33    66   low       
-## 2 Algeria     africa FALSE TRUE   28     3   upper_mid 
-## 3 Angola      africa FALSE TRUE  -12.5  18.5 lower_mid
+## # A tibble: 3 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 3 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## # … with 1 more variable: site_sampleid <chr>
 ```
 
 ```r
-geo[1:7,]
+sample_metadata[1:7,]
 ```
 
 ```
-## # A tibble: 7 x 7
-##   name                region   oecd  g77     lat   long income2017
-##   <chr>               <chr>    <lgl> <lgl> <dbl>  <dbl> <chr>     
-## 1 Afghanistan         asia     FALSE TRUE   33    66    low       
-## 2 Albania             europe   FALSE FALSE  41    20    upper_mid 
-## 3 Algeria             africa   FALSE TRUE   28     3    upper_mid 
-## 4 Andorra             europe   FALSE FALSE  42.5   1.52 high      
-## 5 Angola              africa   FALSE TRUE  -12.5  18.5  lower_mid 
-## 6 Antigua and Barbuda americas FALSE TRUE   17.0 -61.8  high      
-## 7 Argentina           americas FALSE TRUE  -34   -64    upper_mid
+## # A tibble: 7 x 8
+##   th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##   <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+## 1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 2 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+## 3 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+## 4 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+## 5 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+## 6 THR33_1003… medull…         3 Yes, … female THR33   N/A          
+## 7 THR33_1004… medull…        26 Yes, … male   THR33   N/A          
+## # … with 1 more variable: site_sampleid <chr>
 ```
 
 
@@ -337,40 +331,41 @@ Under the hood, a data frame is a list of column vectors. We can use `$` to retr
 
 
 ```r
-head( geo$region )
+head( sample_metadata$disease )
 ```
 
 ```
-## [1] "asia"     "europe"   "africa"   "europe"   "africa"   "americas"
+## [1] "acute leukemia of ambiguous lineage"
+## [2] "acute leukemia of ambiguous lineage"
+## [3] "medulloblastoma"                    
+## [4] "medulloblastoma"                    
+## [5] "medulloblastoma"                    
+## [6] "medulloblastoma"
 ```
 
 ```r
-head( geo[["region"]] )
+head( sample_metadata[["disease"]] )
 ```
 
 ```
-## [1] "asia"     "europe"   "africa"   "europe"   "africa"   "americas"
+## [1] "acute leukemia of ambiguous lineage"
+## [2] "acute leukemia of ambiguous lineage"
+## [3] "medulloblastoma"                    
+## [4] "medulloblastoma"                    
+## [5] "medulloblastoma"                    
+## [6] "medulloblastoma"
 ```
 
-To get the "region" value of the 4th row as above, but unwrapped, we can use:
+To get the "disease" value of the 4th row as above, but unwrapped, we can use:
 
 
 ```r
-geo$region[4]
+sample_metadata$disease[4]
 ```
 
 ```
-## [1] "europe"
+## [1] "medulloblastoma"
 ```
-
-For example, to plot the longitudes and latitudes we could use:
-
-
-```r
-plot(geo$long, geo$lat)
-```
-
-<img src="data_frames_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" />
 
 
 ## Logical indexing
@@ -383,47 +378,47 @@ Southern countries have latitude less than zero.
 
 
 ```r
-is_southern <- geo$lat < 0
+is_glioma <- sample_metadata$disease == "glioma"
 
-head(is_southern)
+head(is_glioma)
 ```
 
 ```
-## [1] FALSE FALSE FALSE FALSE  TRUE FALSE
+## [1] FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
 ```r
-sum(is_southern)
+sum(is_glioma)
 ```
 
 ```
-## [1] 40
+## [1] NA
 ```
 
 `sum` treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.
 
-We can use this logical vector to get the southern countries from `geo`:
+We can use this logical vector to get the southern countries from `sample_metadata`:
 
 
 ```r
-geo[is_southern,]
+sample_metadata[is_glioma,]
 ```
 
 ```
-## # A tibble: 40 x 7
-##    name             region   oecd  g77     lat  long income2017
-##    <chr>            <chr>    <lgl> <lgl> <dbl> <dbl> <chr>     
-##  1 Angola           africa   FALSE TRUE  -12.5  18.5 lower_mid 
-##  2 Argentina        americas FALSE TRUE  -34   -64   upper_mid 
-##  3 Australia        asia     TRUE  FALSE -25   135   high      
-##  4 Bolivia          americas FALSE TRUE  -17   -65   lower_mid 
-##  5 Botswana         africa   FALSE TRUE  -22    24   upper_mid 
-##  6 Brazil           americas FALSE TRUE  -10   -55   upper_mid 
-##  7 Burundi          africa   FALSE TRUE   -3.5  30   low       
-##  8 Chile            americas TRUE  TRUE  -33.5 -70.6 high      
-##  9 Comoros          africa   FALSE TRUE  -12.2  44.4 low       
-## 10 Congo, Dem. Rep. africa   FALSE TRUE   -2.5  23.5 low       
-## # … with 30 more rows
+## # A tibble: 756 x 8
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+##  1 TH03_0117_… glioma       0.9  Yes, … not r… TH03    N/A          
+##  2 TH06_1175_… glioma      17    Yes, … female TH06    N/A          
+##  3 TH27_1241_… glioma      NA    Unkno… unkno… TH27    N/A          
+##  4 TH38_1311_… glioma      13    Yes, … male   TH38    N/A          
+##  5 TH38_1346_… glioma      11    Yes, … female TH38    N/A          
+##  6 TH34_1445_… glioma       7    Yes, … female TH34    N/A          
+##  7 <NA>        <NA>        NA    <NA>   <NA>   <NA>    <NA>         
+##  8 THR24_1924… glioma       5.33 Yes, … female THR24   SJHGG001     
+##  9 THR24_1925… glioma      15.0  Yes, … female THR24   SJHGG002     
+## 10 THR24_1925… glioma      15.0  Yes, … female THR24   SJHGG002     
+## # … with 746 more rows, and 1 more variable: site_sampleid <chr>
 ```
 
 Comparison operators available are:
@@ -441,48 +436,57 @@ More complicated conditions can be constructed using logical operators:
 * `a | b ` -- "or", TRUE if either `a` or `b` or both are TRUE.
 * `! a   ` -- "not" , TRUE if `a` is FALSE, and FALSE if `a` is TRUE.
 
-The `oecd` column of `geo` tells which countries are in the Organisation for Economic Co-operation and Development, and the `g77` column tells which countries are in the Group of 77 (an alliance of developing nations). We could see which OECD countries are in the southern hemisphere with:
+The `blash` column of `sample_metadata` tells which countries are in the Organisation for Economic Co-operation and Development, and the `g77` column tells which countries are in the Group of 77 (an alliance of developing nations). We could see which OECD countries are in the southern hemisphere with:
 
 
 ```r
-southern_oecd <- is_southern & geo$oecd
+senior_gliomas <- is_glioma & sample_metadata$age_at_dx >65
 
-geo[southern_oecd,]
+sample_metadata[senior_gliomas,]
 ```
 
 ```
-## # A tibble: 3 x 7
-##   name        region   oecd  g77     lat  long income2017
-##   <chr>       <chr>    <lgl> <lgl> <dbl> <dbl> <chr>     
-## 1 Australia   asia     TRUE  FALSE -25   135   high      
-## 2 Chile       americas TRUE  TRUE  -33.5 -70.6 high      
-## 3 New Zealand asia     TRUE  FALSE -42   174   high
+## # A tibble: 86 x 8
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+##  1 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  2 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  3 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  4 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  5 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  6 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  7 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  8 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+##  9 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+## 10 <NA>        <NA>           NA <NA>   <NA>   <NA>    <NA>         
+## # … with 76 more rows, and 1 more variable: site_sampleid <chr>
 ```
 
-`is_southern` seems like it should be kept within our `geo` data frame for future use. We can add it as a new column of the data frame with:
+`senior_gliomas` seems like it should be kept within our `sample_metadata` data frame for future use. We can add it as a new column of the data frame with:
 
 
 ```r
-geo$southern <- is_southern
+sample_metadata$senior_glioma <- senior_gliomas
 
-geo
+sample_metadata
 ```
 
 ```
-## # A tibble: 196 x 8
-##    name                region  oecd  g77     lat   long income2017 southern
-##    <chr>               <chr>   <lgl> <lgl> <dbl>  <dbl> <chr>      <lgl>   
-##  1 Afghanistan         asia    FALSE TRUE   33    66    low        FALSE   
-##  2 Albania             europe  FALSE FALSE  41    20    upper_mid  FALSE   
-##  3 Algeria             africa  FALSE TRUE   28     3    upper_mid  FALSE   
-##  4 Andorra             europe  FALSE FALSE  42.5   1.52 high       FALSE   
-##  5 Angola              africa  FALSE TRUE  -12.5  18.5  lower_mid  TRUE    
-##  6 Antigua and Barbuda americ… FALSE TRUE   17.0 -61.8  high       FALSE   
-##  7 Argentina           americ… FALSE TRUE  -34   -64    upper_mid  TRUE    
-##  8 Armenia             europe  FALSE FALSE  40.2  45    lower_mid  FALSE   
-##  9 Australia           asia    TRUE  FALSE -25   135    high       TRUE    
-## 10 Austria             europe  TRUE  FALSE  47.3  13.3  high       FALSE   
-## # … with 186 more rows
+## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+##  1 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+##  2 TH03_0010_… acute …        11 Yes, … female TH03    N/A          
+##  3 THR33_1000… medull…         7 Yes, … female THR33   N/A          
+##  4 THR33_1001… medull…         5 Yes, … male   THR33   N/A          
+##  5 THR33_1002… medull…         5 Yes, … female THR33   N/A          
+##  6 THR33_1003… medull…         3 Yes, … female THR33   N/A          
+##  7 THR33_1004… medull…        26 Yes, … male   THR33   N/A          
+##  8 THR33_1005… medull…        10 Yes, … male   THR33   N/A          
+##  9 THR33_1006… medull…         3 Yes, … male   THR33   N/A          
+## 10 THR33_1007… medull…        27 Yes, … male   THR33   N/A          
+## # … with 12,226 more rows, and 2 more variables: site_sampleid <chr>,
+## #   senior_glioma <lgl>
 ```
 
 
@@ -502,16 +506,25 @@ The above method is a little laborious. We have to keep mentioning the name of t
 
 
 ```r
-filter(geo, lat < 0 & oecd)
+filter(sample_metadata, sample_metadata$age_at_dx >65 & disease == "glioma")
 ```
 
 ```
-## # A tibble: 3 x 8
-##   name        region   oecd  g77     lat  long income2017 southern
-##   <chr>       <chr>    <lgl> <lgl> <dbl> <dbl> <chr>      <lgl>   
-## 1 Australia   asia     TRUE  FALSE -25   135   high       TRUE    
-## 2 Chile       americas TRUE  TRUE  -33.5 -70.6 high       TRUE    
-## 3 New Zealand asia     TRUE  FALSE -42   174   high       TRUE
+## # A tibble: 33 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <chr>  <chr>  <chr>   <chr>        
+##  1 TCGA-CS-49… glioma         67 No     male   TCGA    TCGA-CS-4941 
+##  2 TCGA-DB-A6… glioma         67 No     female TCGA    TCGA-DB-A64L 
+##  3 TCGA-DH-A6… glioma         70 No     male   TCGA    TCGA-DH-A669 
+##  4 TCGA-DH-A6… glioma         70 No     male   TCGA    TCGA-DH-A669 
+##  5 TCGA-DU-63… glioma         66 No     male   TCGA    TCGA-DU-6393 
+##  6 TCGA-DU-64… glioma         66 No     female TCGA    TCGA-DU-6400 
+##  7 TCGA-DU-70… glioma         74 No     female TCGA    TCGA-DU-7012 
+##  8 TCGA-DU-72… glioma         69 No     male   TCGA    TCGA-DU-7292 
+##  9 TCGA-DU-73… glioma         67 No     male   TCGA    TCGA-DU-7306 
+## 10 TCGA-DU-81… glioma         69 No     female TCGA    TCGA-DU-8167 
+## # … with 23 more rows, and 2 more variables: site_sampleid <chr>,
+## #   senior_glioma <lgl>
 ```
 
 In the second argument, we are able to refer to columns of the data frame as though they were variables. The code is beautiful, but also opaque. It's important to understand that under the hood we are creating and combining logical vectors.
@@ -524,149 +537,130 @@ The `count` function from `dplyr` can help us understand the contents of some of
 
 
 ```r
-count(geo, region)
+count(sample_metadata, disease)
 ```
 
 ```
-## # A tibble: 4 x 2
-##   region       n
-##   <chr>    <int>
-## 1 africa      54
-## 2 americas    35
-## 3 asia        59
-## 4 europe      48
+## # A tibble: 103 x 2
+##    disease                                 n
+##    <chr>                               <int>
+##  1 acinar cell carcinoma                   1
+##  2 acute leukemia                          7
+##  3 acute leukemia of ambiguous lineage     2
+##  4 acute lymphoblastic leukemia          549
+##  5 acute megakaryoblastic leukemia        92
+##  6 acute myeloid leukemia                463
+##  7 acute undifferentiated leukemia         1
+##  8 adrenocortical adenoma                  1
+##  9 adrenocortical cancer                  78
+## 10 adrenocortical carcinoma               18
+## # … with 93 more rows
 ```
 
 ```r
-count(geo, income2017)
+count(sample_metadata, pedaya)
 ```
 
 ```
 ## # A tibble: 4 x 2
-##   income2017     n
-##   <chr>      <int>
-## 1 high          58
-## 2 low           31
-## 3 lower_mid     52
-## 4 upper_mid     55
+##   pedaya                  n
+##   <chr>               <int>
+## 1 No                   9426
+## 2 Unknown                82
+## 3 Yes, age < 30 years  2702
+## 4 <NA>                   26
 ```
 
-One annoyance here is that the different categories in `income2017` aren't in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
+One annoyance here is that the different categories in `pedaya` aren't in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
 
 Any sort of vector can be converted to a factor using the `factor` function. This function defaults to placing the levels in alphabetical order, but takes a `levels` argument that can override this.
 
 
 ```r
-head( factor(geo$income2017, levels=c("low","lower_mid","upper_mid","high")) )
+head( factor(sample_metadata$pedaya, levels=c("Yes, age < 30 years","No","Unknown")) )
 ```
 
 ```
-## [1] low       upper_mid upper_mid high      lower_mid high     
-## Levels: low lower_mid upper_mid high
+## [1] Yes, age < 30 years Yes, age < 30 years Yes, age < 30 years
+## [4] Yes, age < 30 years Yes, age < 30 years Yes, age < 30 years
+## Levels: Yes, age < 30 years No Unknown
 ```
 
 We should modify the `income2017` column of the `geo` table in order to use this:
 
 
 ```r
-geo$income2017 <- factor(geo$income2017, levels=c("low","lower_mid","upper_mid","high"))
+sample_metadata$pedaya <- factor(sample_metadata$pedaya,
+                                 c("Yes, age < 30 years","No","Unknown"))
 ```
 
 `count` now produces the desired order of output:
 
 
 ```r
-count(geo, income2017)
+count(sample_metadata, pedaya)
+```
+
+```
+## Warning: Factor `pedaya` contains implicit NA, consider using
+## `forcats::fct_explicit_na`
 ```
 
 ```
 ## # A tibble: 4 x 2
-##   income2017     n
-##   <fct>      <int>
-## 1 low           31
-## 2 lower_mid     52
-## 3 upper_mid     55
-## 4 high          58
+##   pedaya                  n
+##   <fct>               <int>
+## 1 Yes, age < 30 years  2702
+## 2 No                   9426
+## 3 Unknown                82
+## 4 <NA>                   26
 ```
 
-When `plot` is given a factor, it shows a bar plot:
+
+We can count two categorical columns at once.
 
 
 ```r
-plot(geo$income2017)
-```
-
-<img src="data_frames_files/figure-html/unnamed-chunk-27-1.png" width="576" style="display: block; margin: auto;" />
-
-When given two factors, it shows a mosaic plot:
-
-
-```r
-plot(geo$income2017, factor(geo$oecd))
-```
-
-<img src="data_frames_files/figure-html/unnamed-chunk-28-1.png" width="576" style="display: block; margin: auto;" />
-
-Similarly we can count two categorical columns at once.
-
-
-```r
-count(geo, income2017, oecd)
+count(sample_metadata, pedaya, disease)
 ```
 
 ```
-## # A tibble: 6 x 3
-##   income2017 oecd      n
-##   <fct>      <lgl> <int>
-## 1 low        FALSE    31
-## 2 lower_mid  FALSE    52
-## 3 upper_mid  FALSE    53
-## 4 upper_mid  TRUE      2
-## 5 high       FALSE    29
-## 6 high       TRUE     29
-```
-
-## Readability vs tidyness
-
-The counts we obtained counting `income2017` vs `oecd` were properly tidy in the sense of containing a single unit of observation per row. However to view the data, it would be more convenient to have income as columns and OECD membership as rows. We can use the `spread` function from `tidyr` to achieve this.
-
-
-```r
-counts <- count(geo, income2017, oecd)
-spread(counts, key=income2017, value=n, fill=0)
+## Warning: Factor `pedaya` contains implicit NA, consider using
+## `forcats::fct_explicit_na`
 ```
 
 ```
-## # A tibble: 2 x 5
-##   oecd    low lower_mid upper_mid  high
-##   <lgl> <dbl>     <dbl>     <dbl> <dbl>
-## 1 FALSE    31        52        53    29
-## 2 TRUE      0         0         2    29
+## # A tibble: 163 x 3
+##    pedaya              disease                                 n
+##    <fct>               <chr>                               <int>
+##  1 Yes, age < 30 years acinar cell carcinoma                   1
+##  2 Yes, age < 30 years acute leukemia                          1
+##  3 Yes, age < 30 years acute leukemia of ambiguous lineage     2
+##  4 Yes, age < 30 years acute lymphoblastic leukemia          549
+##  5 Yes, age < 30 years acute megakaryoblastic leukemia        92
+##  6 Yes, age < 30 years acute myeloid leukemia                303
+##  7 Yes, age < 30 years acute undifferentiated leukemia         1
+##  8 Yes, age < 30 years adrenocortical adenoma                  1
+##  9 Yes, age < 30 years adrenocortical cancer                  15
+## 10 Yes, age < 30 years adrenocortical carcinoma               18
+## # … with 153 more rows
 ```
-
-Here:
-
-* The `key` column became column names.
-* The `value` column became the values in the new columns.
-* The `fill` value is used to fill in any missing values.
-
-### Tip {- .tip}
-
-Tidying is often the first step when exploring a data-set. The [tidyr](http://tidyr.tidyverse.org/) package contains a number of useful functions that help tidy (or un-tidy!) data. We've just seen `spread` which spreads two columns into multiple columns. The inverse of `spread` is `gather`, which gathers multiple columns into two columns: a column of column names, and a column of values.
 
 
 ### Challenge: counting {- .challenge}
 
-Investigate how many OECD and non-OECD nations come from the northern and southern hemispheres.
+Investigate how many OECD and non-OECD nations come from the northern and southern hemispheres using `count`
 
 1. Using `count`.
 2. By making a mosaic plot.
 
 Remember you may need to convert columns to factors for `plot` to work, and that a `southern` column could be added to `geo` with:
 
+HCB: consider adding leukemia as the example with a grep
+
 
 ```r
-geo$southern <- geo$lat < 0
+# geo$southern <- geo$lat < 0
 ```
 
 
@@ -676,48 +670,50 @@ Data frames can be sorted using the `arrange` function in `dplyr`.
 
 
 ```r
-arrange(geo, lat)
+arrange(sample_metadata, age_at_dx)
 ```
 
 ```
-## # A tibble: 196 x 8
-##    name         region   oecd  g77     lat  long income2017 southern
-##    <chr>        <chr>    <lgl> <lgl> <dbl> <dbl> <fct>      <lgl>   
-##  1 New Zealand  asia     TRUE  FALSE -42   174   high       TRUE    
-##  2 Argentina    americas FALSE TRUE  -34   -64   upper_mid  TRUE    
-##  3 Chile        americas TRUE  TRUE  -33.5 -70.6 high       TRUE    
-##  4 Uruguay      americas FALSE TRUE  -33   -56   high       TRUE    
-##  5 Lesotho      africa   FALSE TRUE  -29.5  28.2 lower_mid  TRUE    
-##  6 South Africa africa   FALSE TRUE  -29    24   upper_mid  TRUE    
-##  7 Swaziland    africa   FALSE TRUE  -26.5  31.5 lower_mid  TRUE    
-##  8 Australia    asia     TRUE  FALSE -25   135   high       TRUE    
-##  9 Paraguay     americas FALSE TRUE  -23.3 -58   upper_mid  TRUE    
-## 10 Botswana     africa   FALSE TRUE  -22    24   upper_mid  TRUE    
-## # … with 186 more rows
+## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <fct>  <chr>  <chr>   <chr>        
+##  1 THR08_0168… acute …         0 Yes, … unkno… THR08   SJINF009     
+##  2 THR08_0169… acute …         0 Yes, … unkno… THR08   SJINF010     
+##  3 TH06_0613_… atypic…         0 Yes, … male   TH06    N/A          
+##  4 TH06_0613_… atypic…         0 Yes, … male   TH06    N/A          
+##  5 TH06_0627_… gliobl…         0 Yes, … female TH06    N/A          
+##  6 THR29_0744… rhabdo…         0 Yes, … female THR29   RMS_2049     
+##  7 THR29_0748… embryo…         0 Yes, … male   THR29   RMS_2053     
+##  8 THR29_0753… alveol…         0 Yes, … male   THR29   RMS_2061     
+##  9 THR29_0754… alveol…         0 Yes, … male   THR29   RMS_2063     
+## 10 THR29_0782… embryo…         0 Yes, … female THR29   RMS_212      
+## # … with 12,226 more rows, and 2 more variables: site_sampleid <chr>,
+## #   senior_glioma <lgl>
 ```
 
 Numeric columns are sorted in numeric order. Character columns will be sorted in alphabetical order. Factor columns are sorted in order of their levels. The `desc` helper function can be used to sort in descending order.
 
 
 ```r
-arrange(geo, desc(name))
+arrange(sample_metadata, desc(disease))
 ```
 
 ```
-## # A tibble: 196 x 8
-##    name           region   oecd  g77     lat   long income2017 southern
-##    <chr>          <chr>    <lgl> <lgl> <dbl>  <dbl> <fct>      <lgl>   
-##  1 Zimbabwe       africa   FALSE TRUE  -19    29.8  low        TRUE    
-##  2 Zambia         africa   FALSE TRUE  -14.3  28.5  lower_mid  TRUE    
-##  3 Yemen          asia     FALSE TRUE   15.5  47.5  lower_mid  FALSE   
-##  4 Vietnam        asia     FALSE TRUE   16.2 108.   lower_mid  FALSE   
-##  5 Venezuela      americas FALSE TRUE    8   -66    upper_mid  FALSE   
-##  6 Vanuatu        asia     FALSE TRUE  -16   167    lower_mid  TRUE    
-##  7 Uzbekistan     asia     FALSE FALSE  41.7  63.8  lower_mid  FALSE   
-##  8 Uruguay        americas FALSE TRUE  -33   -56    high       TRUE    
-##  9 United States  americas TRUE  FALSE  39.8 -98.5  high       FALSE   
-## 10 United Kingdom europe   TRUE  FALSE  54.8  -2.70 high       FALSE   
-## # … with 186 more rows
+## # A tibble: 12,236 x 9
+##    th_sampleid disease age_at_dx pedaya gender site_id site_donor_id
+##    <chr>       <chr>       <dbl> <fct>  <chr>  <chr>   <chr>        
+##  1 TH03_0012_… wilms …     18    Yes, … male   TH03    N/A          
+##  2 TH03_0012_… wilms …     18    Yes, … male   TH03    N/A          
+##  3 TH27_1405_… wilms …     NA    <NA>   male   TH27    N/A          
+##  4 TH03_0144_… wilms …      6    Yes, … male   TH03    N/A          
+##  5 TH27_2189_… wilms …      5    Yes, … female TH27    N/A          
+##  6 TH06_0632_… wilms …      4    Yes, … female TH06    N/A          
+##  7 THR31_0876… wilms …     NA    Yes, … male   THR31   N/A          
+##  8 TARGET-50-… wilms …      6.15 Yes, … female TARGET  TARGET-50-CA…
+##  9 TARGET-50-… wilms …      4.68 Yes, … female TARGET  TARGET-50-CA…
+## 10 TARGET-50-… wilms …      1.1  Yes, … female TARGET  TARGET-50-CA…
+## # … with 12,226 more rows, and 2 more variables: site_sampleid <chr>,
+## #   senior_glioma <lgl>
 ```
 
 
@@ -727,25 +723,26 @@ Let's move on to a larger data set. This is from the [Gapminder](https://www.gap
 
 
 ```r
-gap <- read_csv("r-intro-2-files/gap-minder.csv")
-gap
+expression_values <- read_tsv("expression_data_for_MAP2K1_HRAS_v9_.tsv") %>%
+  gather(sample, expression, -Gene)
+expression_values
 ```
 
 ```
-## # A tibble: 4,312 x 5
-##    name                 year population gdp_percap life_exp
-##    <chr>               <dbl>      <dbl>      <dbl>    <dbl>
-##  1 Afghanistan          1800    3280000        603     28.2
-##  2 Albania              1800     410445        667     35.4
-##  3 Algeria              1800    2503218        715     28.8
-##  4 Andorra              1800       2654       1197     NA  
-##  5 Angola               1800    1567028        618     27.0
-##  6 Antigua and Barbuda  1800      37000        757     33.5
-##  7 Argentina            1800     534000       1507     33.2
-##  8 Armenia              1800     413326        514     34  
-##  9 Australia            1800     351014        814     34.0
-## 10 Austria              1800    3205587       1847     34.4
-## # … with 4,302 more rows
+## # A tibble: 22,908 x 3
+##    Gene   sample         expression
+##    <chr>  <chr>               <dbl>
+##  1 HRAS   THR15_0330_S01       5.77
+##  2 MAP2K1 THR15_0330_S01       4.53
+##  3 HRAS   THR29_0776_S01       6.99
+##  4 MAP2K1 THR29_0776_S01       4.51
+##  5 HRAS   THR11_0247_S01       6.10
+##  6 MAP2K1 THR11_0247_S01       5.75
+##  7 HRAS   THR08_0162_S01       4.48
+##  8 MAP2K1 THR08_0162_S01       6.42
+##  9 HRAS   TH27_1241_S01        6.41
+## 10 MAP2K1 TH27_1241_S01        5.39
+## # … with 22,898 more rows
 ```
 
 ### Quiz {.challenge -}
@@ -758,29 +755,27 @@ It would be useful to have general information about countries from `geo` availa
 
 
 ```r
-gap_geo <- left_join(gap, geo, by="name")
-gap_geo
+expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample"="th_sampleid"))
+expression_by_disease
 ```
 
 ```
-## # A tibble: 4,312 x 12
-##    name   year population gdp_percap life_exp region oecd  g77     lat
-##    <chr> <dbl>      <dbl>      <dbl>    <dbl> <chr>  <lgl> <lgl> <dbl>
-##  1 Afgh…  1800    3280000        603     28.2 asia   FALSE TRUE   33  
-##  2 Alba…  1800     410445        667     35.4 europe FALSE FALSE  41  
-##  3 Alge…  1800    2503218        715     28.8 africa FALSE TRUE   28  
-##  4 Ando…  1800       2654       1197     NA   europe FALSE FALSE  42.5
-##  5 Ango…  1800    1567028        618     27.0 africa FALSE TRUE  -12.5
-##  6 Anti…  1800      37000        757     33.5 ameri… FALSE TRUE   17.0
-##  7 Arge…  1800     534000       1507     33.2 ameri… FALSE TRUE  -34  
-##  8 Arme…  1800     413326        514     34   europe FALSE FALSE  40.2
-##  9 Aust…  1800     351014        814     34.0 asia   TRUE  FALSE -25  
-## 10 Aust…  1800    3205587       1847     34.4 europe TRUE  FALSE  47.3
-## # … with 4,302 more rows, and 3 more variables: long <dbl>,
-## #   income2017 <fct>, southern <lgl>
+## # A tibble: 22,908 x 11
+##    Gene  sample expression disease age_at_dx pedaya gender site_id
+##    <chr> <chr>       <dbl> <chr>       <dbl> <fct>  <chr>  <chr>  
+##  1 HRAS  THR15…       5.77 osteos…      NA   Yes, … female THR15  
+##  2 MAP2… THR15…       4.53 osteos…      NA   Yes, … female THR15  
+##  3 HRAS  THR29…       6.99 rhabdo…      20   Yes, … male   THR29  
+##  4 MAP2… THR29…       4.51 rhabdo…      20   Yes, … male   THR29  
+##  5 HRAS  THR11…       6.10 glioma       13   Yes, … male   THR11  
+##  6 MAP2… THR11…       5.75 glioma       13   Yes, … male   THR11  
+##  7 HRAS  THR08…       4.48 acute …       0.6 Yes, … unkno… THR08  
+##  8 MAP2… THR08…       6.42 acute …       0.6 Yes, … unkno… THR08  
+##  9 HRAS  TH27_…       6.41 glioma       NA   Unkno… unkno… TH27   
+## 10 MAP2… TH27_…       5.39 glioma       NA   Unkno… unkno… TH27   
+## # … with 22,898 more rows, and 3 more variables: site_donor_id <chr>,
+## #   site_sampleid <chr>, senior_glioma <lgl>
 ```
-
-The output contains all ways of pairing up rows by `name`. In this case each row of `geo` pairs up with multiple rows of `gap`.
 
 The "left" in "left join" refers to how rows that can't be paired up are handled. `left_join` keeps all rows from the first data frame but not the second. This is a good default when the intent is to attaching some extra information to a data frame. `inner_join` discard all rows that can't be paired up. `full_join` keeps all rows from both data frames. 
 
