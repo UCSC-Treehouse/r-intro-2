@@ -203,14 +203,6 @@ This can be useful when combined with indexing:
 items[1:4]
 ```
 
-Sequences are useful for other things, such as a starting point for calculations:
-
-```{r}
-x <- 1:10
-x*x
-plot(x, x*x)
-```
-
 
 ## Functions
 

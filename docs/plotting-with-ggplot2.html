@@ -193,11 +193,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">3</span> Plotting with ggplot2</h1>
 <p>We already saw some of R’s built in plotting facilities with the function <code>plot</code>. A more recent and much more powerful plotting library is <code>ggplot2</code>. <code>ggplot2</code> is another mini-language within R, a language for creating plots. It implements ideas from a book called <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448">“The Grammar of Graphics”</a>. The syntax can be a little strange, but there are plenty of examples in the <a href="http://ggplot2.tidyverse.org/reference/">online documentation</a>.</p>
 <p><code>ggplot2</code> is part of the Tidyverse, so loadinging the <code>tidyverse</code> package will load <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
-<p>We continue with the Gapminder dataset, which we loaded with:</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1">geo &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;r-intro-2-files/geo.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb137-2" data-line-number="2">gap &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;r-intro-2-files/gap-minder.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb137-3" data-line-number="3">gap_geo &lt;-<span class="st"> </span><span class="kw">left_join</span>(gap, geo, <span class="dt">by=</span><span class="st">&quot;name&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a></code></pre></div>
+<p>We continue with the expression dataset, which we loaded with:</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv&quot;</span>)</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;expression_data_for_MAP2K1_HRAS_v9_.tsv&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb131-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(sample, expression, <span class="op">-</span>Gene)</a>
+<a class="sourceLine" id="cb131-4" data-line-number="4">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>)) </a>
+<a class="sourceLine" id="cb131-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb131-6" data-line-number="6">small_expression_by_disease &lt;-<span class="st"> </span>expression_by_disease <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;TH34&quot;</span>, sample))</a></code></pre></div>
 <div id="elements-of-a-ggplot" class="section level2">
 <h2><span class="header-section-number">3.1</span> Elements of a ggplot</h2>
 <p>Producing a plot with <code>ggplot2</code>, we must give three things:</p>
@@ -207,120 +210,123 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The actual graphical elements to display (“geometric objects”).</li>
 </ol>
 <p>Let’s make our first ggplot.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>age_at_dx, <span class="dt">y=</span>expression)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb132-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>The call to <code>ggplot</code> and <code>aes</code> sets up the basics of how we are going to represent the various columns of the data frame. <code>aes</code> defines the “aesthetics”, which is how columns of the data frame map to graphical attributes such as x and y position, color, size, etc. <code>aes</code> is another example of magic “non-standard evaluation”, arguments to <code>aes</code> may refer to columns of the data frame directly. We then literally add layers of graphics (“geoms”) to this.</p>
 <p>Further aesthetics can be used. Any aesthetic can be either numeric or categorical, an appropriate scale will be used.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp, <span class="dt">color=</span>region, <span class="dt">size=</span>population)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>age_at_dx, <span class="dt">y=</span>expression, </a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">                                        <span class="dt">color=</span>Gene, <span class="dt">size =</span> gender)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb133-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-5-1.png" width="576" style="display: block; margin: auto;" /></p>
 <div id="challenge-make-a-ggplot" class="section level3 challenge">
 <h3><span class="header-section-number">3.1.1</span> Challenge: make a ggplot</h3>
-<p>This R code will get the data from the year 2010:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1">gap2010 &lt;-<span class="st"> </span><span class="kw">filter</span>(gap_geo, year <span class="op">==</span><span class="st"> </span><span class="dv">2010</span>)</a></code></pre></div>
 <p>Create a ggplot of this with:</p>
 <ul>
-<li><code>gdp_percap</code> as x.</li>
-<li><code>life_exp</code> as y.</li>
-<li><code>population</code> as the size.</li>
-<li><code>region</code> as the color.</li>
+<li><code>expression</code> as x.</li>
+<li><code>age_at_dx</code> as y.</li>
+<li><code>pedaya</code> as the shape</li>
+<li><code>disease</code> as the color.</li>
 </ul>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx, </a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">                                        <span class="dt">color =</span> disease, <span class="dt">shape =</span> pedaya)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb134-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="plotting_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="further-geoms" class="section level2">
 <h2><span class="header-section-number">3.2</span> Further geoms</h2>
 <p>To draw lines, we need to use a “group” aesthetic.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp, <span class="dt">group=</span>name, <span class="dt">color=</span>region)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>Gene, <span class="dt">y=</span>expression, </a>
+<a class="sourceLine" id="cb135-2" data-line-number="2">                                        <span class="dt">group=</span>sample, <span class="dt">color=</span>disease)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb135-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>()</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>A wide variety of geoms are available. Here we show Tukey box-plots. Note again the use of the “group” aesthetic, without this ggplot will just show one big box-plot.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp, <span class="dt">group=</span>year)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>Gene, <span class="dt">y=</span>expression, <span class="dt">group=</span>Gene)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p><code>geom_smooth</code> can be used to show trends.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb137-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb137-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>)</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Aesthetics can be specified globally in <code>ggplot</code>, or as the first argument to individual geoms. Here, the “group” is applied only to draw the lines, and “color” is used to produce multiple trend lines:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group=</span>name)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb145-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">color=</span>oecd))</a></code></pre></div>
-<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p>Aesthetics can be specified globally in <code>ggplot</code>, or as the first argument to individual geoms. Here “color” is used to produce multiple trend lines:</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb138-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">color =</span> Gene), <span class="dt">method =</span> <span class="st">&#39;lm&#39;</span>)</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 <div id="highlighting-subsets" class="section level2">
 <h2><span class="header-section-number">3.3</span> Highlighting subsets</h2>
 <p>Geoms can be added that use a different data frame, using the <code>data=</code> argument.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">gap_australia &lt;-<span class="st"> </span><span class="kw">filter</span>(gap_geo, name <span class="op">==</span><span class="st"> &quot;Australia&quot;</span>)</a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb147-3" data-line-number="3"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp, <span class="dt">group=</span>name)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb147-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb147-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">data=</span>gap_australia, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>, <span class="dt">size=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">small_expression_in_eRMS &lt;-<span class="st"> </span><span class="kw">filter</span>(small_expression_by_disease, disease <span class="op">==</span><span class="st"> &quot;embryonal rhabdomyosarcoma&quot;</span>)</a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb139-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">data =</span> small_expression_in_eRMS, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">size =</span> <span class="dv">2</span>) </a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Notice also that the second <code>geom_line</code> has some further arguments controlling its appearance. These are <strong>not</strong> aesthetics, they are not a mapping of data to appearance, but rather a direct specification of the appearance. There isn’t an associated scale as when color was an aesthetic.</p>
+<p>Notice also that the second <code>geom_line</code> has some further arguments controlling its appearance. These are <strong>not</strong> aesthetics, they are not a mapping of data to appearance, but rather a direct specification of the appearance. There isn’t an associated scale or legend as when color was an aesthetic.</p>
 </div>
 <div id="fine-tuning-a-plot" class="section level2">
 <h2><span class="header-section-number">3.4</span> Fine-tuning a plot</h2>
 <p>Adding <code>labs</code> to a ggplot adjusts the labels given to the axes and legends. A plot title can also be specified.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb148-3" data-line-number="3"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Year&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Life expectancy&quot;</span>, <span class="dt">title=</span><span class="st">&quot;Gapminder&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb140-3" data-line-number="3"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">x=</span><span class="st">&quot;Gene expression&quot;</span>, <span class="dt">y=</span><span class="st">&quot;Age&quot;</span>, <span class="dt">title=</span><span class="st">&quot;TH34 samples&quot;</span>)</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><code>coord_cartesian</code> can be used to set the limits of the x and y axes. Suppose we want our y-axis to start at zero.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb149-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">90</span>))</a></code></pre></div>
+<p><code>coord_cartesian</code> can be used to set the limits of the x and y axes. Suppose we want our x-axis to start at zero.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb141-3" data-line-number="3"><span class="st">    </span><span class="kw">coord_cartesian</span>(<span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">7</span>))</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>Type <code>scale_</code> and press the tab key. You will see functions giving fine-grained controls over various scales (x, y, color, etc). These allow transformations (eg log10), and manually specified breaks (labelled values). Very fine grained control is possible over the appearance of ggplots, see the ggplot2 documentation for details and further examples.</p>
 <div id="challenge-refine-your-ggplot" class="section level3 challenge">
 <h3><span class="header-section-number">3.4.1</span> Challenge: refine your ggplot</h3>
-<p>Continuing with your scatter-plot of the 2010 data, add axis labels to your plot.</p>
+<p>Continuing with the scatter-plot of the <code>small_expression_by_disease</code> data, add axis labels to your plot.</p>
 <p>Give your x axis a log scale by adding <code>scale_x_log10()</code>.</p>
 </div>
 </div>
 <div id="faceting" class="section level2">
 <h2><span class="header-section-number">3.5</span> Faceting</h2>
 <p>Faceting lets us quickly produce a collection of small plots. The plots all have the same scales and the eye can easily compare them.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp, <span class="dt">group=</span>name)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_line</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>region)</a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-2" data-line-number="2"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb142-3" data-line-number="3"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>Gene)</a></code></pre></div>
 <p><img src="plotting_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p>Note the use of <code>~</code>, which we’ve not seen before. <code>~</code> syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent.</p>
+<p>Note the use of <code>~</code>, which we’ve not seen before. <code>~</code> syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent. When I read it in my mind, I say “by” or “against”</p>
 <div id="challenge-facet-your-ggplot" class="section level3 challenge">
 <h3><span class="header-section-number">3.5.1</span> Challenge: facet your ggplot</h3>
-<p>Let’s return again to your scatter-plot of the 2010 data.</p>
-<p>Adjust your plot to now show data from all years, with each year shown in a separate facet, using <code>facet_wrap(~ year)</code>.</p>
-<p>Advanced: Highlight Australia in your plot.</p>
+<p>Let’s return again to your scatter-plot of the <code>small_expression_by_disease</code> data</p>
+<p>Adjust your plot to now show data, with each gender shown in a separate facet, using <code>facet_wrap(~ gender)</code>.</p>
+<p>Advanced: Highlight Ewing sarcoma in your plot.</p>
 </div>
 </div>
 <div id="saving-ggplots" class="section level2">
 <h2><span class="header-section-number">3.6</span> Saving ggplots</h2>
 <p>The act of plotting a ggplot is actually triggered when it is printed. In an interactive session we are automatically printing each value we calculate, but if you are using it with a programming construct such as a for loop or function you might need to explcitly <code>print( )</code> the plot.</p>
 <p>Ggplots can be saved using <code>ggsave</code>.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="co"># Plot created but not shown.</span></a>
-<a class="sourceLine" id="cb151-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(gap_geo, <span class="kw">aes</span>(<span class="dt">x=</span>year, <span class="dt">y=</span>life_exp)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a>
-<a class="sourceLine" id="cb151-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb151-4" data-line-number="4"><span class="co"># Only when we try to look at the value p is it shown</span></a>
-<a class="sourceLine" id="cb151-5" data-line-number="5">p</a>
-<a class="sourceLine" id="cb151-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb151-7" data-line-number="7"><span class="co"># Alternatively, we can explicitly print it</span></a>
-<a class="sourceLine" id="cb151-8" data-line-number="8"><span class="kw">print</span>(p)</a>
-<a class="sourceLine" id="cb151-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb151-10" data-line-number="10"><span class="co"># To save to a file</span></a>
-<a class="sourceLine" id="cb151-11" data-line-number="11"><span class="kw">ggsave</span>(<span class="st">&quot;test.png&quot;</span>, p)</a>
-<a class="sourceLine" id="cb151-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb151-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb151-14" data-line-number="14"><span class="co"># This is an alternative method that works with &quot;base R&quot; plots as well:</span></a>
-<a class="sourceLine" id="cb151-15" data-line-number="15"><span class="kw">png</span>(<span class="st">&quot;test.png&quot;</span>)</a>
-<a class="sourceLine" id="cb151-16" data-line-number="16"><span class="kw">print</span>(p)</a>
-<a class="sourceLine" id="cb151-17" data-line-number="17"><span class="kw">dev.off</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="co"># Plot created but not shown.</span></a>
+<a class="sourceLine" id="cb143-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(small_expression_by_disease, <span class="kw">aes</span>(<span class="dt">x=</span>expression, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb143-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_point</span>() </a>
+<a class="sourceLine" id="cb143-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb143-5" data-line-number="5"><span class="co"># Only when we try to look at the value p is it shown</span></a>
+<a class="sourceLine" id="cb143-6" data-line-number="6">p</a>
+<a class="sourceLine" id="cb143-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb143-8" data-line-number="8"><span class="co"># Alternatively, we can explicitly print it</span></a>
+<a class="sourceLine" id="cb143-9" data-line-number="9"><span class="kw">print</span>(p)</a>
+<a class="sourceLine" id="cb143-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb143-11" data-line-number="11"><span class="co"># To save to a file</span></a>
+<a class="sourceLine" id="cb143-12" data-line-number="12"><span class="kw">ggsave</span>(<span class="st">&quot;test.png&quot;</span>, p)</a>
+<a class="sourceLine" id="cb143-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb143-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb143-15" data-line-number="15"><span class="co"># This is an alternative method that works with &quot;base R&quot; plots as well:</span></a>
+<a class="sourceLine" id="cb143-16" data-line-number="16"><span class="kw">png</span>(<span class="st">&quot;test.png&quot;</span>)</a>
+<a class="sourceLine" id="cb143-17" data-line-number="17"><span class="kw">print</span>(p)</a>
+<a class="sourceLine" id="cb143-18" data-line-number="18"><span class="kw">dev.off</span>()</a></code></pre></div>
 <div id="tip-about-sizing" class="section level3 tip">
 <h3><span class="header-section-number">3.6.1</span> Tip about sizing</h3>
 <p>Figures in papers tend to be quite small. This means text must be proportionately larger than we usually show on screen. Dots should also be proportionately larger, and lines proportionately thicker. The way to achieve this using <code>ggsave</code> is to specify a small width and height, given in inches. To ensure the output also has good resolution, specify a high dots-per-inch, or use a vector-graphics format such as PDF or SVG.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;test2.png&quot;</span>, p, <span class="dt">width=</span><span class="dv">3</span>, <span class="dt">height=</span><span class="dv">3</span>, <span class="dt">dpi=</span><span class="dv">600</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">ggsave</span>(<span class="st">&quot;test2.png&quot;</span>, p, <span class="dt">width=</span><span class="dv">3</span>, <span class="dt">height=</span><span class="dv">3</span>, <span class="dt">dpi=</span><span class="dv">600</span>)</a></code></pre></div>
 
 </div>
 </div>

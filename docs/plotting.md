@@ -11,13 +11,16 @@ We already saw some of R's built in plotting facilities with the function `plot`
 library(tidyverse)
 ```
 
-We continue with the Gapminder dataset, which we loaded with:
+We continue with the expression dataset, which we loaded with:
 
 
 ```r
-geo <- read_csv("r-intro-2-files/geo.csv")
-gap <- read_csv("r-intro-2-files/gap-minder.csv")
-gap_geo <- left_join(gap, geo, by="name")
+sample_metadata <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv")
+expression_values <- read_tsv("expression_data_for_MAP2K1_HRAS_v9_.tsv") %>%
+  gather(sample, expression, -Gene)
+expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample")) 
+
+small_expression_by_disease <- expression_by_disease %>% filter(grepl("TH34", sample))
 ```
 
 ## Elements of a ggplot
@@ -33,7 +36,7 @@ Let's make our first ggplot.
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp)) +
+ggplot(small_expression_by_disease, aes(x=age_at_dx, y=expression)) +
     geom_point()
 ```
 
@@ -46,7 +49,8 @@ Further aesthetics can be used. Any aesthetic can be either numeric or categoric
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp, color=region, size=population)) +
+ggplot(small_expression_by_disease, aes(x=age_at_dx, y=expression, 
+                                        color=Gene, size = gender)) +
     geom_point()
 ```
 
@@ -54,19 +58,23 @@ ggplot(gap_geo, aes(x=year, y=life_exp, color=region, size=population)) +
 
 ### Challenge: make a ggplot {.challenge}
 
-This R code will get the data from the year 2010:
-
-
-```r
-gap2010 <- filter(gap_geo, year == 2010)
-```
 
 Create a ggplot of this with:
 
-* `gdp_percap` as x. 
-* `life_exp` as y.
-* `population` as the size.
-* `region` as the color.
+* `expression` as x. 
+* `age_at_dx` as y.
+* `pedaya` as the shape
+* `disease` as the color.
+
+
+```r
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx, 
+                                        color = disease, shape = pedaya)) +
+    geom_point()
+```
+
+<img src="plotting_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
+
 
 
 ## Further geoms
@@ -75,7 +83,8 @@ To draw lines, we need to use a "group" aesthetic.
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp, group=name, color=region)) +
+ggplot(small_expression_by_disease, aes(x=Gene, y=expression, 
+                                        group=sample, color=disease)) +
     geom_line()
 ```
 
@@ -85,7 +94,7 @@ A wide variety of geoms are available. Here we show Tukey box-plots. Note again 
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp, group=year)) +
+ggplot(small_expression_by_disease, aes(x=Gene, y=expression, group=Gene)) +
     geom_boxplot()
 ```
 
@@ -95,28 +104,20 @@ ggplot(gap_geo, aes(x=year, y=life_exp, group=year)) +
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp)) +
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    geom_smooth()
-```
-
-```
-## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+    geom_smooth(method = 'lm')
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
 
-Aesthetics can be specified globally in `ggplot`, or as the first argument to individual geoms. Here, the "group" is applied only to draw the lines, and "color" is used to produce multiple trend lines:
+Aesthetics can be specified globally in `ggplot`, or as the first argument to individual geoms. Here "color" is used to produce multiple trend lines:
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp)) +
-    geom_line(aes(group=name)) +
-    geom_smooth(aes(color=oecd))
-```
-
-```
-## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+    geom_point() +
+    geom_smooth(aes(color = Gene), method = 'lm')
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
@@ -127,16 +128,16 @@ Geoms can be added that use a different data frame, using the `data=` argument.
 
 
 ```r
-gap_australia <- filter(gap_geo, name == "Australia")
+small_expression_in_eRMS <- filter(small_expression_by_disease, disease == "embryonal rhabdomyosarcoma")
 
-ggplot(gap_geo, aes(x=year, y=life_exp, group=name)) +
-    geom_line() +
-    geom_line(data=gap_australia, color="red", size=2)
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+    geom_point() +
+    geom_point(data = small_expression_in_eRMS, color = "red", size = 2) 
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" />
 
-Notice also that the second `geom_line` has some further arguments controlling its appearance. These are **not** aesthetics, they are not a mapping of data to appearance, but rather a direct specification of the appearance. There isn't an associated scale as when color was an aesthetic.
+Notice also that the second `geom_line` has some further arguments controlling its appearance. These are **not** aesthetics, they are not a mapping of data to appearance, but rather a direct specification of the appearance. There isn't an associated scale or legend as when color was an aesthetic.
 
 
 
@@ -146,20 +147,20 @@ Adding `labs` to a ggplot adjusts the labels given to the axes and legends. A pl
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp)) +
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    labs(x="Year", y="Life expectancy", title="Gapminder")
+    labs(x="Gene expression", y="Age", title="TH34 samples")
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
 
-`coord_cartesian` can be used to set the limits of the x and y axes. Suppose we want our y-axis to start at zero.
+`coord_cartesian` can be used to set the limits of the x and y axes. Suppose we want our x-axis to start at zero.
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp)) +
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    coord_cartesian(ylim=c(0,90))
+    coord_cartesian(xlim=c(0,7))
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
@@ -169,7 +170,7 @@ Type `scale_` and press the tab key. You will see functions giving fine-grained 
 
 ### Challenge: refine your ggplot {.challenge}
 
-Continuing with your scatter-plot of the 2010 data, add axis labels to your plot.
+Continuing with the scatter-plot of the `small_expression_by_disease` data, add axis labels to your plot.
 
 Give your x axis a log scale by adding `scale_x_log10()`.
 
@@ -180,23 +181,23 @@ Faceting lets us quickly produce a collection of small plots. The plots all have
 
 
 ```r
-ggplot(gap_geo, aes(x=year, y=life_exp, group=name)) +
-    geom_line() +
-    facet_wrap(~ region)
+ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+    geom_point() +
+    facet_wrap(~ Gene)
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
 
-Note the use of `~`, which we've not seen before. `~` syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent.
+Note the use of `~`, which we've not seen before. `~` syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent. When I read it in my mind, I say "by" or "against"
 
 
 ### Challenge: facet your ggplot {.challenge}
 
-Let's return again to your scatter-plot of the 2010 data.
+Let's return again to your scatter-plot of the `small_expression_by_disease` data
 
-Adjust your plot to now show data from all years, with each year shown in a separate facet, using `facet_wrap(~ year)`.
+Adjust your plot to now show data, with each gender shown in a separate facet, using `facet_wrap(~ gender)`.
 
-Advanced: Highlight Australia in your plot.
+Advanced: Highlight Ewing sarcoma in your plot.
 
 
 ## Saving ggplots
@@ -208,7 +209,8 @@ Ggplots can be saved using `ggsave`.
 
 ```r
 # Plot created but not shown.
-p <- ggplot(gap_geo, aes(x=year, y=life_exp)) + geom_point()
+p <- ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+    geom_point() 
 
 # Only when we try to look at the value p is it shown
 p

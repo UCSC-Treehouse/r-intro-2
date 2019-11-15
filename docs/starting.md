@@ -315,24 +315,6 @@ items[1:4]
 ## [1] "spam"  "eggs"  "beans" "bacon"
 ```
 
-Sequences are useful for other things, such as a starting point for calculations:
-
-
-```r
-x <- 1:10
-x*x
-```
-
-```
-##  [1]   1   4   9  16  25  36  49  64  81 100
-```
-
-```r
-plot(x, x*x)
-```
-
-<img src="starting_files/figure-html/unnamed-chunk-19-1.png" width="576" style="display: block; margin: auto;" />
-
 
 ## Functions
 
