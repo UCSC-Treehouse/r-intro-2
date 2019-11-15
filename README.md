@@ -17,7 +17,7 @@ make ingest
 ```
 
 
-## Typical schedule
+## Schedule for Saturday November 16
 
 ```
 10:00am   Welcome overview, Starting out in R, Data frames 
