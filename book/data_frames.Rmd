@@ -13,7 +13,7 @@ Today we will be using a collection of modern packages collectively known as the
 
 Our first step is to download the files we need and to install the Tidyverse. This is the one step where we ask you to copy and paste some code:
 
-```{r eval=FALSE, include=FALSE}
+```{r eval=FALSE}
 
 # Download files for this workshop
 download.file(

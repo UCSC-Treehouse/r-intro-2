@@ -12,6 +12,16 @@ Today we will be using a collection of modern packages collectively known as the
 Our first step is to download the files we need and to install the Tidyverse. This is the one step where we ask you to copy and paste some code:
 
 
+```r
+# Download files for this workshop
+download.file(
+"https://drive.google.com/uc?export=download&id=1ORiglWFrxOoQ1-G-1D6-UYGUM9uePd8B",
+  destfile="R-intro-data.zip")
+unzip("R-intro-data.zip")
+
+# Install Tidyverse
+install.packages("tidyverse")
+```
 
 If using RStudio Cloud, you might need to switch to R version 3.5.3 to successfully install Tidyverse. Use the drop-down in the top right corner of the page.
 

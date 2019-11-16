@@ -192,58 +192,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">4</span> Summarizing data</h1>
 <p>Having loaded and thoroughly explored a data set, we are ready to distill it down to concise conclusions. At its simplest, this involves calculating summary statistics like counts, means, and standard deviations. Beyond this is the fitting of models, and hypothesis testing and confidence interval calculation. R has a huge number of packages devoted to these tasks and this is a large part of its appeal, but is beyond the scope of today.</p>
 <p>Loading the data as before, if you have not already done so:</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb144-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb144-3" data-line-number="3">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;selected_metadata.tsv&quot;</span>)</a>
-<a class="sourceLine" id="cb144-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb144-5" data-line-number="5">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;one_gene_expression.tsv&quot;</span>) </a>
-<a class="sourceLine" id="cb144-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb144-7" data-line-number="7">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb145-3" data-line-number="3">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;selected_metadata.tsv&quot;</span>)</a>
+<a class="sourceLine" id="cb145-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb145-5" data-line-number="5">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;one_gene_expression.tsv&quot;</span>) </a>
+<a class="sourceLine" id="cb145-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb145-7" data-line-number="7">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>)) </a></code></pre></div>
 <div id="summary-functions" class="section level2">
 <h2><span class="header-section-number">4.1</span> Summary functions</h2>
 <p>R has a variety of functions for summarizing a vector, including: <code>sum</code>, <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>, <code>sd</code>.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">mean</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">mean</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>) )</a></code></pre></div>
 <pre><code>## [1] 2.5</code></pre>
 <p>We can use these on the expression data.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">expression_in_AML &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_by_disease, disease <span class="op">==</span><span class="st"> &quot;acute myeloid leukemia&quot;</span>)</a>
-<a class="sourceLine" id="cb147-2" data-line-number="2"><span class="kw">sum</span>(expression_in_AML<span class="op">$</span>age_at_dx)</a></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1">expression_in_AML &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_by_disease, disease <span class="op">==</span><span class="st"> &quot;acute myeloid leukemia&quot;</span>)</a>
+<a class="sourceLine" id="cb148-2" data-line-number="2"><span class="kw">sum</span>(expression_in_AML<span class="op">$</span>age_at_dx)</a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">mean</span>(expression_in_AML<span class="op">$</span>age_at_dx)</a></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">mean</span>(expression_in_AML<span class="op">$</span>age_at_dx)</a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 </div>
 <div id="missing-values" class="section level2">
 <h2><span class="header-section-number">4.2</span> Missing values</h2>
 <p>Why did <code>mean</code> fail? The reason is that <code>life_exp</code> contains missing values (<code>NA</code>).</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1">expression_in_AML<span class="op">$</span>age_at_dx</a></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1">expression_in_AML<span class="op">$</span>age_at_dx</a></code></pre></div>
 <pre><code>##  [1] 61.00000       NA       NA  4.60000  0.72000  4.90000 21.00000
 ##  [8] 76.00000       NA  7.82000  0.40000  0.44000       NA 55.00000
 ## [15] 73.00000 12.91667 11.23000  8.46000 18.96000 47.00000  4.00000
 ## [22]  4.00000 14.00000</code></pre>
 <p>R will not ignore these unless we explicitly tell it to with <code>na.rm=TRUE</code>.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="kw">mean</span>(expression_in_AML<span class="op">$</span>age_at_dx, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="kw">mean</span>(expression_in_AML<span class="op">$</span>age_at_dx, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 22.39193</code></pre>
 <p><code>NA</code> is a special value. If we try to calculate with <code>NA</code>, the result is <code>NA</code></p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="ot">NA</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="ot">NA</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span></a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p><code>is.na</code> can be used to detect <code>NA</code> values, or <code>na.omit</code> can be used to directly remove rows of a data frame containing them.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">is.na</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="ot">NA</span>,<span class="dv">3</span>) )</a></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1"><span class="kw">is.na</span>( <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="ot">NA</span>,<span class="dv">3</span>) )</a></code></pre></div>
 <pre><code>## [1] FALSE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">cleaned &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, <span class="op">!</span><span class="kw">is.na</span>(age_at_dx))</a>
-<a class="sourceLine" id="cb159-2" data-line-number="2"><span class="kw">mean</span>(cleaned<span class="op">$</span>age_at_dx)</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1">cleaned &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, <span class="op">!</span><span class="kw">is.na</span>(age_at_dx))</a>
+<a class="sourceLine" id="cb160-2" data-line-number="2"><span class="kw">mean</span>(cleaned<span class="op">$</span>age_at_dx)</a></code></pre></div>
 <pre><code>## [1] 22.39193</code></pre>
 </div>
 <div id="grouped-summaries" class="section level2">
 <h2><span class="header-section-number">4.3</span> Grouped summaries</h2>
 <p>The <code>summarize</code> function in <code>dplyr</code> allows summary functions to be applied to data frames.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">summarize</span>(expression_by_disease, <span class="dt">mean_age_at_dx =</span> <span class="kw">mean</span>(age_at_dx, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw">summarize</span>(expression_by_disease, <span class="dt">mean_age_at_dx =</span> <span class="kw">mean</span>(age_at_dx, <span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   mean_age_at_dx
 ##            &lt;dbl&gt;
 ## 1           13.1</code></pre>
 <p>So far unremarkable, but <code>summarize</code> comes into its own when the <code>group_by</code> “adjective” is used.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2">    <span class="kw">group_by</span>(expression_by_disease, disease), </a>
-<a class="sourceLine" id="cb163-3" data-line-number="3">    <span class="dt">mean_age_at_dx=</span><span class="kw">mean</span>(age_at_dx,<span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">    <span class="kw">group_by</span>(expression_by_disease, disease), </a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">    <span class="dt">mean_age_at_dx=</span><span class="kw">mean</span>(age_at_dx,<span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 36 x 2
 ##    disease                             mean_age_at_dx
 ##    &lt;chr&gt;                                        &lt;dbl&gt;
@@ -261,11 +261,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="section-2" class="section level3 unnumbered">
 <h3></h3>
 <p><code>group_by</code> can be used to group by multiple columns, much like <code>count</code>. We can use this to see how the rest of the world is catching up to OECD nations in terms of life expectancy.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw">summarize</span>(</a>
-<a class="sourceLine" id="cb165-2" data-line-number="2">    <span class="kw">group_by</span>(expression_by_disease, disease, gender), </a>
-<a class="sourceLine" id="cb165-3" data-line-number="3">    <span class="dt">mean_age_at_dx=</span><span class="kw">mean</span>(age_at_dx,<span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a>
-<a class="sourceLine" id="cb165-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb165-5" data-line-number="5">result</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">result &lt;-<span class="st"> </span><span class="kw">summarize</span>(</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2">    <span class="kw">group_by</span>(expression_by_disease, disease, gender), </a>
+<a class="sourceLine" id="cb166-3" data-line-number="3">    <span class="dt">mean_age_at_dx=</span><span class="kw">mean</span>(age_at_dx,<span class="dt">na.rm=</span><span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb166-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb166-5" data-line-number="5">result</a></code></pre></div>
 <pre><code>## # A tibble: 52 x 3
 ## # Groups:   disease [36]
 ##    disease                             gender       mean_age_at_dx
@@ -287,10 +287,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">4.4</span> t-test</h2>
 <p>We will finish this section by demonstrating a t-test. The main point of this section is to give a flavour of how statistical tests work in R, rather than the details of what a t-test does.</p>
 <p>does age of diagnosis differ in males and females with AML?</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">expr_male &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>)</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2">expr_female &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>)</a>
-<a class="sourceLine" id="cb167-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb167-4" data-line-number="4"><span class="kw">t.test</span>(expr_male<span class="op">$</span>age_at_dx, expr_female<span class="op">$</span>age_at_dx)</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1">expr_male &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>)</a>
+<a class="sourceLine" id="cb168-2" data-line-number="2">expr_female &lt;-<span class="st"> </span><span class="kw">filter</span>(expression_in_AML, gender <span class="op">==</span><span class="st"> &quot;female&quot;</span>)</a>
+<a class="sourceLine" id="cb168-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb168-4" data-line-number="4"><span class="kw">t.test</span>(expr_male<span class="op">$</span>age_at_dx, expr_female<span class="op">$</span>age_at_dx)</a></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -304,12 +304,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  18.35667  24.74583</code></pre>
 <p>Statistical routines often have many ways to tweak the details of their operation. These are specified by further arguments to the function call, to override the default behaviour. By default, <code>t.test</code> performs an unpaired t-test. If this was a paired data, we could specify <code>paired=TRUE</code> to <code>t.test</code> to perform a paired sample t-test and gain some statistical power. Check this by looking at the help page with <code>?t.test</code>.</p>
 <p>When performing a statistical test, it’s good practice to visualize the data to make sure there is nothing funny going on.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">ggplot</span>(expression_in_AML, <span class="kw">aes</span>(<span class="dt">x=</span>gender, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb169-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">ggplot</span>(expression_in_AML, <span class="kw">aes</span>(<span class="dt">x=</span>gender, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb170-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="summarizing_files/figure-html/unnamed-chunk-13-1.png" width="336" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="kw">ggplot</span>(expression_in_AML, <span class="kw">aes</span>(<span class="dt">x=</span>gender, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb171-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="kw">ggplot</span>(expression_in_AML, <span class="kw">aes</span>(<span class="dt">x=</span>gender, <span class="dt">y=</span>age_at_dx)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb172-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
 <p><img src="summarizing_files/figure-html/unnamed-chunk-13-2.png" width="336" style="display: block; margin: auto;" /></p>
 <p>This is a visual confirmation of the t-test result. If there were no difference between the years then points would lie approximately evenly above and below the diagonal line, which is clearly not the case. However the outlier may warrant investigation.</p>
