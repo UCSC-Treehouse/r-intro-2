@@ -21,8 +21,13 @@
 * Check out [RStudio's collection of cheat sheets](https://www.rstudio.com/resources/cheatsheets/) cover newer packages in R.
 
 
-[The Carpentries](https://carpentries.org/) run intensive two day workshops on scientific computing and data science topics worldwide. The style of this present workshop is very much based on theirs. 
+## General strategies
 
+View a few rows of your data frequently.
+
+Plot your data frequency. Plot it in different ways.
+
+When you find something interesting, try to disprove what you've found. This will help strengthen your evidence and understanding of your result.
 
 
 

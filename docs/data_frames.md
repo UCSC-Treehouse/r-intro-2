@@ -106,9 +106,9 @@ The argument names become column names in the data frame.
 
 ### Tip {- .tip}
 
-The *path* to the file on our server is `"download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv"`. This says, starting from your working directory, look in the directory `download` for the file `clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv`. The steps in the path are separated by `/`. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.
+The *path* to the file on our server is `"selected_metadata.tsv"`. This says the file `"selected_metadata.tsv"` is in your working directory. Sometimes a file is in a subdirectory, in which case the file and directory names are  separated by `/`. Your working directory is shown at the top of the console pane. The path needed might be different on your own computer, depending where you downloaded the file.
 
-One way to work out the correct path is to find the file in the file browser pane, click on it and select "Import Dataset...".
+One way to work out the correct path is to find the file in the file browser pane.
 
 <img src="figures/import.png" width="50%" style="display: block; margin: auto auto auto 0;" />
 
