@@ -1,0 +1,132 @@
+---
+title: "`r gsub('.Rmd', ' ', gsub('_', ' ', knitr::current_input()))`"
+author: "`r Sys.getenv('USER')`"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    toc: yes
+---
+  
+
+
+```{r setup, include = FALSE}
+
+library(tidyverse)
+
+```
+
+
+## run on mustard
+```{r eval=FALSE, include=FALSE}
+setwd("/scratch/hbeale/")
+cancer_genes <- read_csv("cancer_gene_census.csv")
+# downloaded  cancer gene census from here https://cancer.sanger.ac.uk/cosmic/download
+
+v10 <- read_tsv("TumorCompendium_v10_PolyA_hugo_log2tpm_58581genes_2019-07-25.tsv")
+# downloaded from "https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv"
+
+
+# round 1:
+# th34_v10 <- v10[,c("Gene", grep("TH34", colnames(v10), value = TRUE))]
+# 
+# th34_v10_cancer_genes <- th34_v10 %>% filter(Gene %in% cancer_genes$`Gene Symbol`)
+# 
+# write_tsv(th34_v10_cancer_genes, "th34_v10_cancer_genes.tsv")
+
+# round 2 - need non pediatric samples
+clin <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv")
+set.seed(20)
+some_amls <- clin %>% filter(disease== "acute myeloid leukemia") %>%
+  na.omit %>%
+  sample_n(20)
+
+some_v10 <- v10[,c("Gene", some_amls$th_sampleid, grep("TH34|TH38|TH03", colnames(v10), value = TRUE))]
+
+some_v10_cancer_genes <- some_v10 %>% filter(Gene %in% cancer_genes$`Gene Symbol`)
+
+write_tsv(some_v10_cancer_genes, "some_v10_cancer_genes.tsv")
+
+
+
+```
+
+# round 1 - abandoned
+```{r}
+
+clin <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv")
+
+th34_v10_cancer_genes <- read_tsv("th34_v10_cancer_genes.tsv")
+
+g_th34_v10_cancer_genes <- th34_v10_cancer_genes %>%
+  gather(sample, expression, -Gene)
+
+g_th34_v10_cancer_genes_anno <- left_join(g_th34_v10_cancer_genes, clin, by=c("sample"="th_sampleid"))
+
+t5 <- g_th34_v10_cancer_genes_anno %>% dplyr::select(-site_donor_id, -site_sampleid)
+
+dim(t5)
+dim(na.omit(t5))
+
+t5_whole <- na.omit(t5)
+
+samples_to_keep <- unique(t5_whole$sample)
+
+selected_th34_v10_cancer_genes <- th34_v10_cancer_genes %>%
+  dplyr::select(Gene, samples_to_keep)
+
+selected_clin <- clin %>% 
+  filter(th_sampleid %in% colnames(selected_th34_v10_cancer_genes)) %>%
+  dplyr::select(-site_donor_id, -site_sampleid)
+
+write_tsv(selected_th34_v10_cancer_genes, "../book/selected_expression.tsv")
+write_tsv(selected_clin, "../book/selected_metadata.tsv")
+
+```
+
+
+
+# round 2 - abandoned
+```{r}
+
+clin <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv")
+
+some_v10_cancer_genes <- read_tsv("some_v10_cancer_genes.tsv")
+
+g_some_v10_cancer_genes <- some_v10_cancer_genes %>%
+  gather(sample, expression, -Gene)
+
+g_some_v10_cancer_genes_anno <- left_join(g_some_v10_cancer_genes, clin, by=c("sample"="th_sampleid"))
+
+t5 <- g_some_v10_cancer_genes_anno %>% dplyr::select(-site_donor_id, -site_sampleid)
+
+dim(t5)
+dim(na.omit(t5))
+
+t5_whole <- na.omit(t5)
+
+samples_to_keep <- unique(t5_whole$sample)
+
+selected_some_v10_cancer_genes <- some_v10_cancer_genes %>%
+  dplyr::select(Gene, samples_to_keep)
+
+g_selected_some_v10_cancer_genes <- selected_some_v10_cancer_genes %>%
+  gather(sample, expression, -Gene)
+
+selected_clin <- clin %>% 
+  filter(th_sampleid %in% colnames(selected_some_v10_cancer_genes)) %>%
+  dplyr::select(-site_donor_id, -site_sampleid) %>%
+  dplyr::rename(sample = th_sampleid)
+
+set.seed(20)
+selected_clin$site_id[sample(1:nrow(selected_clin), 20)]=NA
+selected_clin$age_at_dx[sample(1:nrow(selected_clin), 20)]=NA
+
+
+write_tsv(g_selected_some_v10_cancer_genes, "../book/selected_expression.tsv")
+write_tsv(selected_clin, "../book/selected_metadata.tsv")
+
+this_gene = "ABL1"
+write_tsv(g_selected_some_v10_cancer_genes %>% filter(Gene == this_gene), "../book/one_gene_expression.tsv")
+
+
+```

@@ -10,9 +10,11 @@ Loading the data as before, if you have not already done so:
 ```r
 library(tidyverse)
 
-geo <- read_csv("r-intro-2-files/geo.csv")
-gap <- read_csv("r-intro-2-files/gap-minder.csv")
-gap_geo <- left_join(gap, geo, by="name")
+sample_metadata <- read_tsv("selected_metadata.tsv")
+
+expression_values <- read_tsv("one_gene_expression.tsv") 
+
+expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample")) 
 ```
 
 
@@ -29,77 +31,50 @@ mean( c(1,2,3,4) )
 ## [1] 2.5
 ```
 
-We can use these on the Gapminder data.
+We can use these on the expression data.
 
 
 ```r
-gap2010 <- filter(gap_geo, year == 2010)
-sum(gap2010$population)
-```
-
-```
-## [1] 6949495061
-```
-
-```r
-mean(gap2010$life_exp)
+expression_in_AML <- filter(expression_by_disease, disease == "acute myeloid leukemia")
+sum(expression_in_AML$age_at_dx)
 ```
 
 ```
 ## [1] NA
 ```
 
+```r
+mean(expression_in_AML$age_at_dx)
+```
 
+```
+## [1] NA
+```
 ## Missing values
 
 Why did `mean` fail? The reason is that `life_exp` contains missing values (`NA`).
 
 
 ```r
-gap2010$life_exp
+expression_in_AML$age_at_dx
 ```
 
 ```
-##   [1] 56.20 76.31 76.55 82.66 60.08 76.85 75.82 73.34 81.98 80.50 69.13
-##  [12] 73.79 76.03 70.39 76.68 70.43 79.98 71.38 61.82 72.13 71.64 76.75
-##  [23] 57.06 74.19 77.08 73.86 57.89 57.73 66.12 57.25 81.29 72.45 47.48
-##  [34] 56.49 79.12 74.59 76.44 65.93 57.53 60.43 80.40 56.34 76.33 78.39
-##  [45] 79.88 77.47 79.49 63.69 73.04 74.60 76.72 70.52 74.11 60.93 61.66
-##  [56] 76.00 61.30 65.28 80.00 81.42 62.86 65.55 72.82 80.09 62.16 80.41
-##  [67] 71.34 71.25 57.99 55.65 65.49 32.11 71.58 82.61 74.52 82.03 66.20
-##  [78] 69.90 74.45 67.24 80.38 81.42 81.69 74.66 82.85 75.78 68.37 62.76
-##  [89] 60.73 70.10 80.13 78.20 68.45 63.80 73.06 79.85 46.50 60.77 76.10
-## [100]    NA 73.17 81.35 74.01 60.84 53.07 74.46 77.91 59.46 80.28 63.72
-## [111] 68.23 73.42 75.47 65.38 69.74    NA 66.18 76.36 73.55 54.48 66.84
-## [122] 58.60    NA 68.26 80.73 80.90 77.36 58.78 60.53 81.04 76.09 65.33
-## [133]    NA 77.85 58.70 74.07 77.92 69.03 76.30 79.84 79.52 73.66 69.24
-## [144] 64.59    NA 75.48 71.64 71.46    NA 68.91 75.13 64.01 74.65 73.38
-## [155] 55.05 82.69 75.52 79.45 61.71 53.13 54.27 81.94 74.42 66.29 70.32
-## [166] 46.98 81.52 82.21 76.15 79.19 69.61 59.30 76.57 71.10 58.74 69.86
-## [177] 72.56 76.89 78.21 67.94    NA 56.81 70.41 76.51 80.34 78.74 76.36
-## [188] 68.77 63.02 75.41 72.27 73.07 67.51 52.02 49.57 58.13
+##  [1] 61.00000       NA       NA  4.60000  0.72000  4.90000 21.00000
+##  [8] 76.00000       NA  7.82000  0.40000  0.44000       NA 55.00000
+## [15] 73.00000 12.91667 11.23000  8.46000 18.96000 47.00000  4.00000
+## [22]  4.00000 14.00000
 ```
 
 R will not ignore these unless we explicitly tell it to with `na.rm=TRUE`.
 
 
 ```r
-mean(gap2010$life_exp, na.rm=TRUE)
+mean(expression_in_AML$age_at_dx, na.rm=TRUE)
 ```
 
 ```
-## [1] 70.34005
-```
-
-Ideally we should also use `weighted.mean` here, to take population into account.
-
-
-```r
-weighted.mean(gap2010$life_exp, gap2010$population, na.rm=TRUE)
-```
-
-```
-## [1] 70.96192
+## [1] 22.39193
 ```
 
 `NA` is a special value. If we try to calculate with `NA`, the result is `NA`
@@ -125,12 +100,12 @@ is.na( c(1,2,NA,3) )
 ```
 
 ```r
-cleaned <- filter(gap2010, !is.na(life_exp))
-weighted.mean(cleaned$life_exp, cleaned$population)
+cleaned <- filter(expression_in_AML, !is.na(age_at_dx))
+mean(cleaned$age_at_dx)
 ```
 
 ```
-## [1] 70.96192
+## [1] 22.39193
 ```
 
 ## Grouped summaries
@@ -139,14 +114,14 @@ The `summarize` function in `dplyr` allows summary functions to be applied to da
 
 
 ```r
-summarize(gap2010, mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
+summarize(expression_by_disease, mean_age_at_dx = mean(age_at_dx, na.rm=TRUE))
 ```
 
 ```
 ## # A tibble: 1 x 1
-##   mean_life_exp
-##           <dbl>
-## 1          71.0
+##   mean_age_at_dx
+##            <dbl>
+## 1           13.1
 ```
 
 So far unremarkable, but `summarize` comes into its own when the `group_by` "adjective" is used.
@@ -154,33 +129,26 @@ So far unremarkable, but `summarize` comes into its own when the `group_by` "adj
 
 ```r
 summarize(
-    group_by(gap_geo, year), 
-    mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
+    group_by(expression_by_disease, disease), 
+    mean_age_at_dx=mean(age_at_dx,na.rm=TRUE))
 ```
 
 ```
-## # A tibble: 22 x 2
-##     year mean_life_exp
-##    <dbl>         <dbl>
-##  1  1800          30.9
-##  2  1810          31.1
-##  3  1820          31.2
-##  4  1830          31.4
-##  5  1840          31.4
-##  6  1850          31.6
-##  7  1860          30.3
-##  8  1870          31.5
-##  9  1880          32.0
-## 10  1890          32.5
-## # … with 12 more rows
+## # A tibble: 36 x 2
+##    disease                             mean_age_at_dx
+##    <chr>                                        <dbl>
+##  1 acute leukemia of ambiguous lineage           11  
+##  2 acute lymphoblastic leukemia                   6.8
+##  3 acute myeloid leukemia                        22.4
+##  4 adrenocortical carcinoma                      12  
+##  5 alveolar rhabdomyosarcoma                     17  
+##  6 atypical teratoid/rhabdoid tumor               1.4
+##  7 colon adenocarcinoma                          24  
+##  8 desmoplastic small round cell tumor           18.5
+##  9 embryonal rhabdomyosarcoma                    16  
+## 10 ependymoma                                     6.7
+## # … with 26 more rows
 ```
-
-
-### Challenge: summarizing {- .challenge}
-
-What is the total population for each year? Plot the result.
-
-Advanced: What is the total GDP for each year? For this you will first need to calculate GDP per capita times the population of each country.
 
 
 ### {-}
@@ -190,106 +158,85 @@ Advanced: What is the total GDP for each year? For this you will first need to c
 
 ```r
 result <- summarize(
-    group_by(gap_geo,year,oecd), 
-    mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
+    group_by(expression_by_disease, disease, gender), 
+    mean_age_at_dx=mean(age_at_dx,na.rm=TRUE))
+
 result
 ```
 
 ```
-## # A tibble: 44 x 3
-## # Groups:   year [22]
-##     year oecd  mean_life_exp
-##    <dbl> <lgl>         <dbl>
-##  1  1800 FALSE          29.9
-##  2  1800 TRUE           34.7
-##  3  1810 FALSE          29.9
-##  4  1810 TRUE           35.2
-##  5  1820 FALSE          30.0
-##  6  1820 TRUE           35.9
-##  7  1830 FALSE          30.0
-##  8  1830 TRUE           36.2
-##  9  1840 FALSE          30.0
-## 10  1840 TRUE           36.2
-## # … with 34 more rows
+## # A tibble: 52 x 3
+## # Groups:   disease [36]
+##    disease                             gender       mean_age_at_dx
+##    <chr>                               <chr>                 <dbl>
+##  1 acute leukemia of ambiguous lineage female                 11  
+##  2 acute lymphoblastic leukemia        female                NaN  
+##  3 acute lymphoblastic leukemia        male                    6.8
+##  4 acute myeloid leukemia              female                 24.7
+##  5 acute myeloid leukemia              male                   18.4
+##  6 adrenocortical carcinoma            not reported           12  
+##  7 alveolar rhabdomyosarcoma           female                 17  
+##  8 atypical teratoid/rhabdoid tumor    male                    1.4
+##  9 colon adenocarcinoma                female                 24  
+## 10 desmoplastic small round cell tumor male                   18.5
+## # … with 42 more rows
 ```
-
-```r
-ggplot(result, aes(x=year,y=mean_life_exp,color=oecd)) + geom_line()
-```
-
-<img src="summarizing_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
-
-A similar plot could be produced using `geom_smooth`. Differences here are that we have full control over the summarization process so we were able to use the exact summarization method we want (`weighted.mean` for each year), and we have access to the resulting numeric data as well as the plot. We have reduced a large data set down to a smaller one that distills out one of the stories present in this data. However the earlier visualization and exploration activity using `ggplot2` was essential. It gave us an idea of what sort of variability was present in the data, and any unexpected issues the data might have.
 
 
 ## t-test
 
 We will finish this section by demonstrating a t-test. The main point of this section is to give a flavour of how statistical tests work in R, rather than the details of what a t-test does.
 
-Has life expectancy increased from 2000 to 2010?
+does age of diagnosis differ in males and females with AML?
 
 
 ```r
-gap2000 <- filter(gap_geo, year == 2000)
-gap2010 <- filter(gap_geo, year == 2010)
+expr_male <- filter(expression_in_AML, gender == "male")
+expr_female <- filter(expression_in_AML, gender == "female")
 
-t.test(gap2010$life_exp, gap2000$life_exp)
+t.test(expr_male$age_at_dx, expr_female$age_at_dx)
 ```
 
 ```
 ## 
 ## 	Welch Two Sample t-test
 ## 
-## data:  gap2010$life_exp and gap2000$life_exp
-## t = 3.0341, df = 374.98, p-value = 0.002581
+## data:  expr_male$age_at_dx and expr_female$age_at_dx
+## t = -0.52009, df = 13.552, p-value = 0.6114
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  1.023455 4.792947
+##  -32.81913  20.04079
 ## sample estimates:
 ## mean of x mean of y 
-##  70.34005  67.43185
+##  18.35667  24.74583
 ```
 
-Statistical routines often have many ways to tweak the details of their operation. These are specified by further arguments to the function call, to override the default behaviour. By default, `t.test` performs an unpaired t-test, but these are repeated observations of the same countries. We can specify `paired=TRUE` to `t.test` to perform a paired sample t-test and gain some statistical power. Check this by looking at the help page with `?t.test`.
-
-It's important to first check that both data frames are in the same order.
-
-
-```r
-all(gap2000$name == gap2010$name)
-```
-
-```
-## [1] TRUE
-```
-
-```r
-t.test(gap2010$life_exp, gap2000$life_exp, paired=TRUE)
-```
-
-```
-## 
-## 	Paired t-test
-## 
-## data:  gap2010$life_exp and gap2000$life_exp
-## t = 13.371, df = 188, p-value < 2.2e-16
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  2.479153 3.337249
-## sample estimates:
-## mean of the differences 
-##                2.908201
-```
+Statistical routines often have many ways to tweak the details of their operation. These are specified by further arguments to the function call, to override the default behaviour. By default, `t.test` performs an unpaired t-test. If this was a paired data, we could specify `paired=TRUE` to `t.test` to perform a paired sample t-test and gain some statistical power. Check this by looking at the help page with `?t.test`.
 
 When performing a statistical test, it's good practice to visualize the data to make sure there is nothing funny going on.
 
 
 ```r
-plot(gap2000$life_exp, gap2010$life_exp)
-abline(0,1)
+ggplot(expression_in_AML, aes(x=gender, y=age_at_dx)) + 
+  geom_boxplot()
 ```
 
-<img src="summarizing_files/figure-html/unnamed-chunk-15-1.png" width="336" style="display: block; margin: auto;" />
+```
+## Warning: Removed 4 rows containing non-finite values (stat_boxplot).
+```
+
+<img src="summarizing_files/figure-html/unnamed-chunk-13-1.png" width="336" style="display: block; margin: auto;" />
+
+```r
+ggplot(expression_in_AML, aes(x=gender, y=age_at_dx)) + 
+  geom_jitter()
+```
+
+```
+## Warning: Removed 4 rows containing missing values (geom_point).
+```
+
+<img src="summarizing_files/figure-html/unnamed-chunk-13-2.png" width="336" style="display: block; margin: auto;" />
 
 This is a visual confirmation of the t-test result. If there were no difference between the years then points would lie approximately evenly above and below the diagonal line, which is clearly not the case. However the outlier may warrant investigation.
 
@@ -319,7 +266,7 @@ Let's look at the result of a t-test:
 
 
 ```r
-result <- t.test(gap2010$life_exp, gap2000$life_exp, paired=TRUE)
+result <- t.test(expr_male$age_at_dx, expr_female$age_at_dx)
 
 class(result)
 ```
@@ -350,7 +297,7 @@ result$p.value
 ```
 
 ```
-## [1] 4.301261e-29
+## [1] 0.6113911
 ```
 
 In R, a t-test is just another function returning just another type of data, so it can also be a building block. The value it returns is a special type of vector called a "list", but with a public face that presents itself nicely. This is a common pattern in R. Besides printing to the console nicely, this public face may alter the behaviour of generic functions such as `plot` and `summary`.

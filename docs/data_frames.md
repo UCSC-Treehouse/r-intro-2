@@ -45,18 +45,16 @@ R is a language with mini-languages within it that solve specific problem domain
 We will use the `read_tsv` function from `readr` to load a data set. (See also `read.csv` in base R.) TSV stands for Tab Separated Values, and is a text format used to store tabular data. The first few lines of the file we are loading are shown below. Conventionally the first line contains column headings.
 
 ```
-th_sampleid    disease                             age_at_dx
-TH03_0010_S01  acute leukemia of ambiguous lineage        11
-TH03_0010_S02  acute leukemia of ambiguous lineage        11
-THR33_1000_S01 medulloblastoma                             7
-THR33_1001_S01 medulloblastoma                             5
-THR33_1002_S01 medulloblastoma                             5
-THR33_1003_S01 medulloblastoma                             3
+th_sampleid   disease                             age_at_dx
+TH34_1150_S02 Ewing sarcoma                             16   
+TH34_1162_S01 Ewing sarcoma                             15   
+TH34_1163_S01 embryonal rhabdomyosarcoma                18   
+TH34_1179_S01 colon adenocarcinoma                      24   
 ```
 
 
 ```r
-sample_metadata <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv")
+sample_metadata <- read_tsv("selected_metadata.tsv")
 ```
 
 ```
@@ -66,12 +64,9 @@ sample_metadata <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25_clean
 ##   disease = col_character(),
 ##   age_at_dx = col_double(),
 ##   pedaya = col_character(),
-##   gender = col_character()
+##   gender = col_character(),
+##   site_id = col_character()
 ## )
-```
-
-```r
-# downloaded from "https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv"
 ```
 
 `read_tsv` has guessed the type of data each column holds:
@@ -141,7 +136,7 @@ nrow(sample_metadata)
 ```
 
 ```
-## [1] 11610
+## [1] 134
 ```
 
 ```r
@@ -149,7 +144,7 @@ ncol(sample_metadata)
 ```
 
 ```
-## [1] 5
+## [1] 6
 ```
 
 ```r
@@ -157,7 +152,7 @@ colnames(sample_metadata)
 ```
 
 ```
-## [1] "sample"    "disease"   "age_at_dx" "pedaya"    "gender"
+## [1] "sample"    "disease"   "age_at_dx" "pedaya"    "gender"    "site_id"
 ```
 
 ```r
@@ -165,19 +160,21 @@ summary(sample_metadata)
 ```
 
 ```
-##     sample            disease            age_at_dx       pedaya         
-##  Length:11610       Length:11610       Min.   : 0.0   Length:11610      
-##  Class :character   Class :character   1st Qu.:39.0   Class :character  
-##  Mode  :character   Mode  :character   Median :57.0   Mode  :character  
-##                                        Mean   :50.7                     
-##                                        3rd Qu.:68.0                     
-##                                        Max.   :90.0                     
-##     gender         
-##  Length:11610      
-##  Class :character  
-##  Mode  :character  
-##                    
-##                    
+##     sample            disease            age_at_dx         pedaya         
+##  Length:134         Length:134         Min.   : 0.200   Length:134        
+##  Class :character   Class :character   1st Qu.: 4.675   Class :character  
+##  Mode  :character   Mode  :character   Median :11.615   Mode  :character  
+##                                        Mean   :13.061                     
+##                                        3rd Qu.:16.000                     
+##                                        Max.   :76.000                     
+##                                        NA's   :20                         
+##     gender            site_id         
+##  Length:134         Length:134        
+##  Class :character   Class :character  
+##  Mode  :character   Mode  :character  
+##                                       
+##                                       
+##                                       
 ## 
 ```
 
@@ -193,9 +190,9 @@ sample_metadata[4,2]
 
 ```
 ## # A tibble: 1 x 1
-##   disease        
-##   <chr>          
-## 1 medulloblastoma
+##   disease       
+##   <chr>         
+## 1 hepatoblastoma
 ```
 
 Note that while this is a single value, it is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.) More on this in a moment.
@@ -209,9 +206,9 @@ sample_metadata[4,"disease"]
 
 ```
 ## # A tibble: 1 x 1
-##   disease        
-##   <chr>          
-## 1 medulloblastoma
+##   disease       
+##   <chr>         
+## 1 hepatoblastoma
 ```
 
 The column or row may be omitted, thereby retrieving the entire row or column.
@@ -222,10 +219,10 @@ sample_metadata[4,]
 ```
 
 ```
-## # A tibble: 1 x 5
-##   sample         disease         age_at_dx pedaya              gender
-##   <chr>          <chr>               <dbl> <chr>               <chr> 
-## 1 THR33_1001_S01 medulloblastoma         5 Yes, age < 30 years male
+## # A tibble: 1 x 6
+##   sample       disease       age_at_dx pedaya            gender     site_id
+##   <chr>        <chr>             <dbl> <chr>             <chr>      <chr>  
+## 1 TH03_0104_S… hepatoblasto…      0.33 Yes, age < 30 ye… not repor… TH03
 ```
 
 ```r
@@ -233,20 +230,20 @@ sample_metadata[,"disease"]
 ```
 
 ```
-## # A tibble: 11,610 x 1
-##    disease                            
-##    <chr>                              
-##  1 acute leukemia of ambiguous lineage
-##  2 acute leukemia of ambiguous lineage
-##  3 medulloblastoma                    
-##  4 medulloblastoma                    
-##  5 medulloblastoma                    
-##  6 medulloblastoma                    
-##  7 medulloblastoma                    
-##  8 medulloblastoma                    
-##  9 medulloblastoma                    
-## 10 medulloblastoma                    
-## # … with 11,600 more rows
+## # A tibble: 134 x 1
+##    disease                                 
+##    <chr>                                   
+##  1 acute leukemia of ambiguous lineage     
+##  2 acute leukemia of ambiguous lineage     
+##  3 spindle cell/sclerosing rhabdomyosarcoma
+##  4 hepatoblastoma                          
+##  5 spindle cell/sclerosing rhabdomyosarcoma
+##  6 Ewing sarcoma                           
+##  7 hepatoblastoma                          
+##  8 acute lymphoblastic leukemia            
+##  9 synovial sarcoma                        
+## 10 synovial sarcoma                        
+## # … with 124 more rows
 ```
 
 Multiple rows or columns may be retrieved using a vector.
@@ -258,12 +255,12 @@ sample_metadata[rows_wanted,]
 ```
 
 ```
-## # A tibble: 3 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   <chr>        <chr>                           <dbl> <chr>           <chr> 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age < 30 … female
-## 2 THR33_1000_… medulloblastoma                     7 Yes, age < 30 … female
-## 3 THR33_1002_… medulloblastoma                     5 Yes, age < 30 … female
+## # A tibble: 3 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   <chr>      <chr>                       <dbl> <chr>       <chr>    <chr>  
+## 1 TH03_0010… acute leukemia of ambi…        NA Yes, age <… female   TH03   
+## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age <… not rep… <NA>   
+## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age <… not rep… TH03
 ```
 
 Vector indexing can also be written on a single line.
@@ -274,12 +271,12 @@ sample_metadata[c(1,3,5),]
 ```
 
 ```
-## # A tibble: 3 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   <chr>        <chr>                           <dbl> <chr>           <chr> 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age < 30 … female
-## 2 THR33_1000_… medulloblastoma                     7 Yes, age < 30 … female
-## 3 THR33_1002_… medulloblastoma                     5 Yes, age < 30 … female
+## # A tibble: 3 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   <chr>      <chr>                       <dbl> <chr>       <chr>    <chr>  
+## 1 TH03_0010… acute leukemia of ambi…        NA Yes, age <… female   TH03   
+## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age <… not rep… <NA>   
+## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age <… not rep… TH03
 ```
 
 ```r
@@ -287,16 +284,16 @@ sample_metadata[1:7,]
 ```
 
 ```
-## # A tibble: 7 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   <chr>        <chr>                           <dbl> <chr>           <chr> 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age < 30 … female
-## 2 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age < 30 … female
-## 3 THR33_1000_… medulloblastoma                     7 Yes, age < 30 … female
-## 4 THR33_1001_… medulloblastoma                     5 Yes, age < 30 … male  
-## 5 THR33_1002_… medulloblastoma                     5 Yes, age < 30 … female
-## 6 THR33_1003_… medulloblastoma                     3 Yes, age < 30 … female
-## 7 THR33_1004_… medulloblastoma                    26 Yes, age < 30 … male
+## # A tibble: 7 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   <chr>      <chr>                       <dbl> <chr>       <chr>    <chr>  
+## 1 TH03_0010… acute leukemia of ambi…     NA    Yes, age <… female   TH03   
+## 2 TH03_0010… acute leukemia of ambi…     11    Yes, age <… female   TH03   
+## 3 TH03_0103… spindle cell/sclerosin…      8    Yes, age <… not rep… <NA>   
+## 4 TH03_0104… hepatoblastoma               0.33 Yes, age <… not rep… TH03   
+## 5 TH03_0105… spindle cell/sclerosin…     17    Yes, age <… not rep… TH03   
+## 6 TH03_0106… Ewing sarcoma               15    Yes, age <… not rep… TH03   
+## 7 TH03_0107… hepatoblastoma               1    Yes, age <… not rep… TH03
 ```
 
 
@@ -312,12 +309,12 @@ head( sample_metadata$disease )
 ```
 
 ```
-## [1] "acute leukemia of ambiguous lineage"
-## [2] "acute leukemia of ambiguous lineage"
-## [3] "medulloblastoma"                    
-## [4] "medulloblastoma"                    
-## [5] "medulloblastoma"                    
-## [6] "medulloblastoma"
+## [1] "acute leukemia of ambiguous lineage"     
+## [2] "acute leukemia of ambiguous lineage"     
+## [3] "spindle cell/sclerosing rhabdomyosarcoma"
+## [4] "hepatoblastoma"                          
+## [5] "spindle cell/sclerosing rhabdomyosarcoma"
+## [6] "Ewing sarcoma"
 ```
 
 ```r
@@ -325,12 +322,12 @@ head( sample_metadata[["disease"]] )
 ```
 
 ```
-## [1] "acute leukemia of ambiguous lineage"
-## [2] "acute leukemia of ambiguous lineage"
-## [3] "medulloblastoma"                    
-## [4] "medulloblastoma"                    
-## [5] "medulloblastoma"                    
-## [6] "medulloblastoma"
+## [1] "acute leukemia of ambiguous lineage"     
+## [2] "acute leukemia of ambiguous lineage"     
+## [3] "spindle cell/sclerosing rhabdomyosarcoma"
+## [4] "hepatoblastoma"                          
+## [5] "spindle cell/sclerosing rhabdomyosarcoma"
+## [6] "Ewing sarcoma"
 ```
 
 To get the "disease" value of the 4th row as above, but unwrapped, we can use:
@@ -341,7 +338,7 @@ sample_metadata$disease[4]
 ```
 
 ```
-## [1] "medulloblastoma"
+## [1] "hepatoblastoma"
 ```
 
 
@@ -353,21 +350,21 @@ We will first do this in a slightly verbose way in order to understand it, then 
 
 
 ```r
-is_glioma <- sample_metadata$disease == "glioma"
+is_ewing_sarcoma <- sample_metadata$disease == "Ewing sarcoma"
 
-head(is_glioma)
+head(is_ewing_sarcoma)
 ```
 
 ```
-## [1] FALSE FALSE FALSE FALSE FALSE FALSE
+## [1] FALSE FALSE FALSE FALSE FALSE  TRUE
 ```
 
 ```r
-sum(is_glioma)
+sum(is_ewing_sarcoma)
 ```
 
 ```
-## [1] 702
+## [1] 7
 ```
 
 `sum` treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.
@@ -376,24 +373,20 @@ We can use this logical vector to get the glioma samples from `sample_metadata`:
 
 
 ```r
-sample_metadata[is_glioma,]
+sample_metadata[is_ewing_sarcoma,]
 ```
 
 ```
-## # A tibble: 702 x 5
-##    sample         disease age_at_dx pedaya              gender      
-##    <chr>          <chr>       <dbl> <chr>               <chr>       
-##  1 TH03_0117_S01  glioma       0.9  Yes, age < 30 years not reported
-##  2 TH06_1175_S01  glioma      17    Yes, age < 30 years female      
-##  3 TH38_1311_S02  glioma      13    Yes, age < 30 years male        
-##  4 TH38_1346_S02  glioma      11    Yes, age < 30 years female      
-##  5 TH34_1445_S02  glioma       7    Yes, age < 30 years female      
-##  6 THR24_1924_S01 glioma       5.33 Yes, age < 30 years female      
-##  7 THR24_1925_S01 glioma      15.0  Yes, age < 30 years female      
-##  8 THR24_1925_S02 glioma      15.0  Yes, age < 30 years female      
-##  9 THR24_1926_S01 glioma      13.1  Yes, age < 30 years male        
-## 10 THR24_1926_S02 glioma      13.1  Yes, age < 30 years male        
-## # … with 692 more rows
+## # A tibble: 7 x 6
+##   sample       disease       age_at_dx pedaya           gender      site_id
+##   <chr>        <chr>             <dbl> <chr>            <chr>       <chr>  
+## 1 TH03_0106_S… Ewing sarcoma        15 Yes, age < 30 y… not report… TH03   
+## 2 TH34_1150_S… Ewing sarcoma        16 Yes, age < 30 y… male        <NA>   
+## 3 TH34_1150_S… Ewing sarcoma        16 Yes, age < 30 y… male        <NA>   
+## 4 TH34_1162_S… Ewing sarcoma        15 Yes, age < 30 y… female      <NA>   
+## 5 TH34_1240_S… Ewing sarcoma        16 Yes, age < 30 y… male        TH34   
+## 6 TH03_0014_S… Ewing sarcoma         4 Yes, age < 30 y… male        TH03   
+## 7 TH03_0157_S… Ewing sarcoma        60 No               not report… TH03
 ```
 
 Comparison operators available are:
@@ -415,63 +408,56 @@ The `age_at_dx` column of `sample_metadata` tells the age at which the person wa
 
 
 ```r
-senior_gliomas <- is_glioma & sample_metadata$age_at_dx >65
+ewing_sarcoma_in_male <- is_ewing_sarcoma & sample_metadata$gender == "male"
 
-sample_metadata[senior_gliomas,]
+sample_metadata[ewing_sarcoma_in_male,]
 ```
 
 ```
-## # A tibble: 33 x 5
-##    sample          disease age_at_dx pedaya gender
-##    <chr>           <chr>       <dbl> <chr>  <chr> 
-##  1 TCGA-CS-4941-01 glioma         67 No     male  
-##  2 TCGA-DB-A64L-01 glioma         67 No     female
-##  3 TCGA-DH-A669-01 glioma         70 No     male  
-##  4 TCGA-DH-A669-02 glioma         70 No     male  
-##  5 TCGA-DU-6393-01 glioma         66 No     male  
-##  6 TCGA-DU-6400-01 glioma         66 No     female
-##  7 TCGA-DU-7012-01 glioma         74 No     female
-##  8 TCGA-DU-7292-01 glioma         69 No     male  
-##  9 TCGA-DU-7306-01 glioma         67 No     male  
-## 10 TCGA-DU-8167-01 glioma         69 No     female
-## # … with 23 more rows
+## # A tibble: 4 x 6
+##   sample        disease       age_at_dx pedaya              gender site_id
+##   <chr>         <chr>             <dbl> <chr>               <chr>  <chr>  
+## 1 TH34_1150_S01 Ewing sarcoma        16 Yes, age < 30 years male   <NA>   
+## 2 TH34_1150_S02 Ewing sarcoma        16 Yes, age < 30 years male   <NA>   
+## 3 TH34_1240_S01 Ewing sarcoma        16 Yes, age < 30 years male   TH34   
+## 4 TH03_0014_S01 Ewing sarcoma         4 Yes, age < 30 years male   TH03
 ```
 
-`senior_gliomas` seems like it should be kept within our `sample_metadata` data frame for future use. We can add it as a new column of the data frame with:
+`ewing_sarcoma_in_male` seems like it should be kept within our `sample_metadata` data frame for future use. We can add it as a new column of the data frame with:
 
 
 ```r
-sample_metadata$senior_glioma <- senior_gliomas
+sample_metadata$ewing_sarcoma_in_male <- ewing_sarcoma_in_male
 
 sample_metadata
 ```
 
 ```
-## # A tibble: 11,610 x 6
-##    sample     disease            age_at_dx pedaya      gender senior_glioma
-##    <chr>      <chr>                  <dbl> <chr>       <chr>  <lgl>        
-##  1 TH03_0010… acute leukemia of…        11 Yes, age <… female FALSE        
-##  2 TH03_0010… acute leukemia of…        11 Yes, age <… female FALSE        
-##  3 THR33_100… medulloblastoma            7 Yes, age <… female FALSE        
-##  4 THR33_100… medulloblastoma            5 Yes, age <… male   FALSE        
-##  5 THR33_100… medulloblastoma            5 Yes, age <… female FALSE        
-##  6 THR33_100… medulloblastoma            3 Yes, age <… female FALSE        
-##  7 THR33_100… medulloblastoma           26 Yes, age <… male   FALSE        
-##  8 THR33_100… medulloblastoma           10 Yes, age <… male   FALSE        
-##  9 THR33_100… medulloblastoma            3 Yes, age <… male   FALSE        
-## 10 THR33_100… medulloblastoma           27 Yes, age <… male   FALSE        
-## # … with 11,600 more rows
+## # A tibble: 134 x 7
+##    sample  disease      age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
+##    <chr>   <chr>            <dbl> <chr>    <chr>   <chr>   <lgl>           
+##  1 TH03_0… acute leuke…     NA    Yes, ag… female  TH03    FALSE           
+##  2 TH03_0… acute leuke…     11    Yes, ag… female  TH03    FALSE           
+##  3 TH03_0… spindle cel…      8    Yes, ag… not re… <NA>    FALSE           
+##  4 TH03_0… hepatoblast…      0.33 Yes, ag… not re… TH03    FALSE           
+##  5 TH03_0… spindle cel…     17    Yes, ag… not re… TH03    FALSE           
+##  6 TH03_0… Ewing sarco…     15    Yes, ag… not re… TH03    FALSE           
+##  7 TH03_0… hepatoblast…      1    Yes, ag… not re… TH03    FALSE           
+##  8 TH03_0… acute lymph…      0.2  Yes, ag… male    TH03    FALSE           
+##  9 TH03_0… synovial sa…     NA    Yes, ag… male    TH03    FALSE           
+## 10 TH03_0… synovial sa…     17    Yes, ag… male    TH03    FALSE           
+## # … with 124 more rows
 ```
 
 
 ### Challenge: logical indexing {- .challenge}
 
 
-1. Which samples are gliomas from seniors (over 65)?
+1. Which samples are gliomas?
 
-2. Which samples are in neither glioma nor from seniors?
+2. Which samples are in neither ewing sarcoma nor from males?
 
-2. How many samples are from seniors?
+2. How many samples are from people over 65?
 
 
 ### A `dplyr` shorthand
@@ -480,24 +466,17 @@ The above method is a little laborious. We have to keep mentioning the name of t
 
 
 ```r
-filter(sample_metadata, sample_metadata$age_at_dx >65 & disease == "glioma")
+filter(sample_metadata, sample_metadata$gender == "male" & disease == "Ewing sarcoma")
 ```
 
 ```
-## # A tibble: 33 x 6
-##    sample          disease age_at_dx pedaya gender senior_glioma
-##    <chr>           <chr>       <dbl> <chr>  <chr>  <lgl>        
-##  1 TCGA-CS-4941-01 glioma         67 No     male   TRUE         
-##  2 TCGA-DB-A64L-01 glioma         67 No     female TRUE         
-##  3 TCGA-DH-A669-01 glioma         70 No     male   TRUE         
-##  4 TCGA-DH-A669-02 glioma         70 No     male   TRUE         
-##  5 TCGA-DU-6393-01 glioma         66 No     male   TRUE         
-##  6 TCGA-DU-6400-01 glioma         66 No     female TRUE         
-##  7 TCGA-DU-7012-01 glioma         74 No     female TRUE         
-##  8 TCGA-DU-7292-01 glioma         69 No     male   TRUE         
-##  9 TCGA-DU-7306-01 glioma         67 No     male   TRUE         
-## 10 TCGA-DU-8167-01 glioma         69 No     female TRUE         
-## # … with 23 more rows
+## # A tibble: 4 x 7
+##   sample    disease   age_at_dx pedaya     gender site_id ewing_sarcoma_in…
+##   <chr>     <chr>         <dbl> <chr>      <chr>  <chr>   <lgl>            
+## 1 TH34_115… Ewing sa…        16 Yes, age … male   <NA>    TRUE             
+## 2 TH34_115… Ewing sa…        16 Yes, age … male   <NA>    TRUE             
+## 3 TH34_124… Ewing sa…        16 Yes, age … male   TH34    TRUE             
+## 4 TH03_001… Ewing sa…         4 Yes, age … male   TH03    TRUE
 ```
 
 In the second argument, we are able to refer to columns of the data frame as though they were variables. The code is beautiful, but also opaque. It's important to understand that under the hood we are creating and combining logical vectors.
@@ -514,39 +493,38 @@ count(sample_metadata, pedaya)
 ```
 
 ```
-## # A tibble: 3 x 2
+## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   <chr>               <int>
-## 1 No                   9408
-## 2 Unknown                 1
-## 3 Yes, age < 30 years  2201
+## 1 No                      8
+## 2 Yes, age < 30 years   126
 ```
 
 ```r
-count(sample_metadata, senior_glioma)
+count(sample_metadata, ewing_sarcoma_in_male)
 ```
 
 ```
 ## # A tibble: 2 x 2
-##   senior_glioma     n
-##   <lgl>         <int>
-## 1 FALSE         11577
-## 2 TRUE             33
+##   ewing_sarcoma_in_male     n
+##   <lgl>                 <int>
+## 1 FALSE                   130
+## 2 TRUE                      4
 ```
 
-One annoyance here is that the different categories in `pedaya` aren't in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
+Maybe you want the different categories in `pedaya` to be in a different order, with "Yes" coming first. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
 
 Any sort of vector can be converted to a factor using the `factor` function. This function defaults to placing the levels in alphabetical order, but takes a `levels` argument that can override this.
 
 
 ```r
-head( factor(sample_metadata$pedaya, levels=c("Yes, age < 30 years","No","Unknown")) )
+head( factor(sample_metadata$pedaya, levels=c("Yes, age < 30 years","No")) )
 ```
 
 ```
 ## [1] Yes, age < 30 years Yes, age < 30 years Yes, age < 30 years
 ## [4] Yes, age < 30 years Yes, age < 30 years Yes, age < 30 years
-## Levels: Yes, age < 30 years No Unknown
+## Levels: Yes, age < 30 years No
 ```
 
 We should modify the `pedaya` column of the `sample_metadata` table in order to use this:
@@ -554,7 +532,7 @@ We should modify the `pedaya` column of the `sample_metadata` table in order to 
 
 ```r
 sample_metadata$pedaya <- factor(sample_metadata$pedaya,
-                                 c("Yes, age < 30 years","No","Unknown"))
+                                 c("Yes, age < 30 years","No"))
 ```
 
 `count` now produces the desired order of output:
@@ -565,12 +543,11 @@ count(sample_metadata, pedaya)
 ```
 
 ```
-## # A tibble: 3 x 2
+## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   <fct>               <int>
-## 1 Yes, age < 30 years  2201
-## 2 No                   9408
-## 3 Unknown                 1
+## 1 Yes, age < 30 years   126
+## 2 No                      8
 ```
 
 
@@ -578,17 +555,16 @@ We can count two categorical columns at once.
 
 
 ```r
-count(sample_metadata, pedaya, senior_glioma)
+count(sample_metadata, pedaya, ewing_sarcoma_in_male)
 ```
 
 ```
-## # A tibble: 4 x 3
-##   pedaya              senior_glioma     n
-##   <fct>               <lgl>         <int>
-## 1 Yes, age < 30 years FALSE          2201
-## 2 No                  FALSE          9375
-## 3 No                  TRUE             33
-## 4 Unknown             FALSE             1
+## # A tibble: 3 x 3
+##   pedaya              ewing_sarcoma_in_male     n
+##   <fct>               <lgl>                 <int>
+## 1 Yes, age < 30 years FALSE                   122
+## 2 Yes, age < 30 years TRUE                      4
+## 3 No                  FALSE                     8
 ```
 
 
@@ -607,20 +583,20 @@ arrange(sample_metadata, age_at_dx)
 ```
 
 ```
-## # A tibble: 11,610 x 6
-##    sample     disease            age_at_dx pedaya      gender senior_glioma
-##    <chr>      <chr>                  <dbl> <fct>       <chr>  <lgl>        
-##  1 THR08_016… acute lymphoblast…         0 Yes, age <… unkno… FALSE        
-##  2 THR08_016… acute lymphoblast…         0 Yes, age <… unkno… FALSE        
-##  3 TH06_0613… atypical teratoid…         0 Yes, age <… male   FALSE        
-##  4 TH06_0613… atypical teratoid…         0 Yes, age <… male   FALSE        
-##  5 TH06_0627… glioblastoma mult…         0 Yes, age <… female FALSE        
-##  6 THR29_074… rhabdomyosarcoma           0 Yes, age <… female FALSE        
-##  7 THR29_074… embryonal rhabdom…         0 Yes, age <… male   FALSE        
-##  8 THR29_075… alveolar rhabdomy…         0 Yes, age <… male   FALSE        
-##  9 THR29_075… alveolar rhabdomy…         0 Yes, age <… male   FALSE        
-## 10 THR29_078… embryonal rhabdom…         0 Yes, age <… female FALSE        
-## # … with 11,600 more rows
+## # A tibble: 134 x 7
+##    sample   disease     age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
+##    <chr>    <chr>           <dbl> <fct>    <chr>   <chr>   <lgl>           
+##  1 TH03_00… acute lymp…      0.2  Yes, ag… male    TH03    FALSE           
+##  2 TH03_01… hepatoblas…      0.33 Yes, ag… not re… TH03    FALSE           
+##  3 TARGET-… acute myel…      0.4  Yes, ag… female  TARGET  FALSE           
+##  4 TARGET-… acute myel…      0.44 Yes, ag… male    TARGET  FALSE           
+##  5 TARGET-… acute myel…      0.72 Yes, ag… male    TARGET  FALSE           
+##  6 TH34_13… juvenile m…      0.75 Yes, ag… female  <NA>    FALSE           
+##  7 TH03_01… glioma           0.9  Yes, ag… not re… TH03    FALSE           
+##  8 TH34_13… myoepithel…      0.96 Yes, ag… male    TH34    FALSE           
+##  9 TH03_01… hepatoblas…      1    Yes, ag… not re… TH03    FALSE           
+## 10 TH38_14… sarcoma          1.33 Yes, ag… male    TH38    FALSE           
+## # … with 124 more rows
 ```
 
 Numeric columns are sorted in numeric order. Character columns will be sorted in alphabetical order. Factor columns are sorted in order of their levels. The `desc` helper function can be used to sort in descending order.
@@ -631,20 +607,20 @@ arrange(sample_metadata, desc(disease))
 ```
 
 ```
-## # A tibble: 11,610 x 6
-##    sample          disease    age_at_dx pedaya         gender senior_glioma
-##    <chr>           <chr>          <dbl> <fct>          <chr>  <lgl>        
-##  1 TH03_0012_S01   wilms tum…     18    Yes, age < 30… male   FALSE        
-##  2 TH03_0012_S02   wilms tum…     18    Yes, age < 30… male   FALSE        
-##  3 TH03_0144_S01   wilms tum…      6    Yes, age < 30… male   FALSE        
-##  4 TH27_2189_S01   wilms tum…      5    Yes, age < 30… female FALSE        
-##  5 TH06_0632_S01   wilms tum…      4    Yes, age < 30… female FALSE        
-##  6 TARGET-50-CAAA… wilms tum…      6.15 Yes, age < 30… female FALSE        
-##  7 TARGET-50-CAAA… wilms tum…      4.68 Yes, age < 30… female FALSE        
-##  8 TARGET-50-CAAA… wilms tum…      1.1  Yes, age < 30… female FALSE        
-##  9 TARGET-50-CAAA… wilms tum…      4.38 Yes, age < 30… female FALSE        
-## 10 TARGET-50-CAAA… wilms tum…      7.53 Yes, age < 30… female FALSE        
-## # … with 11,600 more rows
+## # A tibble: 134 x 7
+##    sample   disease      age_at_dx pedaya   gender site_id ewing_sarcoma_i…
+##    <chr>    <chr>            <dbl> <fct>    <chr>  <chr>   <lgl>           
+##  1 TH03_00… wilms tumor         18 Yes, ag… male   TH03    FALSE           
+##  2 TH03_00… wilms tumor         18 Yes, ag… male   TH03    FALSE           
+##  3 TH03_01… wilms tumor          6 Yes, ag… male   TH03    FALSE           
+##  4 TH34_14… undifferent…        16 Yes, ag… female TH34    FALSE           
+##  5 TH03_01… undifferent…         9 Yes, ag… male   TH03    FALSE           
+##  6 TH03_00… undifferent…        NA Yes, ag… not r… TH03    FALSE           
+##  7 TH03_00… undifferent…        17 Yes, ag… not r… TH03    FALSE           
+##  8 TH03_00… undifferent…        17 Yes, ag… not r… TH03    FALSE           
+##  9 TH03_00… undifferent…        12 Yes, ag… male   TH03    FALSE           
+## 10 TH03_00… undifferent…        12 Yes, ag… male   TH03    FALSE           
+## # … with 124 more rows
 ```
 
 
@@ -654,26 +630,7 @@ Let's move on to a larger data set. These are some gene expression values.
 
 
 ```r
-expression_values <- read_tsv("expression_data_for_MAP2K1_HRAS_v9_.tsv") %>%
-  gather(sample, expression, -Gene)
-expression_values
-```
-
-```
-## # A tibble: 22,908 x 3
-##    Gene   sample         expression
-##    <chr>  <chr>               <dbl>
-##  1 HRAS   THR15_0330_S01       5.77
-##  2 MAP2K1 THR15_0330_S01       4.53
-##  3 HRAS   THR29_0776_S01       6.99
-##  4 MAP2K1 THR29_0776_S01       4.51
-##  5 HRAS   THR11_0247_S01       6.10
-##  6 MAP2K1 THR11_0247_S01       5.75
-##  7 HRAS   THR08_0162_S01       4.48
-##  8 MAP2K1 THR08_0162_S01       6.42
-##  9 HRAS   TH27_1241_S01        6.41
-## 10 MAP2K1 TH27_1241_S01        5.39
-## # … with 22,898 more rows
+expression_values <- read_tsv("one_gene_expression.tsv") 
 ```
 
 ### Quiz {.challenge -}
@@ -691,20 +648,20 @@ expression_by_disease
 ```
 
 ```
-## # A tibble: 22,908 x 8
-##    Gene   sample  expression disease  age_at_dx pedaya gender senior_glioma
-##    <chr>  <chr>        <dbl> <chr>        <dbl> <fct>  <chr>  <lgl>        
-##  1 HRAS   THR15_…       5.77 <NA>          NA   <NA>   <NA>   NA           
-##  2 MAP2K1 THR15_…       4.53 <NA>          NA   <NA>   <NA>   NA           
-##  3 HRAS   THR29_…       6.99 rhabdom…      20   Yes, … male   FALSE        
-##  4 MAP2K1 THR29_…       4.51 rhabdom…      20   Yes, … male   FALSE        
-##  5 HRAS   THR11_…       6.10 glioma        13   Yes, … male   FALSE        
-##  6 MAP2K1 THR11_…       5.75 glioma        13   Yes, … male   FALSE        
-##  7 HRAS   THR08_…       4.48 acute l…       0.6 Yes, … unkno… FALSE        
-##  8 MAP2K1 THR08_…       6.42 acute l…       0.6 Yes, … unkno… FALSE        
-##  9 HRAS   TH27_1…       6.41 <NA>          NA   <NA>   <NA>   NA           
-## 10 MAP2K1 TH27_1…       5.39 <NA>          NA   <NA>   <NA>   NA           
-## # … with 22,898 more rows
+## # A tibble: 134 x 9
+##    Gene  sample expression disease age_at_dx pedaya gender site_id
+##    <chr> <chr>       <dbl> <chr>       <dbl> <fct>  <chr>  <chr>  
+##  1 ABL1  TCGA-…       4.91 acute …     61    No     female <NA>   
+##  2 ABL1  THR24…       4.56 acute …     NA    Yes, … female THR24  
+##  3 ABL1  TARGE…       4.48 acute …     NA    Yes, … female TARGET 
+##  4 ABL1  TARGE…       3.72 acute …      4.6  Yes, … female TARGET 
+##  5 ABL1  TARGE…       2.94 acute …      0.72 Yes, … male   TARGET 
+##  6 ABL1  THR24…       4.75 acute …      4.9  Yes, … female THR24  
+##  7 ABL1  TCGA-…       5.55 acute …     21    Yes, … female TCGA   
+##  8 ABL1  TCGA-…       5.25 acute …     76    No     female TCGA   
+##  9 ABL1  TCGA-…       4.94 acute …     NA    No     female TCGA   
+## 10 ABL1  TARGE…       4.14 acute …      7.82 Yes, … female TARGET 
+## # … with 124 more rows, and 1 more variable: ewing_sarcoma_in_male <lgl>
 ```
 
 The "left" in "left join" refers to how rows that can't be paired up are handled. `left_join` keeps all rows from the first data frame but not the second. This is a good default when the intent is to attaching some extra information to a data frame. `inner_join` discard all rows that can't be paired up. `full_join` keeps all rows from both data frames. 

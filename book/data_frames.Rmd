@@ -28,7 +28,7 @@ If using RStudio Cloud, you might need to switch to R version 3.5.3 to successfu
 
 People also sometimes have problems installing all the packages in Tidyverse on Windows machines. If you run into problems you may have more success installing individual packages.
 
-```{r, eval=FALSE}
+```{r eval=FALSE}
 install.packages(c("dplyr","readr","tidyr","ggplot2"))
 ```
 
@@ -54,22 +54,17 @@ R is a language with mini-languages within it that solve specific problem domain
 We will use the `read_tsv` function from `readr` to load a data set. (See also `read.csv` in base R.) TSV stands for Tab Separated Values, and is a text format used to store tabular data. The first few lines of the file we are loading are shown below. Conventionally the first line contains column headings.
 
 ```
-th_sampleid    disease                             age_at_dx
-TH03_0010_S01  acute leukemia of ambiguous lineage        11
-TH03_0010_S02  acute leukemia of ambiguous lineage        11
-THR33_1000_S01 medulloblastoma                             7
-THR33_1001_S01 medulloblastoma                             5
-THR33_1002_S01 medulloblastoma                             5
-THR33_1003_S01 medulloblastoma                             3
+th_sampleid   disease                             age_at_dx
+TH34_1150_S02 Ewing sarcoma                             16   
+TH34_1162_S01 Ewing sarcoma                             15   
+TH34_1163_S01 embryonal rhabdomyosarcoma                18   
+TH34_1179_S01 colon adenocarcinoma                      24   
 ```
 
 ```{r}
 
-sample_metadata <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv")
+sample_metadata <- read_tsv("selected_metadata.tsv")
   
- 
-# downloaded from "https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv"
-
 ```
 
 `read_tsv` has guessed the type of data each column holds:
@@ -185,6 +180,8 @@ To get the "disease" value of the 4th row as above, but unwrapped, we can use:
 
 ```{r}
 sample_metadata$disease[4]
+
+
 ```
 
 
@@ -195,10 +192,10 @@ A method of indexing that we haven't discussed yet is logical indexing. Instead 
 We will first do this in a slightly verbose way in order to understand it, then learn a more concise way to do this using the `dplyr` package.
 
 ```{r}
-is_glioma <- sample_metadata$disease == "glioma"
+is_ewing_sarcoma <- sample_metadata$disease == "Ewing sarcoma"
 
-head(is_glioma)
-sum(is_glioma)
+head(is_ewing_sarcoma)
+sum(is_ewing_sarcoma)
 ```
 
 `sum` treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.
@@ -206,7 +203,7 @@ sum(is_glioma)
 We can use this logical vector to get the glioma samples from `sample_metadata`:
 
 ```{r}
-sample_metadata[is_glioma,]
+sample_metadata[is_ewing_sarcoma,]
 
 
 ```
@@ -229,15 +226,15 @@ More complicated conditions can be constructed using logical operators:
 The `age_at_dx` column of `sample_metadata` tells the age at which the person was diagnosed. We could see which gliomas occured in people over 65 with:
 
 ```{r}
-senior_gliomas <- is_glioma & sample_metadata$age_at_dx >65
+ewing_sarcoma_in_male <- is_ewing_sarcoma & sample_metadata$gender == "male"
 
-sample_metadata[senior_gliomas,]
+sample_metadata[ewing_sarcoma_in_male,]
 ```
 
-`senior_gliomas` seems like it should be kept within our `sample_metadata` data frame for future use. We can add it as a new column of the data frame with:
+`ewing_sarcoma_in_male` seems like it should be kept within our `sample_metadata` data frame for future use. We can add it as a new column of the data frame with:
 
 ```{r}
-sample_metadata$senior_glioma <- senior_gliomas
+sample_metadata$ewing_sarcoma_in_male <- ewing_sarcoma_in_male
 
 sample_metadata
 ```
@@ -246,11 +243,11 @@ sample_metadata
 ### Challenge: logical indexing {- .challenge}
 
 
-1. Which samples are gliomas from seniors (over 65)?
+1. Which samples are gliomas?
 
-2. Which samples are in neither glioma nor from seniors?
+2. Which samples are in neither ewing sarcoma nor from males?
 
-2. How many samples are from seniors?
+2. How many samples are from people over 65?
 
 
 ### A `dplyr` shorthand
@@ -258,7 +255,8 @@ sample_metadata
 The above method is a little laborious. We have to keep mentioning the name of the data frame, and there is a lot of punctuation to keep track of. `dplyr` provides a slightly magical function called `filter` which lets us write more concisely. For example:
 
 ```{r}
-filter(sample_metadata, sample_metadata$age_at_dx >65 & disease == "glioma")
+filter(sample_metadata, sample_metadata$gender == "male" & disease == "Ewing sarcoma")
+
 ```
 
 In the second argument, we are able to refer to columns of the data frame as though they were variables. The code is beautiful, but also opaque. It's important to understand that under the hood we are creating and combining logical vectors.
@@ -271,22 +269,22 @@ The `count` function from `dplyr` can help us understand the contents of some of
 
 ```{r}
 count(sample_metadata, pedaya)
-count(sample_metadata, senior_glioma)
+count(sample_metadata, ewing_sarcoma_in_male)
 ```
 
-One annoyance here is that the different categories in `pedaya` aren't in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
+Maybe you want the different categories in `pedaya` to be in a different order, with "Yes" coming first. This comes up quite often, for example when sorting or plotting categorical data. R's solution is a further type of vector called a *factor* (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of *levels*. It is otherwise quite similar to a character vector.
 
 Any sort of vector can be converted to a factor using the `factor` function. This function defaults to placing the levels in alphabetical order, but takes a `levels` argument that can override this.
 
 ```{r}
-head( factor(sample_metadata$pedaya, levels=c("Yes, age < 30 years","No","Unknown")) )
+head( factor(sample_metadata$pedaya, levels=c("Yes, age < 30 years","No")) )
 ```
 
 We should modify the `pedaya` column of the `sample_metadata` table in order to use this:
 
 ```{r}
 sample_metadata$pedaya <- factor(sample_metadata$pedaya,
-                                 c("Yes, age < 30 years","No","Unknown"))
+                                 c("Yes, age < 30 years","No"))
 ```
 
 `count` now produces the desired order of output:
@@ -299,7 +297,7 @@ count(sample_metadata, pedaya)
 We can count two categorical columns at once.
 
 ```{r}
-count(sample_metadata, pedaya, senior_glioma)
+count(sample_metadata, pedaya, ewing_sarcoma_in_male)
 ```
 
 
@@ -328,9 +326,7 @@ arrange(sample_metadata, desc(disease))
 Let's move on to a larger data set. These are some gene expression values. 
 
 ```{r message=F}
-expression_values <- read_tsv("expression_data_for_MAP2K1_HRAS_v9_.tsv") %>%
-  gather(sample, expression, -Gene)
-expression_values
+expression_values <- read_tsv("one_gene_expression.tsv") 
 ```
 
 ### Quiz {.challenge -}

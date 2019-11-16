@@ -11,9 +11,12 @@ Loading the data as before, if you have not already done so:
 ```{r message=F, warning=F}
 library(tidyverse)
 
-geo <- read_csv("r-intro-2-files/geo.csv")
-gap <- read_csv("r-intro-2-files/gap-minder.csv")
-gap_geo <- left_join(gap, geo, by="name")
+sample_metadata <- read_tsv("selected_metadata.tsv")
+
+expression_values <- read_tsv("one_gene_expression.tsv") 
+
+expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample")) 
+
 ```
 
 
@@ -25,33 +28,25 @@ R has a variety of functions for summarizing a vector, including: `sum`, `mean`,
 mean( c(1,2,3,4) )
 ```
 
-We can use these on the Gapminder data.
+We can use these on the expression data.
 
 ```{r}
-gap2010 <- filter(gap_geo, year == 2010)
-sum(gap2010$population)
-mean(gap2010$life_exp)
+expression_in_AML <- filter(expression_by_disease, disease == "acute myeloid leukemia")
+sum(expression_in_AML$age_at_dx)
+mean(expression_in_AML$age_at_dx)
 ```
-
-
 ## Missing values
 
 Why did `mean` fail? The reason is that `life_exp` contains missing values (`NA`).
 
 ```{r}
-gap2010$life_exp
+expression_in_AML$age_at_dx
 ```
 
 R will not ignore these unless we explicitly tell it to with `na.rm=TRUE`.
 
 ```{r}
-mean(gap2010$life_exp, na.rm=TRUE)
-```
-
-Ideally we should also use `weighted.mean` here, to take population into account.
-
-```{r}
-weighted.mean(gap2010$life_exp, gap2010$population, na.rm=TRUE)
+mean(expression_in_AML$age_at_dx, na.rm=TRUE)
 ```
 
 `NA` is a special value. If we try to calculate with `NA`, the result is `NA`
@@ -65,8 +60,8 @@ NA + 1
 ```{r}
 is.na( c(1,2,NA,3) )
 
-cleaned <- filter(gap2010, !is.na(life_exp))
-weighted.mean(cleaned$life_exp, cleaned$population)
+cleaned <- filter(expression_in_AML, !is.na(age_at_dx))
+mean(cleaned$age_at_dx)
 ```
 
 ## Grouped summaries
@@ -74,23 +69,16 @@ weighted.mean(cleaned$life_exp, cleaned$population)
 The `summarize` function in `dplyr` allows summary functions to be applied to data frames.
 
 ```{r}
-summarize(gap2010, mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
+summarize(expression_by_disease, mean_age_at_dx = mean(age_at_dx, na.rm=TRUE))
 ```
 
 So far unremarkable, but `summarize` comes into its own when the `group_by` "adjective" is used.
 
 ```{r}
 summarize(
-    group_by(gap_geo, year), 
-    mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
+    group_by(expression_by_disease, disease), 
+    mean_age_at_dx=mean(age_at_dx,na.rm=TRUE))
 ```
-
-
-### Challenge: summarizing {- .challenge}
-
-What is the total population for each year? Plot the result.
-
-Advanced: What is the total GDP for each year? For this you will first need to calculate GDP per capita times the population of each country.
 
 
 ### {-}
@@ -99,43 +87,38 @@ Advanced: What is the total GDP for each year? For this you will first need to c
 
 ```{r}
 result <- summarize(
-    group_by(gap_geo,year,oecd), 
-    mean_life_exp=weighted.mean(life_exp, population, na.rm=TRUE))
-result
-ggplot(result, aes(x=year,y=mean_life_exp,color=oecd)) + geom_line()
-```
+    group_by(expression_by_disease, disease, gender), 
+    mean_age_at_dx=mean(age_at_dx,na.rm=TRUE))
 
-A similar plot could be produced using `geom_smooth`. Differences here are that we have full control over the summarization process so we were able to use the exact summarization method we want (`weighted.mean` for each year), and we have access to the resulting numeric data as well as the plot. We have reduced a large data set down to a smaller one that distills out one of the stories present in this data. However the earlier visualization and exploration activity using `ggplot2` was essential. It gave us an idea of what sort of variability was present in the data, and any unexpected issues the data might have.
+result
+```
 
 
 ## t-test
 
 We will finish this section by demonstrating a t-test. The main point of this section is to give a flavour of how statistical tests work in R, rather than the details of what a t-test does.
 
-Has life expectancy increased from 2000 to 2010?
+does age of diagnosis differ in males and females with AML?
 
 ```{r}
-gap2000 <- filter(gap_geo, year == 2000)
-gap2010 <- filter(gap_geo, year == 2010)
+expr_male <- filter(expression_in_AML, gender == "male")
+expr_female <- filter(expression_in_AML, gender == "female")
 
-t.test(gap2010$life_exp, gap2000$life_exp)
+t.test(expr_male$age_at_dx, expr_female$age_at_dx)
 ```
 
-Statistical routines often have many ways to tweak the details of their operation. These are specified by further arguments to the function call, to override the default behaviour. By default, `t.test` performs an unpaired t-test, but these are repeated observations of the same countries. We can specify `paired=TRUE` to `t.test` to perform a paired sample t-test and gain some statistical power. Check this by looking at the help page with `?t.test`.
-
-It's important to first check that both data frames are in the same order.
-
-```{r}
-all(gap2000$name == gap2010$name)
-
-t.test(gap2010$life_exp, gap2000$life_exp, paired=TRUE)
-```
+Statistical routines often have many ways to tweak the details of their operation. These are specified by further arguments to the function call, to override the default behaviour. By default, `t.test` performs an unpaired t-test. If this was a paired data, we could specify `paired=TRUE` to `t.test` to perform a paired sample t-test and gain some statistical power. Check this by looking at the help page with `?t.test`.
 
 When performing a statistical test, it's good practice to visualize the data to make sure there is nothing funny going on.
 
 ```{r fig.width=3.5,fig.height=4.5}
-plot(gap2000$life_exp, gap2010$life_exp)
-abline(0,1)
+
+ggplot(expression_in_AML, aes(x=gender, y=age_at_dx)) + 
+  geom_boxplot()
+
+ggplot(expression_in_AML, aes(x=gender, y=age_at_dx)) + 
+  geom_jitter()
+
 ```
 
 This is a visual confirmation of the t-test result. If there were no difference between the years then points would lie approximately evenly above and below the diagonal line, which is clearly not the case. However the outlier may warrant investigation.
@@ -153,7 +136,7 @@ typeof(42)
 Let's look at the result of a t-test:
 
 ```{r}
-result <- t.test(gap2010$life_exp, gap2000$life_exp, paired=TRUE)
+result <- t.test(expr_male$age_at_dx, expr_female$age_at_dx)
 
 class(result)
 typeof(result)

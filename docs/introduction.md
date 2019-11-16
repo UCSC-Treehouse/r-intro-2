@@ -17,7 +17,7 @@ header-includes:
 
 These are course notes for the "Introduction to R" course given by Treehouse and the Vaske lab on Saturday November 16. The class will be held in 123 Sinsheimer on Saturday November 16. 
 
-### Schedule {-}
+### Schedule & logistics {-}
 
 ```
 10:00am   Welcome overview, Starting out in R, Data frames 
@@ -40,7 +40,7 @@ During the workshop we will be using the RStudio Cloud to use R over the web:
 
 R is the language itself. RStudio provides a convenient environment in which to use R, either on your local computer or on a server.
 
-### About this class code {-}
+### About this class {-}
 
 The class was developed by the [Monash Bioinformatics Platform](https://www.monash.edu/researchinfrastructure/bioinformatics) for the [Monash Data Fluency](https://monashdatafluency.github.io/) initiative. The teaching style is based on the style of [The Carpentries](https://carpentries.org/). This is a new version of the course focussing on the modern [Tidyverse](https://www.tidyverse.org/) set of packages. We believe this is currently the quickest route to being productive in R.
 
@@ -58,4 +58,3 @@ This course is developed for the Monash Bioinformatics Platform by Paul Harrison
 
 This work is licensed under a [CC BY-4: Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/). The attribution is "Monash Bioinformatics Platform" if copying or modifying these notes.
 
-Data files are derived from Gapminder, which has a CC BY-4 license. The attribution is "Free data from www.gapminder.org". The data is given here in a form designed to teach various points about the R language. Refer to the [Gapminder site](https://www.gapminder.org) for the original form of the data if using it for other uses.

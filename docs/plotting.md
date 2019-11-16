@@ -15,12 +15,11 @@ We continue with the expression dataset, which we loaded with:
 
 
 ```r
-sample_metadata <- read_tsv("clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv")
-expression_values <- read_tsv("expression_data_for_MAP2K1_HRAS_v9_.tsv") %>%
-  gather(sample, expression, -Gene)
-expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample")) 
+sample_metadata <- read_tsv("selected_metadata.tsv")
 
-small_expression_by_disease <- expression_by_disease %>% filter(grepl("TH34", sample))
+expression_values <- read_tsv("one_gene_expression.tsv") 
+
+expression_by_disease <- left_join(expression_values, sample_metadata, by=c("sample")) 
 ```
 
 ## Elements of a ggplot
@@ -31,12 +30,11 @@ Producing a plot with `ggplot2`, we must give three things:
 2. How the columns of the data frame can be translated into positions, colors, sizes, and shapes of graphical elements ("aesthetics").
 3. The actual graphical elements to display ("geometric objects").
 
-
 Let's make our first ggplot.
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=age_at_dx, y=expression)) +
+ggplot(expression_by_disease, aes(x=age_at_dx, y=expression)) +
     geom_point()
 ```
 
@@ -49,8 +47,8 @@ Further aesthetics can be used. Any aesthetic can be either numeric or categoric
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=age_at_dx, y=expression, 
-                                        color=Gene, size = gender)) +
+ggplot(expression_by_disease, aes(x=age_at_dx, y=expression, 
+                                        color=Gene, shape = gender)) +
     geom_point()
 ```
 
@@ -68,9 +66,13 @@ Create a ggplot of this with:
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx, 
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx, 
                                         color = disease, shape = pedaya)) +
     geom_point()
+```
+
+```
+## Warning: Removed 20 rows containing missing values (geom_point).
 ```
 
 <img src="plotting_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" />
@@ -79,48 +81,37 @@ ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx,
 
 ## Further geoms
 
-To draw lines, we need to use a "group" aesthetic.
-
-
-```r
-ggplot(small_expression_by_disease, aes(x=Gene, y=expression, 
-                                        group=sample, color=disease)) +
-    geom_line()
-```
-
-<img src="plotting_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
-
 A wide variety of geoms are available. Here we show Tukey box-plots. Note again the use of the "group" aesthetic, without this ggplot will just show one big box-plot.
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=Gene, y=expression, group=Gene)) +
+ggplot(expression_by_disease, aes(x=gender, y=expression, group=gender)) +
     geom_boxplot()
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-7-1.png" width="576" style="display: block; margin: auto;" />
 
 `geom_smooth` can be used to show trends.
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
     geom_smooth(method = 'lm')
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" />
 
 Aesthetics can be specified globally in `ggplot`, or as the first argument to individual geoms. Here "color" is used to produce multiple trend lines:
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    geom_smooth(aes(color = Gene), method = 'lm')
+    geom_smooth(aes(color = gender), method = 'lm')
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" />
 
 ## Highlighting subsets
 
@@ -128,14 +119,14 @@ Geoms can be added that use a different data frame, using the `data=` argument.
 
 
 ```r
-small_expression_in_eRMS <- filter(small_expression_by_disease, disease == "embryonal rhabdomyosarcoma")
+expression_in_eRMS <- filter(expression_by_disease, disease == "embryonal rhabdomyosarcoma")
 
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    geom_point(data = small_expression_in_eRMS, color = "red", size = 2) 
+    geom_point(data = expression_in_eRMS, color = "red", size = 2) 
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" />
 
 Notice also that the second `geom_line` has some further arguments controlling its appearance. These are **not** aesthetics, they are not a mapping of data to appearance, but rather a direct specification of the appearance. There isn't an associated scale or legend as when color was an aesthetic.
 
@@ -147,32 +138,32 @@ Adding `labs` to a ggplot adjusts the labels given to the axes and legends. A pl
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    labs(x="Gene expression", y="Age", title="TH34 samples")
+    labs(x="Gene expression", y="Age", title="Expression of one gene")
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" />
 
 `coord_cartesian` can be used to set the limits of the x and y axes. Suppose we want our x-axis to start at zero.
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
     coord_cartesian(xlim=c(0,7))
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-12-1.png" width="576" style="display: block; margin: auto;" />
 
 Type `scale_` and press the tab key. You will see functions giving fine-grained controls over various scales (x, y, color, etc). These allow transformations (eg log10), and manually specified breaks (labelled values). Very fine grained control is possible over the appearance of ggplots, see the ggplot2 documentation for details and further examples.
 
 
 ### Challenge: refine your ggplot {.challenge}
 
-Continuing with the scatter-plot of the `small_expression_by_disease` data, add axis labels to your plot.
+Continuing with the scatter-plot of the `expression_by_disease` data, add axis labels to your plot.
 
-Give your x axis a log scale by adding `scale_x_log10()`.
+Give your y axis a log scale by adding `scale_y_log10()`.
 
 
 ## Faceting
@@ -181,19 +172,19 @@ Faceting lets us quickly produce a collection of small plots. The plots all have
 
 
 ```r
-ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() +
-    facet_wrap(~ Gene)
+    facet_wrap(~ gender)
 ```
 
-<img src="plotting_files/figure-html/unnamed-chunk-14-1.png" width="576" style="display: block; margin: auto;" />
+<img src="plotting_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" />
 
 Note the use of `~`, which we've not seen before. `~` syntax is used in R to specify dependence on some set of variables, for example when specifying a linear model. Here the information in each plot is dependent on the continent. When I read it in my mind, I say "by" or "against"
 
 
 ### Challenge: facet your ggplot {.challenge}
 
-Let's return again to your scatter-plot of the `small_expression_by_disease` data
+Let's return again to your scatter-plot of the `expression_by_disease` data
 
 Adjust your plot to now show data, with each gender shown in a separate facet, using `facet_wrap(~ gender)`.
 
@@ -209,7 +200,7 @@ Ggplots can be saved using `ggsave`.
 
 ```r
 # Plot created but not shown.
-p <- ggplot(small_expression_by_disease, aes(x=expression, y=age_at_dx)) +
+p <- ggplot(expression_by_disease, aes(x=expression, y=age_at_dx)) +
     geom_point() 
 
 # Only when we try to look at the value p is it shown

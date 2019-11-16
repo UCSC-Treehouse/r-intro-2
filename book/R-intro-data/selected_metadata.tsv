@@ -1,0 +1,135 @@
+sample	disease	age_at_dx	pedaya	gender	site_id
+TH03_0010_S01	acute leukemia of ambiguous lineage	NA	Yes, age < 30 years	female	TH03
+TH03_0010_S02	acute leukemia of ambiguous lineage	11	Yes, age < 30 years	female	TH03
+TH03_0103_S01	spindle cell/sclerosing rhabdomyosarcoma	8	Yes, age < 30 years	not reported	NA
+TH03_0104_S01	hepatoblastoma	0.33	Yes, age < 30 years	not reported	TH03
+TH03_0105_S01	spindle cell/sclerosing rhabdomyosarcoma	17	Yes, age < 30 years	not reported	TH03
+TH03_0106_S01	Ewing sarcoma	15	Yes, age < 30 years	not reported	TH03
+TH03_0107_S01	hepatoblastoma	1	Yes, age < 30 years	not reported	TH03
+TH03_0011_S01	acute lymphoblastic leukemia	0.2	Yes, age < 30 years	male	TH03
+TH03_0112_S01	synovial sarcoma	NA	Yes, age < 30 years	male	TH03
+TH03_0112_S02	synovial sarcoma	17	Yes, age < 30 years	male	TH03
+TH03_0113_S01	myoepithelial carcinoma	NA	Yes, age < 30 years	male	TH03
+TH03_0113_S02	myoepithelial carcinoma	1.9	Yes, age < 30 years	male	TH03
+TH03_0114_S01	fibrolamellar hepatocellular carcinoma	11	Yes, age < 30 years	male	TH03
+TH34_1149_S01	INI-deficient soft tissue sarcoma NOS	3	Yes, age < 30 years	male	TH34
+TH34_1149_S02	INI-deficient soft tissue sarcoma NOS	3	Yes, age < 30 years	male	TH34
+TH03_0115_S01	teratoma	10	Yes, age < 30 years	female	TH03
+TH34_1150_S01	Ewing sarcoma	16	Yes, age < 30 years	male	NA
+TH34_1150_S02	Ewing sarcoma	16	Yes, age < 30 years	male	NA
+TH03_0116_S01	hepatoblastoma	1.7	Yes, age < 30 years	not reported	TH03
+TH34_1162_S01	Ewing sarcoma	15	Yes, age < 30 years	female	NA
+TH34_1163_S01	embryonal rhabdomyosarcoma	18	Yes, age < 30 years	male	NA
+TH03_0117_S01	glioma	0.9	Yes, age < 30 years	not reported	TH03
+TH34_1179_S01	colon adenocarcinoma	24	Yes, age < 30 years	female	TH34
+TH03_0118_S01	acute myeloid leukemia	4	Yes, age < 30 years	female	TH03
+TH03_0012_S01	wilms tumor	18	Yes, age < 30 years	male	TH03
+TH03_0012_S02	wilms tumor	18	Yes, age < 30 years	male	TH03
+TH34_1238_S01	acute lymphoblastic leukemia	NA	Yes, age < 30 years	female	TH34
+TH34_1239_S01	acute myeloid leukemia	4	Yes, age < 30 years	female	NA
+TH34_1240_S01	Ewing sarcoma	16	Yes, age < 30 years	male	TH34
+TH03_0013_S01	acute lymphoblastic leukemia	5	Yes, age < 30 years	male	NA
+TH03_0013_S02	acute lymphoblastic leukemia	5	Yes, age < 30 years	male	TH03
+TH38_1311_S02	glioma	13	Yes, age < 30 years	male	TH38
+TH38_1346_S02	glioma	11	Yes, age < 30 years	female	TH38
+TH34_1349_S01	gastrointestinal stromal tumor	11	Yes, age < 30 years	male	NA
+TH34_1349_S02	gastrointestinal stromal tumor	11	Yes, age < 30 years	male	TH34
+TH34_1350_S01	juvenile myelomonocytic leukemia	0.75	Yes, age < 30 years	female	NA
+TH34_1351_S01	osteosarcoma	10	Yes, age < 30 years	female	TH34
+TH34_1352_S01	myoepithelial carcinoma	0.96	Yes, age < 30 years	male	TH34
+TH34_1379_S01	hepatoblastoma	4	Yes, age < 30 years	male	TH34
+TH34_1380_S01	embryonal rhabdomyosarcoma	15	Yes, age < 30 years	male	TH34
+TH34_1380_S02	embryonal rhabdomyosarcoma	15	Yes, age < 30 years	male	TH34
+TH34_1381_S01	ependymoma	2.5	Yes, age < 30 years	female	TH34
+TH03_0139_S01	osteosarcoma	12	Yes, age < 30 years	male	NA
+TH34_1399_S01	desmoplastic small round cell tumor	14	Yes, age < 30 years	male	TH34
+TH03_0014_S01	Ewing sarcoma	4	Yes, age < 30 years	male	TH03
+TH03_0140_S01	osteosarcoma	13	Yes, age < 30 years	male	TH03
+TH03_0141_S01	osteosarcoma	17	Yes, age < 30 years	female	TH03
+TH34_1412_S01	desmoplastic small round cell tumor	23	Yes, age < 30 years	male	NA
+TH34_1414_S01	alveolar rhabdomyosarcoma	17	Yes, age < 30 years	female	TH34
+TH34_1415_S01	undifferentiated sarcoma NOS	16	Yes, age < 30 years	female	TH34
+TH38_1416_S02	osteosarcoma	22	Yes, age < 30 years	male	TH38
+TH38_1417_S02	ependymoma	10	Yes, age < 30 years	female	NA
+TH38_1423_S02	sarcoma	1.33	Yes, age < 30 years	male	TH38
+TH38_1425_S02	sarcoma	NA	Yes, age < 30 years	female	TH38
+TH38_1428_S02	supratentorial embryonal tumor NOS	NA	Yes, age < 30 years	male	TH38
+TH03_0143_S01	osteosarcoma	NA	Yes, age < 30 years	male	TH03
+TH03_0143_S02	osteosarcoma	17	Yes, age < 30 years	male	NA
+TH38_1437_S03	medulloblastoma	11	Yes, age < 30 years	male	TH38
+TH38_1437_S04	medulloblastoma	NA	Yes, age < 30 years	male	TH38
+TH03_0144_S01	wilms tumor	6	Yes, age < 30 years	male	TH03
+TH34_1444_S01	follicular neoplasm	1.5	Yes, age < 30 years	male	TH34
+TH34_1445_S02	glioma	7	Yes, age < 30 years	female	TH34
+TH34_1447_S01	undifferentiated hepatic sarcoma	5	Yes, age < 30 years	female	TH34
+TH34_1447_S02	undifferentiated hepatic sarcoma	5	Yes, age < 30 years	female	TH34
+TH34_1452_S01	ependymoma	5	Yes, age < 30 years	male	TH34
+TH34_1456_S02	osteosarcoma	12	Yes, age < 30 years	male	TH34
+TH38_1457_S02	ependymoma	7	Yes, age < 30 years	female	TH38
+TH03_0146_S01	undifferentiated sarcoma NOS	9	Yes, age < 30 years	male	TH03
+TH03_0148_S01	lymphoma	NA	Yes, age < 30 years	male	TH03
+TH03_0149_S01	acute myeloid leukemia	14	Yes, age < 30 years	male	TH03
+TH03_0015_S01	neuroblastoma	3	Yes, age < 30 years	male	TH03
+TH03_0015_S02	neuroblastoma	3	Yes, age < 30 years	male	TH03
+TH03_0156_S01	synovial sarcoma	25	Yes, age < 30 years	not reported	TH03
+TH03_0157_S01	Ewing sarcoma	60	No	not reported	TH03
+TH03_0159_S01	osteosarcoma	16	Yes, age < 30 years	female	TH03
+TH03_0159_S02	osteosarcoma	16	Yes, age < 30 years	female	TH03
+TH03_0016_S01	atypical teratoid/rhabdoid tumor	1.4	Yes, age < 30 years	male	TH03
+TH03_0160_S01	osteosarcoma	31	No	male	TH03
+TH03_0017_S01	hepatoblastoma	14	Yes, age < 30 years	female	TH03
+TH03_0017_S02	hepatoblastoma	14	Yes, age < 30 years	female	NA
+THR24_1712_S01	acute myeloid leukemia	11.23	Yes, age < 30 years	female	THR24
+THR24_1717_S01	acute myeloid leukemia	NA	Yes, age < 30 years	female	THR24
+THR24_1735_S01	acute myeloid leukemia	12.91666667	Yes, age < 30 years	male	THR24
+THR24_1737_S01	acute myeloid leukemia	4.9	Yes, age < 30 years	female	THR24
+TH03_0018_S01	undifferentiated pleomorphic sarcoma	12	Yes, age < 30 years	male	TH03
+TH03_0018_S02	undifferentiated pleomorphic sarcoma	12	Yes, age < 30 years	male	TH03
+TH03_0019_S01	fibrolamellar hepatocellular carcinoma	15	Yes, age < 30 years	male	TH03
+TH03_0020_S01	medulloblastoma	16	Yes, age < 30 years	male	TH03
+TH03_0022_S01	osteosarcoma	12	Yes, age < 30 years	not reported	TH03
+TH03_0024_S01	adrenocortical carcinoma	12	Yes, age < 30 years	not reported	TH03
+TH03_0025_S02	osteosarcoma	15	Yes, age < 30 years	not reported	NA
+TH03_0027_S01	osteosarcoma	14	Yes, age < 30 years	not reported	TH03
+TH03_0027_S03	osteosarcoma	14	Yes, age < 30 years	not reported	TH03
+TH03_0027_S04	osteosarcoma	NA	Yes, age < 30 years	not reported	TH03
+TH03_0286_S01	hepatocellular carcinoma	12	Yes, age < 30 years	male	TH03
+TH03_0287_S01	neuroblastoma	3	Yes, age < 30 years	male	TH03
+TH03_0288_S01	neuroblastoma	4	Yes, age < 30 years	male	NA
+TH03_0289_S01	acute lymphoblastic leukemia	17	Yes, age < 30 years	male	TH03
+TH03_0029_S01	osteosarcoma	13	Yes, age < 30 years	not reported	TH03
+TH03_0290_S01	glioma	NA	Yes, age < 30 years	female	NA
+TH03_0291_S01	ependymoma	9	Yes, age < 30 years	female	TH03
+TH03_0294_S02	epithelioid hemangioendothelioma	12	Yes, age < 30 years	male	TH03
+TH03_0296_S01	osteosarcoma	NA	Yes, age < 30 years	female	TH03
+TH03_0296_S02	osteosarcoma	10	Yes, age < 30 years	female	TH03
+TH03_0296_S03	osteosarcoma	10	Yes, age < 30 years	female	TH03
+TH03_0296_S04	osteosarcoma	NA	Yes, age < 30 years	female	TH03
+TH03_0296_S05	osteosarcoma	NA	Yes, age < 30 years	female	TH03
+TH03_0003_S01	undifferentiated sarcoma NOS	NA	Yes, age < 30 years	not reported	TH03
+TH03_0003_S03	undifferentiated sarcoma NOS	17	Yes, age < 30 years	not reported	TH03
+TH03_0003_S04	undifferentiated sarcoma NOS	17	Yes, age < 30 years	not reported	TH03
+TH03_0038_S01	osteosarcoma	13	Yes, age < 30 years	not reported	NA
+TH03_0004_S02	hepatoblastoma	2	Yes, age < 30 years	male	TH03
+TH03_0004_S03	hepatoblastoma	2	Yes, age < 30 years	male	TH03
+TH03_0004_S04	hepatoblastoma	2	Yes, age < 30 years	male	TH03
+TH03_0005_S01	nasopharyngeal carcinoma	20	Yes, age < 30 years	not reported	TH03
+TH03_0006_S01	rhabdomyosarcoma	7	Yes, age < 30 years	female	TH03
+TH03_0006_S03	rhabdomyosarcoma	7	Yes, age < 30 years	female	TH03
+TH03_0008_S01	neuroblastoma	NA	Yes, age < 30 years	not reported	NA
+TARGET-20-PAKERZ-04	acute myeloid leukemia	NA	Yes, age < 30 years	female	TARGET
+TARGET-20-PAKLPD-09	acute myeloid leukemia	0.4	Yes, age < 30 years	female	TARGET
+TARGET-20-PANKKE-09	acute myeloid leukemia	0.72	Yes, age < 30 years	male	TARGET
+TARGET-20-PANLKB-09	acute myeloid leukemia	4.6	Yes, age < 30 years	female	TARGET
+TARGET-20-PAPXRJ-04	acute myeloid leukemia	7.82	Yes, age < 30 years	female	TARGET
+TARGET-20-PARBRA-09	acute myeloid leukemia	NA	Yes, age < 30 years	female	TARGET
+TARGET-20-PARFAL-04	acute myeloid leukemia	18.96	Yes, age < 30 years	male	TARGET
+TARGET-20-PASBPK-09	acute myeloid leukemia	0.44	Yes, age < 30 years	male	TARGET
+TARGET-20-PASMGW-09	acute myeloid leukemia	8.46	Yes, age < 30 years	male	TARGET
+TCGA-AB-2903-03	acute myeloid leukemia	76	No	female	TCGA
+TCGA-AB-2910-03	acute myeloid leukemia	61	No	female	NA
+TCGA-AB-2918-03	acute myeloid leukemia	47	No	female	TCGA
+TCGA-AB-2941-03	acute myeloid leukemia	73	No	male	TCGA
+TCGA-AB-2950-03	acute myeloid leukemia	NA	No	female	TCGA
+TCGA-AB-2954-03	acute myeloid leukemia	55	No	female	TCGA
+TCGA-AB-3011-03	acute myeloid leukemia	21	Yes, age < 30 years	female	TCGA

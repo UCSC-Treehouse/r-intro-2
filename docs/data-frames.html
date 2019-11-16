@@ -168,9 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.3" data-path="thinking-in-r.html"><a href="thinking-in-r.html#programming"><i class="fa fa-check"></i><b>5.3</b> Programming</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="next-steps.html"><a href="next-steps.html"><i class="fa fa-check"></i><b>6</b> Next steps</a><ul>
-<li class="chapter" data-level="6.1" data-path="next-steps.html"><a href="next-steps.html#deepen-your-understanding"><i class="fa fa-check"></i><b>6.1</b> Deepen your understanding</a></li>
-<li class="chapter" data-level="6.2" data-path="next-steps.html"><a href="next-steps.html#expand-your-vocabulary"><i class="fa fa-check"></i><b>6.2</b> Expand your vocabulary</a></li>
-<li class="chapter" data-level="6.3" data-path="next-steps.html"><a href="next-steps.html#join-the-community"><i class="fa fa-check"></i><b>6.3</b> Join the community</a></li>
+<li class="chapter" data-level="6.1" data-path="next-steps.html"><a href="next-steps.html#how-to-find-help"><i class="fa fa-check"></i><b>6.1</b> How to find help</a></li>
 </ul></li>
 </ul>
 
@@ -213,23 +211,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loading-data" class="section level2">
 <h2><span class="header-section-number">2.2</span> Loading data</h2>
 <p>We will use the <code>read_tsv</code> function from <code>readr</code> to load a data set. (See also <code>read.csv</code> in base R.) TSV stands for Tab Separated Values, and is a text format used to store tabular data. The first few lines of the file we are loading are shown below. Conventionally the first line contains column headings.</p>
-<pre><code>th_sampleid    disease                             age_at_dx
-TH03_0010_S01  acute leukemia of ambiguous lineage        11
-TH03_0010_S02  acute leukemia of ambiguous lineage        11
-THR33_1000_S01 medulloblastoma                             7
-THR33_1001_S01 medulloblastoma                             5
-THR33_1002_S01 medulloblastoma                             5
-THR33_1003_S01 medulloblastoma                             3</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;clinical_TumorCompendium_v10_PolyA_2019-07-25_clean.tsv&quot;</span>)</a></code></pre></div>
+<pre><code>th_sampleid   disease                             age_at_dx
+TH34_1150_S02 Ewing sarcoma                             16   
+TH34_1162_S01 Ewing sarcoma                             15   
+TH34_1163_S01 embryonal rhabdomyosarcoma                18   
+TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;selected_metadata.tsv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   sample = col_character(),
 ##   disease = col_character(),
 ##   age_at_dx = col_double(),
 ##   pedaya = col_character(),
-##   gender = col_character()
+##   gender = col_character(),
+##   site_id = col_character()
 ## )</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="co"># downloaded from &quot;https://xena.treehouse.gi.ucsc.edu/download/clinical_TumorCompendium_v10_PolyA_2019-07-25.tsv&quot;</span></a></code></pre></div>
 <p><code>read_tsv</code> has guessed the type of data each column holds:</p>
 <ul>
 <li><code>&lt;chr&gt;</code> - character strings</li>
@@ -245,7 +241,7 @@ THR33_1003_S01 medulloblastoma                             3</code></pre>
 <div id="tip-1" class="section level3 unnumbered tip">
 <h3>Tip</h3>
 <p>A data frame can also be created from vectors, with the <code>tibble</code> function. (See also <code>data.frame</code> in base R.) For example:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     foo bar  
 ##   &lt;dbl&gt; &lt;chr&gt;
@@ -266,144 +262,142 @@ THR33_1003_S01 medulloblastoma                             3</code></pre>
 <p>The <code>View</code> function gives us a spreadsheet-like view of the data frame.</p>
 <pre><code>View(sample_metadata)</code></pre>
 <p><code>print</code> with the <code>n</code> argument can be used to show more than the first 10 rows on the console.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">print</span>(sample_metadata, <span class="dt">n=</span><span class="dv">200</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">print</span>(sample_metadata, <span class="dt">n=</span><span class="dv">200</span>)</a></code></pre></div>
 <p>We can extract details of the data frame with further functions:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">nrow</span>(sample_metadata)</a></code></pre></div>
-<pre><code>## [1] 11610</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">ncol</span>(sample_metadata)</a></code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">colnames</span>(sample_metadata)</a></code></pre></div>
-<pre><code>## [1] &quot;sample&quot;    &quot;disease&quot;   &quot;age_at_dx&quot; &quot;pedaya&quot;    &quot;gender&quot;</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">summary</span>(sample_metadata)</a></code></pre></div>
-<pre><code>##     sample            disease            age_at_dx       pedaya         
-##  Length:11610       Length:11610       Min.   : 0.0   Length:11610      
-##  Class :character   Class :character   1st Qu.:39.0   Class :character  
-##  Mode  :character   Mode  :character   Median :57.0   Mode  :character  
-##                                        Mean   :50.7                     
-##                                        3rd Qu.:68.0                     
-##                                        Max.   :90.0                     
-##     gender         
-##  Length:11610      
-##  Class :character  
-##  Mode  :character  
-##                    
-##                    
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">nrow</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] 134</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">ncol</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">colnames</span>(sample_metadata)</a></code></pre></div>
+<pre><code>## [1] &quot;sample&quot;    &quot;disease&quot;   &quot;age_at_dx&quot; &quot;pedaya&quot;    &quot;gender&quot;    &quot;site_id&quot;</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">summary</span>(sample_metadata)</a></code></pre></div>
+<pre><code>##     sample            disease            age_at_dx         pedaya         
+##  Length:134         Length:134         Min.   : 0.200   Length:134        
+##  Class :character   Class :character   1st Qu.: 4.675   Class :character  
+##  Mode  :character   Mode  :character   Median :11.615   Mode  :character  
+##                                        Mean   :13.061                     
+##                                        3rd Qu.:16.000                     
+##                                        Max.   :76.000                     
+##                                        NA&#39;s   :20                         
+##     gender            site_id         
+##  Length:134         Length:134        
+##  Class :character   Class :character  
+##  Mode  :character   Mode  :character  
+##                                       
+##                                       
+##                                       
 ## </code></pre>
 </div>
 <div id="indexing-data-frames" class="section level2">
 <h2><span class="header-section-number">2.4</span> Indexing data frames</h2>
 <p>Data frames can be subset using <code>[row,column]</code> syntax.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
-##   disease        
-##   &lt;chr&gt;          
-## 1 medulloblastoma</code></pre>
+##   disease       
+##   &lt;chr&gt;         
+## 1 hepatoblastoma</code></pre>
 <p>Note that while this is a single value, it is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.) More on this in a moment.</p>
 <p>Columns can be given by name.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
-##   disease        
-##   &lt;chr&gt;          
-## 1 medulloblastoma</code></pre>
+##   disease       
+##   &lt;chr&gt;         
+## 1 hepatoblastoma</code></pre>
 <p>The column or row may be omitted, thereby retrieving the entire row or column.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,]</a></code></pre></div>
-<pre><code>## # A tibble: 1 x 5
-##   sample         disease         age_at_dx pedaya              gender
-##   &lt;chr&gt;          &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt; 
-## 1 THR33_1001_S01 medulloblastoma         5 Yes, age &lt; 30 years male</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">sample_metadata[,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
-<pre><code>## # A tibble: 11,610 x 1
-##    disease                            
-##    &lt;chr&gt;                              
-##  1 acute leukemia of ambiguous lineage
-##  2 acute leukemia of ambiguous lineage
-##  3 medulloblastoma                    
-##  4 medulloblastoma                    
-##  5 medulloblastoma                    
-##  6 medulloblastoma                    
-##  7 medulloblastoma                    
-##  8 medulloblastoma                    
-##  9 medulloblastoma                    
-## 10 medulloblastoma                    
-## # … with 11,600 more rows</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,]</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 6
+##   sample       disease       age_at_dx pedaya            gender     site_id
+##   &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;  
+## 1 TH03_0104_S… hepatoblasto…      0.33 Yes, age &lt; 30 ye… not repor… TH03</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">sample_metadata[,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
+<pre><code>## # A tibble: 134 x 1
+##    disease                                 
+##    &lt;chr&gt;                                   
+##  1 acute leukemia of ambiguous lineage     
+##  2 acute leukemia of ambiguous lineage     
+##  3 spindle cell/sclerosing rhabdomyosarcoma
+##  4 hepatoblastoma                          
+##  5 spindle cell/sclerosing rhabdomyosarcoma
+##  6 Ewing sarcoma                           
+##  7 hepatoblastoma                          
+##  8 acute lymphoblastic leukemia            
+##  9 synovial sarcoma                        
+## 10 synovial sarcoma                        
+## # … with 124 more rows</code></pre>
 <p>Multiple rows or columns may be retrieved using a vector.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb88-2" data-line-number="2">sample_metadata[rows_wanted,]</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   &lt;chr&gt;        &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age &lt; 30 … female
-## 2 THR33_1000_… medulloblastoma                     7 Yes, age &lt; 30 … female
-## 3 THR33_1002_… medulloblastoma                     5 Yes, age &lt; 30 … female</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">sample_metadata[rows_wanted,]</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
+## 1 TH03_0010… acute leukemia of ambi…        NA Yes, age &lt;… female   TH03   
+## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age &lt;… not rep… &lt;NA&gt;   
+## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age &lt;… not rep… TH03</code></pre>
 <p>Vector indexing can also be written on a single line.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">sample_metadata[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   &lt;chr&gt;        &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age &lt; 30 … female
-## 2 THR33_1000_… medulloblastoma                     7 Yes, age &lt; 30 … female
-## 3 THR33_1002_… medulloblastoma                     5 Yes, age &lt; 30 … female</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">sample_metadata[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</a></code></pre></div>
-<pre><code>## # A tibble: 7 x 5
-##   sample       disease                     age_at_dx pedaya          gender
-##   &lt;chr&gt;        &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt; 
-## 1 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age &lt; 30 … female
-## 2 TH03_0010_S… acute leukemia of ambiguou…        11 Yes, age &lt; 30 … female
-## 3 THR33_1000_… medulloblastoma                     7 Yes, age &lt; 30 … female
-## 4 THR33_1001_… medulloblastoma                     5 Yes, age &lt; 30 … male  
-## 5 THR33_1002_… medulloblastoma                     5 Yes, age &lt; 30 … female
-## 6 THR33_1003_… medulloblastoma                     3 Yes, age &lt; 30 … female
-## 7 THR33_1004_… medulloblastoma                    26 Yes, age &lt; 30 … male</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">sample_metadata[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
+## 1 TH03_0010… acute leukemia of ambi…        NA Yes, age &lt;… female   TH03   
+## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age &lt;… not rep… &lt;NA&gt;   
+## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age &lt;… not rep… TH03</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1">sample_metadata[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 6
+##   sample     disease                 age_at_dx pedaya      gender   site_id
+##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
+## 1 TH03_0010… acute leukemia of ambi…     NA    Yes, age &lt;… female   TH03   
+## 2 TH03_0010… acute leukemia of ambi…     11    Yes, age &lt;… female   TH03   
+## 3 TH03_0103… spindle cell/sclerosin…      8    Yes, age &lt;… not rep… &lt;NA&gt;   
+## 4 TH03_0104… hepatoblastoma               0.33 Yes, age &lt;… not rep… TH03   
+## 5 TH03_0105… spindle cell/sclerosin…     17    Yes, age &lt;… not rep… TH03   
+## 6 TH03_0106… Ewing sarcoma               15    Yes, age &lt;… not rep… TH03   
+## 7 TH03_0107… hepatoblastoma               1    Yes, age &lt;… not rep… TH03</code></pre>
 </div>
 <div id="columns-are-vectors" class="section level2">
 <h2><span class="header-section-number">2.5</span> Columns are vectors</h2>
 <p>Ok, so how do we actually get data out of a data frame?</p>
 <p>Under the hood, a data frame is a list of column vectors. We can use <code>$</code> to retrieve columns. Occasionally it is also useful to use <code>[[ ]]</code> to retrieve columns, for example if the column name we want is stored in a variable.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">head</span>( sample_metadata<span class="op">$</span>disease )</a></code></pre></div>
-<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;
-## [2] &quot;acute leukemia of ambiguous lineage&quot;
-## [3] &quot;medulloblastoma&quot;                    
-## [4] &quot;medulloblastoma&quot;                    
-## [5] &quot;medulloblastoma&quot;                    
-## [6] &quot;medulloblastoma&quot;</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">head</span>( sample_metadata[[<span class="st">&quot;disease&quot;</span>]] )</a></code></pre></div>
-<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;
-## [2] &quot;acute leukemia of ambiguous lineage&quot;
-## [3] &quot;medulloblastoma&quot;                    
-## [4] &quot;medulloblastoma&quot;                    
-## [5] &quot;medulloblastoma&quot;                    
-## [6] &quot;medulloblastoma&quot;</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="kw">head</span>( sample_metadata<span class="op">$</span>disease )</a></code></pre></div>
+<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;     
+## [2] &quot;acute leukemia of ambiguous lineage&quot;     
+## [3] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
+## [4] &quot;hepatoblastoma&quot;                          
+## [5] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
+## [6] &quot;Ewing sarcoma&quot;</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">head</span>( sample_metadata[[<span class="st">&quot;disease&quot;</span>]] )</a></code></pre></div>
+<pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;     
+## [2] &quot;acute leukemia of ambiguous lineage&quot;     
+## [3] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
+## [4] &quot;hepatoblastoma&quot;                          
+## [5] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
+## [6] &quot;Ewing sarcoma&quot;</code></pre>
 <p>To get the “disease” value of the 4th row as above, but unwrapped, we can use:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">sample_metadata<span class="op">$</span>disease[<span class="dv">4</span>]</a></code></pre></div>
-<pre><code>## [1] &quot;medulloblastoma&quot;</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">sample_metadata<span class="op">$</span>disease[<span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] &quot;hepatoblastoma&quot;</code></pre>
 </div>
 <div id="logical-indexing" class="section level2">
 <h2><span class="header-section-number">2.6</span> Logical indexing</h2>
 <p>A method of indexing that we haven’t discussed yet is logical indexing. Instead of specifying the row number or numbers that we want, we can give a logical vector which is <code>TRUE</code> for the rows we want and <code>FALSE</code> otherwise. This can also be used with vectors.</p>
 <p>We will first do this in a slightly verbose way in order to understand it, then learn a more concise way to do this using the <code>dplyr</code> package.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">is_glioma &lt;-<span class="st"> </span>sample_metadata<span class="op">$</span>disease <span class="op">==</span><span class="st"> &quot;glioma&quot;</span></a>
-<a class="sourceLine" id="cb100-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="kw">head</span>(is_glioma)</a></code></pre></div>
-<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">sum</span>(is_glioma)</a></code></pre></div>
-<pre><code>## [1] 702</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1">is_ewing_sarcoma &lt;-<span class="st"> </span>sample_metadata<span class="op">$</span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="kw">head</span>(is_ewing_sarcoma)</a></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">sum</span>(is_ewing_sarcoma)</a></code></pre></div>
+<pre><code>## [1] 7</code></pre>
 <p><code>sum</code> treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.</p>
 <p>We can use this logical vector to get the glioma samples from <code>sample_metadata</code>:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">sample_metadata[is_glioma,]</a></code></pre></div>
-<pre><code>## # A tibble: 702 x 5
-##    sample         disease age_at_dx pedaya              gender      
-##    &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;       
-##  1 TH03_0117_S01  glioma       0.9  Yes, age &lt; 30 years not reported
-##  2 TH06_1175_S01  glioma      17    Yes, age &lt; 30 years female      
-##  3 TH38_1311_S02  glioma      13    Yes, age &lt; 30 years male        
-##  4 TH38_1346_S02  glioma      11    Yes, age &lt; 30 years female      
-##  5 TH34_1445_S02  glioma       7    Yes, age &lt; 30 years female      
-##  6 THR24_1924_S01 glioma       5.33 Yes, age &lt; 30 years female      
-##  7 THR24_1925_S01 glioma      15.0  Yes, age &lt; 30 years female      
-##  8 THR24_1925_S02 glioma      15.0  Yes, age &lt; 30 years female      
-##  9 THR24_1926_S01 glioma      13.1  Yes, age &lt; 30 years male        
-## 10 THR24_1926_S02 glioma      13.1  Yes, age &lt; 30 years male        
-## # … with 692 more rows</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1">sample_metadata[is_ewing_sarcoma,]</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 6
+##   sample       disease       age_at_dx pedaya           gender      site_id
+##   &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;  
+## 1 TH03_0106_S… Ewing sarcoma        15 Yes, age &lt; 30 y… not report… TH03   
+## 2 TH34_1150_S… Ewing sarcoma        16 Yes, age &lt; 30 y… male        &lt;NA&gt;   
+## 3 TH34_1150_S… Ewing sarcoma        16 Yes, age &lt; 30 y… male        &lt;NA&gt;   
+## 4 TH34_1162_S… Ewing sarcoma        15 Yes, age &lt; 30 y… female      &lt;NA&gt;   
+## 5 TH34_1240_S… Ewing sarcoma        16 Yes, age &lt; 30 y… male        TH34   
+## 6 TH03_0014_S… Ewing sarcoma         4 Yes, age &lt; 30 y… male        TH03   
+## 7 TH03_0157_S… Ewing sarcoma        60 No               not report… TH03</code></pre>
 <p>Comparison operators available are:</p>
 <ul>
 <li><code>x == y</code> – “equal to”</li>
@@ -420,112 +414,95 @@ THR33_1003_S01 medulloblastoma                             3</code></pre>
 <li><code>! a</code> – “not” , TRUE if <code>a</code> is FALSE, and FALSE if <code>a</code> is TRUE.</li>
 </ul>
 <p>The <code>age_at_dx</code> column of <code>sample_metadata</code> tells the age at which the person was diagnosed. We could see which gliomas occured in people over 65 with:</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">senior_gliomas &lt;-<span class="st"> </span>is_glioma <span class="op">&amp;</span><span class="st"> </span>sample_metadata<span class="op">$</span>age_at_dx <span class="op">&gt;</span><span class="dv">65</span></a>
-<a class="sourceLine" id="cb106-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb106-3" data-line-number="3">sample_metadata[senior_gliomas,]</a></code></pre></div>
-<pre><code>## # A tibble: 33 x 5
-##    sample          disease age_at_dx pedaya gender
-##    &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
-##  1 TCGA-CS-4941-01 glioma         67 No     male  
-##  2 TCGA-DB-A64L-01 glioma         67 No     female
-##  3 TCGA-DH-A669-01 glioma         70 No     male  
-##  4 TCGA-DH-A669-02 glioma         70 No     male  
-##  5 TCGA-DU-6393-01 glioma         66 No     male  
-##  6 TCGA-DU-6400-01 glioma         66 No     female
-##  7 TCGA-DU-7012-01 glioma         74 No     female
-##  8 TCGA-DU-7292-01 glioma         69 No     male  
-##  9 TCGA-DU-7306-01 glioma         67 No     male  
-## 10 TCGA-DU-8167-01 glioma         69 No     female
-## # … with 23 more rows</code></pre>
-<p><code>senior_gliomas</code> seems like it should be kept within our <code>sample_metadata</code> data frame for future use. We can add it as a new column of the data frame with:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">sample_metadata<span class="op">$</span>senior_glioma &lt;-<span class="st"> </span>senior_gliomas</a>
-<a class="sourceLine" id="cb108-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb108-3" data-line-number="3">sample_metadata</a></code></pre></div>
-<pre><code>## # A tibble: 11,610 x 6
-##    sample     disease            age_at_dx pedaya      gender senior_glioma
-##    &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;  &lt;lgl&gt;        
-##  1 TH03_0010… acute leukemia of…        11 Yes, age &lt;… female FALSE        
-##  2 TH03_0010… acute leukemia of…        11 Yes, age &lt;… female FALSE        
-##  3 THR33_100… medulloblastoma            7 Yes, age &lt;… female FALSE        
-##  4 THR33_100… medulloblastoma            5 Yes, age &lt;… male   FALSE        
-##  5 THR33_100… medulloblastoma            5 Yes, age &lt;… female FALSE        
-##  6 THR33_100… medulloblastoma            3 Yes, age &lt;… female FALSE        
-##  7 THR33_100… medulloblastoma           26 Yes, age &lt;… male   FALSE        
-##  8 THR33_100… medulloblastoma           10 Yes, age &lt;… male   FALSE        
-##  9 THR33_100… medulloblastoma            3 Yes, age &lt;… male   FALSE        
-## 10 THR33_100… medulloblastoma           27 Yes, age &lt;… male   FALSE        
-## # … with 11,600 more rows</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1">ewing_sarcoma_in_male &lt;-<span class="st"> </span>is_ewing_sarcoma <span class="op">&amp;</span><span class="st"> </span>sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb105-3" data-line-number="3">sample_metadata[ewing_sarcoma_in_male,]</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 6
+##   sample        disease       age_at_dx pedaya              gender site_id
+##   &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;  &lt;chr&gt;  
+## 1 TH34_1150_S01 Ewing sarcoma        16 Yes, age &lt; 30 years male   &lt;NA&gt;   
+## 2 TH34_1150_S02 Ewing sarcoma        16 Yes, age &lt; 30 years male   &lt;NA&gt;   
+## 3 TH34_1240_S01 Ewing sarcoma        16 Yes, age &lt; 30 years male   TH34   
+## 4 TH03_0014_S01 Ewing sarcoma         4 Yes, age &lt; 30 years male   TH03</code></pre>
+<p><code>ewing_sarcoma_in_male</code> seems like it should be kept within our <code>sample_metadata</code> data frame for future use. We can add it as a new column of the data frame with:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">sample_metadata<span class="op">$</span>ewing_sarcoma_in_male &lt;-<span class="st"> </span>ewing_sarcoma_in_male</a>
+<a class="sourceLine" id="cb107-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb107-3" data-line-number="3">sample_metadata</a></code></pre></div>
+<pre><code>## # A tibble: 134 x 7
+##    sample  disease      age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
+##    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;           
+##  1 TH03_0… acute leuke…     NA    Yes, ag… female  TH03    FALSE           
+##  2 TH03_0… acute leuke…     11    Yes, ag… female  TH03    FALSE           
+##  3 TH03_0… spindle cel…      8    Yes, ag… not re… &lt;NA&gt;    FALSE           
+##  4 TH03_0… hepatoblast…      0.33 Yes, ag… not re… TH03    FALSE           
+##  5 TH03_0… spindle cel…     17    Yes, ag… not re… TH03    FALSE           
+##  6 TH03_0… Ewing sarco…     15    Yes, ag… not re… TH03    FALSE           
+##  7 TH03_0… hepatoblast…      1    Yes, ag… not re… TH03    FALSE           
+##  8 TH03_0… acute lymph…      0.2  Yes, ag… male    TH03    FALSE           
+##  9 TH03_0… synovial sa…     NA    Yes, ag… male    TH03    FALSE           
+## 10 TH03_0… synovial sa…     17    Yes, ag… male    TH03    FALSE           
+## # … with 124 more rows</code></pre>
 <div id="challenge-logical-indexing" class="section level3 unnumbered challenge">
 <h3>Challenge: logical indexing</h3>
 <ol style="list-style-type: decimal">
-<li><p>Which samples are gliomas from seniors (over 65)?</p></li>
-<li><p>Which samples are in neither glioma nor from seniors?</p></li>
-<li><p>How many samples are from seniors?</p></li>
+<li><p>Which samples are gliomas?</p></li>
+<li><p>Which samples are in neither ewing sarcoma nor from males?</p></li>
+<li><p>How many samples are from people over 65?</p></li>
 </ol>
 </div>
 <div id="a-dplyr-shorthand" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> A <code>dplyr</code> shorthand</h3>
 <p>The above method is a little laborious. We have to keep mentioning the name of the data frame, and there is a lot of punctuation to keep track of. <code>dplyr</code> provides a slightly magical function called <code>filter</code> which lets us write more concisely. For example:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">filter</span>(sample_metadata, sample_metadata<span class="op">$</span>age_at_dx <span class="op">&gt;</span><span class="dv">65</span> <span class="op">&amp;</span><span class="st"> </span>disease <span class="op">==</span><span class="st"> &quot;glioma&quot;</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 33 x 6
-##    sample          disease age_at_dx pedaya gender senior_glioma
-##    &lt;chr&gt;           &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;  &lt;lgl&gt;        
-##  1 TCGA-CS-4941-01 glioma         67 No     male   TRUE         
-##  2 TCGA-DB-A64L-01 glioma         67 No     female TRUE         
-##  3 TCGA-DH-A669-01 glioma         70 No     male   TRUE         
-##  4 TCGA-DH-A669-02 glioma         70 No     male   TRUE         
-##  5 TCGA-DU-6393-01 glioma         66 No     male   TRUE         
-##  6 TCGA-DU-6400-01 glioma         66 No     female TRUE         
-##  7 TCGA-DU-7012-01 glioma         74 No     female TRUE         
-##  8 TCGA-DU-7292-01 glioma         69 No     male   TRUE         
-##  9 TCGA-DU-7306-01 glioma         67 No     male   TRUE         
-## 10 TCGA-DU-8167-01 glioma         69 No     female TRUE         
-## # … with 23 more rows</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">filter</span>(sample_metadata, sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 7
+##   sample    disease   age_at_dx pedaya     gender site_id ewing_sarcoma_in…
+##   &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;   &lt;lgl&gt;            
+## 1 TH34_115… Ewing sa…        16 Yes, age … male   &lt;NA&gt;    TRUE             
+## 2 TH34_115… Ewing sa…        16 Yes, age … male   &lt;NA&gt;    TRUE             
+## 3 TH34_124… Ewing sa…        16 Yes, age … male   TH34    TRUE             
+## 4 TH03_001… Ewing sa…         4 Yes, age … male   TH03    TRUE</code></pre>
 <p>In the second argument, we are able to refer to columns of the data frame as though they were variables. The code is beautiful, but also opaque. It’s important to understand that under the hood we are creating and combining logical vectors.</p>
 </div>
 </div>
 <div id="factors" class="section level2">
 <h2><span class="header-section-number">2.7</span> Factors</h2>
 <p>The <code>count</code> function from <code>dplyr</code> can help us understand the contents of some of the columns in <code>sample_metadata</code>. <code>count</code> is also <em>magical</em>, we can refer to columns of the data frame directly in the arguments to <code>count</code>.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   &lt;chr&gt;               &lt;int&gt;
-## 1 No                   9408
-## 2 Unknown                 1
-## 3 Yes, age &lt; 30 years  2201</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, senior_glioma)</a></code></pre></div>
+## 1 No                      8
+## 2 Yes, age &lt; 30 years   126</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, ewing_sarcoma_in_male)</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
-##   senior_glioma     n
-##   &lt;lgl&gt;         &lt;int&gt;
-## 1 FALSE         11577
-## 2 TRUE             33</code></pre>
-<p>One annoyance here is that the different categories in <code>pedaya</code> aren’t in a sensible order. This comes up quite often, for example when sorting or plotting categorical data. R’s solution is a further type of vector called a <em>factor</em> (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of <em>levels</em>. It is otherwise quite similar to a character vector.</p>
+##   ewing_sarcoma_in_male     n
+##   &lt;lgl&gt;                 &lt;int&gt;
+## 1 FALSE                   130
+## 2 TRUE                      4</code></pre>
+<p>Maybe you want the different categories in <code>pedaya</code> to be in a different order, with “Yes” coming first. This comes up quite often, for example when sorting or plotting categorical data. R’s solution is a further type of vector called a <em>factor</em> (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of <em>levels</em>. It is otherwise quite similar to a character vector.</p>
 <p>Any sort of vector can be converted to a factor using the <code>factor</code> function. This function defaults to placing the levels in alphabetical order, but takes a <code>levels</code> argument that can override this.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">head</span>( <span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Unknown&quot;</span>)) )</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">head</span>( <span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>)) )</a></code></pre></div>
 <pre><code>## [1] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
 ## [4] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
-## Levels: Yes, age &lt; 30 years No Unknown</code></pre>
+## Levels: Yes, age &lt; 30 years No</code></pre>
 <p>We should modify the <code>pedaya</code> column of the <code>sample_metadata</code> table in order to use this:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">sample_metadata<span class="op">$</span>pedaya &lt;-<span class="st"> </span><span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya,</a>
-<a class="sourceLine" id="cb118-2" data-line-number="2">                                 <span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>,<span class="st">&quot;Unknown&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1">sample_metadata<span class="op">$</span>pedaya &lt;-<span class="st"> </span><span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya,</a>
+<a class="sourceLine" id="cb117-2" data-line-number="2">                                 <span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>))</a></code></pre></div>
 <p><code>count</code> now produces the desired order of output:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
-<pre><code>## # A tibble: 3 x 2
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   &lt;fct&gt;               &lt;int&gt;
-## 1 Yes, age &lt; 30 years  2201
-## 2 No                   9408
-## 3 Unknown                 1</code></pre>
+## 1 Yes, age &lt; 30 years   126
+## 2 No                      8</code></pre>
 <p>We can count two categorical columns at once.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya, senior_glioma)</a></code></pre></div>
-<pre><code>## # A tibble: 4 x 3
-##   pedaya              senior_glioma     n
-##   &lt;fct&gt;               &lt;lgl&gt;         &lt;int&gt;
-## 1 Yes, age &lt; 30 years FALSE          2201
-## 2 No                  FALSE          9375
-## 3 No                  TRUE             33
-## 4 Unknown             FALSE             1</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya, ewing_sarcoma_in_male)</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 3
+##   pedaya              ewing_sarcoma_in_male     n
+##   &lt;fct&gt;               &lt;lgl&gt;                 &lt;int&gt;
+## 1 Yes, age &lt; 30 years FALSE                   122
+## 2 Yes, age &lt; 30 years TRUE                      4
+## 3 No                  FALSE                     8</code></pre>
 <div id="challenge-counting" class="section level3 unnumbered challenge">
 <h3>Challenge: counting</h3>
 <p>Investigate how many acute myeloid leukemia samples come from adult or pediatric individuals using <code>count</code></p>
@@ -534,58 +511,42 @@ THR33_1003_S01 medulloblastoma                             3</code></pre>
 <div id="sorting" class="section level2">
 <h2><span class="header-section-number">2.8</span> Sorting</h2>
 <p>Data frames can be sorted using the <code>arrange</code> function in <code>dplyr</code>.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, age_at_dx)</a></code></pre></div>
-<pre><code>## # A tibble: 11,610 x 6
-##    sample     disease            age_at_dx pedaya      gender senior_glioma
-##    &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt; &lt;fct&gt;       &lt;chr&gt;  &lt;lgl&gt;        
-##  1 THR08_016… acute lymphoblast…         0 Yes, age &lt;… unkno… FALSE        
-##  2 THR08_016… acute lymphoblast…         0 Yes, age &lt;… unkno… FALSE        
-##  3 TH06_0613… atypical teratoid…         0 Yes, age &lt;… male   FALSE        
-##  4 TH06_0613… atypical teratoid…         0 Yes, age &lt;… male   FALSE        
-##  5 TH06_0627… glioblastoma mult…         0 Yes, age &lt;… female FALSE        
-##  6 THR29_074… rhabdomyosarcoma           0 Yes, age &lt;… female FALSE        
-##  7 THR29_074… embryonal rhabdom…         0 Yes, age &lt;… male   FALSE        
-##  8 THR29_075… alveolar rhabdomy…         0 Yes, age &lt;… male   FALSE        
-##  9 THR29_075… alveolar rhabdomy…         0 Yes, age &lt;… male   FALSE        
-## 10 THR29_078… embryonal rhabdom…         0 Yes, age &lt;… female FALSE        
-## # … with 11,600 more rows</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, age_at_dx)</a></code></pre></div>
+<pre><code>## # A tibble: 134 x 7
+##    sample   disease     age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
+##    &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;           
+##  1 TH03_00… acute lymp…      0.2  Yes, ag… male    TH03    FALSE           
+##  2 TH03_01… hepatoblas…      0.33 Yes, ag… not re… TH03    FALSE           
+##  3 TARGET-… acute myel…      0.4  Yes, ag… female  TARGET  FALSE           
+##  4 TARGET-… acute myel…      0.44 Yes, ag… male    TARGET  FALSE           
+##  5 TARGET-… acute myel…      0.72 Yes, ag… male    TARGET  FALSE           
+##  6 TH34_13… juvenile m…      0.75 Yes, ag… female  &lt;NA&gt;    FALSE           
+##  7 TH03_01… glioma           0.9  Yes, ag… not re… TH03    FALSE           
+##  8 TH34_13… myoepithel…      0.96 Yes, ag… male    TH34    FALSE           
+##  9 TH03_01… hepatoblas…      1    Yes, ag… not re… TH03    FALSE           
+## 10 TH38_14… sarcoma          1.33 Yes, ag… male    TH38    FALSE           
+## # … with 124 more rows</code></pre>
 <p>Numeric columns are sorted in numeric order. Character columns will be sorted in alphabetical order. Factor columns are sorted in order of their levels. The <code>desc</code> helper function can be used to sort in descending order.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, <span class="kw">desc</span>(disease))</a></code></pre></div>
-<pre><code>## # A tibble: 11,610 x 6
-##    sample          disease    age_at_dx pedaya         gender senior_glioma
-##    &lt;chr&gt;           &lt;chr&gt;          &lt;dbl&gt; &lt;fct&gt;          &lt;chr&gt;  &lt;lgl&gt;        
-##  1 TH03_0012_S01   wilms tum…     18    Yes, age &lt; 30… male   FALSE        
-##  2 TH03_0012_S02   wilms tum…     18    Yes, age &lt; 30… male   FALSE        
-##  3 TH03_0144_S01   wilms tum…      6    Yes, age &lt; 30… male   FALSE        
-##  4 TH27_2189_S01   wilms tum…      5    Yes, age &lt; 30… female FALSE        
-##  5 TH06_0632_S01   wilms tum…      4    Yes, age &lt; 30… female FALSE        
-##  6 TARGET-50-CAAA… wilms tum…      6.15 Yes, age &lt; 30… female FALSE        
-##  7 TARGET-50-CAAA… wilms tum…      4.68 Yes, age &lt; 30… female FALSE        
-##  8 TARGET-50-CAAA… wilms tum…      1.1  Yes, age &lt; 30… female FALSE        
-##  9 TARGET-50-CAAA… wilms tum…      4.38 Yes, age &lt; 30… female FALSE        
-## 10 TARGET-50-CAAA… wilms tum…      7.53 Yes, age &lt; 30… female FALSE        
-## # … with 11,600 more rows</code></pre>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, <span class="kw">desc</span>(disease))</a></code></pre></div>
+<pre><code>## # A tibble: 134 x 7
+##    sample   disease      age_at_dx pedaya   gender site_id ewing_sarcoma_i…
+##    &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;lgl&gt;           
+##  1 TH03_00… wilms tumor         18 Yes, ag… male   TH03    FALSE           
+##  2 TH03_00… wilms tumor         18 Yes, ag… male   TH03    FALSE           
+##  3 TH03_01… wilms tumor          6 Yes, ag… male   TH03    FALSE           
+##  4 TH34_14… undifferent…        16 Yes, ag… female TH34    FALSE           
+##  5 TH03_01… undifferent…         9 Yes, ag… male   TH03    FALSE           
+##  6 TH03_00… undifferent…        NA Yes, ag… not r… TH03    FALSE           
+##  7 TH03_00… undifferent…        17 Yes, ag… not r… TH03    FALSE           
+##  8 TH03_00… undifferent…        17 Yes, ag… not r… TH03    FALSE           
+##  9 TH03_00… undifferent…        12 Yes, ag… male   TH03    FALSE           
+## 10 TH03_00… undifferent…        12 Yes, ag… male   TH03    FALSE           
+## # … with 124 more rows</code></pre>
 </div>
 <div id="joining-data-frames" class="section level2">
 <h2><span class="header-section-number">2.9</span> Joining data frames</h2>
 <p>Let’s move on to a larger data set. These are some gene expression values.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;expression_data_for_MAP2K1_HRAS_v9_.tsv&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb127-2" data-line-number="2"><span class="st">  </span><span class="kw">gather</span>(sample, expression, <span class="op">-</span>Gene)</a>
-<a class="sourceLine" id="cb127-3" data-line-number="3">expression_values</a></code></pre></div>
-<pre><code>## # A tibble: 22,908 x 3
-##    Gene   sample         expression
-##    &lt;chr&gt;  &lt;chr&gt;               &lt;dbl&gt;
-##  1 HRAS   THR15_0330_S01       5.77
-##  2 MAP2K1 THR15_0330_S01       4.53
-##  3 HRAS   THR29_0776_S01       6.99
-##  4 MAP2K1 THR29_0776_S01       4.51
-##  5 HRAS   THR11_0247_S01       6.10
-##  6 MAP2K1 THR11_0247_S01       5.75
-##  7 HRAS   THR08_0162_S01       4.48
-##  8 MAP2K1 THR08_0162_S01       6.42
-##  9 HRAS   TH27_1241_S01        6.41
-## 10 MAP2K1 TH27_1241_S01        5.39
-## # … with 22,898 more rows</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;one_gene_expression.tsv&quot;</span>) </a></code></pre></div>
 <div id="quiz" class="section level3 challenge unnumbered">
 <h3>Quiz</h3>
 <p>What is the unit of observation in this new data frame?</p>
@@ -593,22 +554,22 @@ THR33_1003_S01 medulloblastoma                             3</code></pre>
 <div id="section-1" class="section level3 unnumbered">
 <h3></h3>
 <p>It would be useful to have general information about samples from <code>sample_metadata</code> available as columns when we use this data frame. <code>expression_values</code> and <code>sample_metadata</code> share a column called <code>sample</code> which can be used to match rows from one to the other.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>))</a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">expression_by_disease</a></code></pre></div>
-<pre><code>## # A tibble: 22,908 x 8
-##    Gene   sample  expression disease  age_at_dx pedaya gender senior_glioma
-##    &lt;chr&gt;  &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;lgl&gt;        
-##  1 HRAS   THR15_…       5.77 &lt;NA&gt;          NA   &lt;NA&gt;   &lt;NA&gt;   NA           
-##  2 MAP2K1 THR15_…       4.53 &lt;NA&gt;          NA   &lt;NA&gt;   &lt;NA&gt;   NA           
-##  3 HRAS   THR29_…       6.99 rhabdom…      20   Yes, … male   FALSE        
-##  4 MAP2K1 THR29_…       4.51 rhabdom…      20   Yes, … male   FALSE        
-##  5 HRAS   THR11_…       6.10 glioma        13   Yes, … male   FALSE        
-##  6 MAP2K1 THR11_…       5.75 glioma        13   Yes, … male   FALSE        
-##  7 HRAS   THR08_…       4.48 acute l…       0.6 Yes, … unkno… FALSE        
-##  8 MAP2K1 THR08_…       6.42 acute l…       0.6 Yes, … unkno… FALSE        
-##  9 HRAS   TH27_1…       6.41 &lt;NA&gt;          NA   &lt;NA&gt;   &lt;NA&gt;   NA           
-## 10 MAP2K1 TH27_1…       5.39 &lt;NA&gt;          NA   &lt;NA&gt;   &lt;NA&gt;   NA           
-## # … with 22,898 more rows</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>))</a>
+<a class="sourceLine" id="cb127-2" data-line-number="2">expression_by_disease</a></code></pre></div>
+<pre><code>## # A tibble: 134 x 9
+##    Gene  sample expression disease age_at_dx pedaya gender site_id
+##    &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt;  
+##  1 ABL1  TCGA-…       4.91 acute …     61    No     female &lt;NA&gt;   
+##  2 ABL1  THR24…       4.56 acute …     NA    Yes, … female THR24  
+##  3 ABL1  TARGE…       4.48 acute …     NA    Yes, … female TARGET 
+##  4 ABL1  TARGE…       3.72 acute …      4.6  Yes, … female TARGET 
+##  5 ABL1  TARGE…       2.94 acute …      0.72 Yes, … male   TARGET 
+##  6 ABL1  THR24…       4.75 acute …      4.9  Yes, … female THR24  
+##  7 ABL1  TCGA-…       5.55 acute …     21    Yes, … female TCGA   
+##  8 ABL1  TCGA-…       5.25 acute …     76    No     female TCGA   
+##  9 ABL1  TCGA-…       4.94 acute …     NA    No     female TCGA   
+## 10 ABL1  TARGE…       4.14 acute …      7.82 Yes, … female TARGET 
+## # … with 124 more rows, and 1 more variable: ewing_sarcoma_in_male &lt;lgl&gt;</code></pre>
 <p>The “left” in “left join” refers to how rows that can’t be paired up are handled. <code>left_join</code> keeps all rows from the first data frame but not the second. This is a good default when the intent is to attaching some extra information to a data frame. <code>inner_join</code> discard all rows that can’t be paired up. <code>full_join</code> keeps all rows from both data frames.</p>
 </div>
 </div>
