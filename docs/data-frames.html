@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 Data frames | Introduction to R, version 2</title>
   <meta name="description" content="2 Data frames | Introduction to R, version 2" />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.16 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 Data frames | Introduction to R, version 2" />
   <meta property="og:type" content="book" />
@@ -51,66 +51,41 @@
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -195,25 +170,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="setting-up" class="section level2">
 <h2><span class="header-section-number">2.1</span> Setting up</h2>
 <p>Our first step is to download the files we need and to install the Tidyverse. This is the one step where we ask you to copy and paste some code:</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co"># Download files for this workshop</span></a>
-<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">download.file</span>(</a>
-<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="st">&quot;https://drive.google.com/uc?export=download&amp;id=1ORiglWFrxOoQ1-G-1D6-UYGUM9uePd8B&quot;</span>,</a>
-<a class="sourceLine" id="cb62-4" data-line-number="4">  <span class="dt">destfile=</span><span class="st">&quot;R-intro-data.zip&quot;</span>)</a>
-<a class="sourceLine" id="cb62-5" data-line-number="5"><span class="kw">unzip</span>(<span class="st">&quot;R-intro-data.zip&quot;</span>)</a>
-<a class="sourceLine" id="cb62-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb62-7" data-line-number="7"><span class="co"># Install Tidyverse</span></a>
-<a class="sourceLine" id="cb62-8" data-line-number="8"><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Download files for this workshop</span>
+<span class="kw">download.file</span>(
+<span class="st">&quot;https://drive.google.com/uc?export=download&amp;id=1ORiglWFrxOoQ1-G-1D6-UYGUM9uePd8B&quot;</span>,
+  <span class="dt">destfile=</span><span class="st">&quot;R-intro-data.zip&quot;</span>)
+<span class="kw">unzip</span>(<span class="st">&quot;R-intro-data.zip&quot;</span>)
+
+<span class="co"># Install Tidyverse</span>
+<span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</code></pre></div>
 <p>If using RStudio Cloud, you might need to switch to R version 3.5.3 to successfully install Tidyverse. Use the drop-down in the top right corner of the page.</p>
 <p>People also sometimes have problems installing all the packages in Tidyverse on Windows machines. If you run into problems you may have more success installing individual packages.</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>,<span class="st">&quot;readr&quot;</span>,<span class="st">&quot;tidyr&quot;</span>,<span class="st">&quot;ggplot2&quot;</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;dplyr&quot;</span>,<span class="st">&quot;readr&quot;</span>,<span class="st">&quot;tidyr&quot;</span>,<span class="st">&quot;ggplot2&quot;</span>))</code></pre></div>
 <p>We need to load the <code>tidyverse</code> package in order to use it.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
-<a class="sourceLine" id="cb64-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="co"># OR</span></a>
-<a class="sourceLine" id="cb64-4" data-line-number="4"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb64-5" data-line-number="5"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb64-6" data-line-number="6"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb64-7" data-line-number="7"><span class="kw">library</span>(ggplot2)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+
+<span class="co"># OR</span>
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(readr)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(ggplot2)</code></pre></div>
 <p>The <code>tidyverse</code> package loads various other packages, setting up a modern R environment. In this section we will be using functions from the <code>dplyr</code>, <code>readr</code> and <code>tidyr</code> packages.</p>
 <p>R is a language with mini-languages within it that solve specific problem domains. <code>dplyr</code> is such a mini-language, a set of “verbs” (functions) that work well together. <code>dplyr</code>, with the help of <code>tidyr</code> for some more complex operations, provides a way to perform most manipulations on a data frame that you might need.</p>
 </div>
@@ -225,7 +200,7 @@ TH34_1150_S02 Ewing sarcoma                             16
 TH34_1162_S01 Ewing sarcoma                             15   
 TH34_1163_S01 embryonal rhabdomyosarcoma                18   
 TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;selected_metadata.tsv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;selected_metadata.tsv&quot;</span>)</code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   sample = col_character(),
@@ -250,7 +225,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="tip-1" class="section level3 unnumbered tip">
 <h3>Tip</h3>
 <p>A data frame can also be created from vectors, with the <code>tibble</code> function. (See also <code>data.frame</code> in base R.) For example:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tibble</span>(<span class="dt">foo=</span><span class="kw">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>), <span class="dt">bar=</span><span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>))</code></pre></div>
 <pre><code>## # A tibble: 3 x 2
 ##     foo bar  
 ##   &lt;dbl&gt; &lt;chr&gt;
@@ -271,15 +246,15 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <p>The <code>View</code> function gives us a spreadsheet-like view of the data frame.</p>
 <pre><code>View(sample_metadata)</code></pre>
 <p><code>print</code> with the <code>n</code> argument can be used to show more than the first 10 rows on the console.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">print</span>(sample_metadata, <span class="dt">n=</span><span class="dv">200</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(sample_metadata, <span class="dt">n=</span><span class="dv">200</span>)</code></pre></div>
 <p>We can extract details of the data frame with further functions:</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">nrow</span>(sample_metadata)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(sample_metadata)</code></pre></div>
 <pre><code>## [1] 134</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">ncol</span>(sample_metadata)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(sample_metadata)</code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">colnames</span>(sample_metadata)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colnames</span>(sample_metadata)</code></pre></div>
 <pre><code>## [1] &quot;sample&quot;    &quot;disease&quot;   &quot;age_at_dx&quot; &quot;pedaya&quot;    &quot;gender&quot;    &quot;site_id&quot;</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">summary</span>(sample_metadata)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(sample_metadata)</code></pre></div>
 <pre><code>##     sample            disease            age_at_dx         pedaya         
 ##  Length:134         Length:134         Min.   : 0.200   Length:134        
 ##  Class :character   Class :character   1st Qu.: 4.675   Class :character  
@@ -300,25 +275,25 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="indexing-data-frames" class="section level2">
 <h2><span class="header-section-number">2.4</span> Indexing data frames</h2>
 <p>Data frames can be subset using <code>[row,column]</code> syntax.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[<span class="dv">4</span>,<span class="dv">2</span>]</code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   disease       
 ##   &lt;chr&gt;         
 ## 1 hepatoblastoma</code></pre>
 <p>Note that while this is a single value, it is still wrapped in a data frame. (This is a behaviour specific to Tidyverse data frames.) More on this in a moment.</p>
 <p>Columns can be given by name.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[<span class="dv">4</span>,<span class="st">&quot;disease&quot;</span>]</code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   disease       
 ##   &lt;chr&gt;         
 ## 1 hepatoblastoma</code></pre>
 <p>The column or row may be omitted, thereby retrieving the entire row or column.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">sample_metadata[<span class="dv">4</span>,]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[<span class="dv">4</span>,]</code></pre></div>
 <pre><code>## # A tibble: 1 x 6
 ##   sample       disease       age_at_dx pedaya            gender     site_id
 ##   &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;      &lt;chr&gt;  
 ## 1 TH03_0104_S… hepatoblasto…      0.33 Yes, age &lt; 30 ye… not repor… TH03</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1">sample_metadata[,<span class="st">&quot;disease&quot;</span>]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[,<span class="st">&quot;disease&quot;</span>]</code></pre></div>
 <pre><code>## # A tibble: 134 x 1
 ##    disease                                 
 ##    &lt;chr&gt;                                   
@@ -334,8 +309,8 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## 10 synovial sarcoma                        
 ## # … with 124 more rows</code></pre>
 <p>Multiple rows or columns may be retrieved using a vector.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb88-2" data-line-number="2">sample_metadata[rows_wanted,]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rows_wanted &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)
+sample_metadata[rows_wanted,]</code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##   sample     disease                 age_at_dx pedaya      gender   site_id
 ##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
@@ -343,14 +318,14 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age &lt;… not rep… &lt;NA&gt;   
 ## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age &lt;… not rep… TH03</code></pre>
 <p>Vector indexing can also be written on a single line.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">sample_metadata[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>),]</code></pre></div>
 <pre><code>## # A tibble: 3 x 6
 ##   sample     disease                 age_at_dx pedaya      gender   site_id
 ##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
 ## 1 TH03_0010… acute leukemia of ambi…        NA Yes, age &lt;… female   TH03   
 ## 2 TH03_0103… spindle cell/sclerosin…         8 Yes, age &lt;… not rep… &lt;NA&gt;   
 ## 3 TH03_0105… spindle cell/sclerosin…        17 Yes, age &lt;… not rep… TH03</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1">sample_metadata[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,]</code></pre></div>
 <pre><code>## # A tibble: 7 x 6
 ##   sample     disease                 age_at_dx pedaya      gender   site_id
 ##   &lt;chr&gt;      &lt;chr&gt;                       &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;  
@@ -366,14 +341,14 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <h2><span class="header-section-number">2.5</span> Columns are vectors</h2>
 <p>Ok, so how do we actually get data out of a data frame?</p>
 <p>Under the hood, a data frame is a list of column vectors. We can use <code>$</code> to retrieve columns. Occasionally it is also useful to use <code>[[ ]]</code> to retrieve columns, for example if the column name we want is stored in a variable.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">head</span>( sample_metadata<span class="op">$</span>disease )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>( sample_metadata<span class="op">$</span>disease )</code></pre></div>
 <pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;     
 ## [2] &quot;acute leukemia of ambiguous lineage&quot;     
 ## [3] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
 ## [4] &quot;hepatoblastoma&quot;                          
 ## [5] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
 ## [6] &quot;Ewing sarcoma&quot;</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">head</span>( sample_metadata[[<span class="st">&quot;disease&quot;</span>]] )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>( sample_metadata[[<span class="st">&quot;disease&quot;</span>]] )</code></pre></div>
 <pre><code>## [1] &quot;acute leukemia of ambiguous lineage&quot;     
 ## [2] &quot;acute leukemia of ambiguous lineage&quot;     
 ## [3] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
@@ -381,22 +356,22 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## [5] &quot;spindle cell/sclerosing rhabdomyosarcoma&quot;
 ## [6] &quot;Ewing sarcoma&quot;</code></pre>
 <p>To get the “disease” value of the 4th row as above, but unwrapped, we can use:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">sample_metadata<span class="op">$</span>disease[<span class="dv">4</span>]</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata<span class="op">$</span>disease[<span class="dv">4</span>]</code></pre></div>
 <pre><code>## [1] &quot;hepatoblastoma&quot;</code></pre>
 </div>
 <div id="logical-indexing" class="section level2">
 <h2><span class="header-section-number">2.6</span> Logical indexing</h2>
 <p>A method of indexing that we haven’t discussed yet is logical indexing. Instead of specifying the row number or numbers that we want, we can give a logical vector which is <code>TRUE</code> for the rows we want and <code>FALSE</code> otherwise. This can also be used with vectors.</p>
 <p>We will first do this in a slightly verbose way in order to understand it, then learn a more concise way to do this using the <code>dplyr</code> package.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">is_ewing_sarcoma &lt;-<span class="st"> </span>sample_metadata<span class="op">$</span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span></a>
-<a class="sourceLine" id="cb100-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="kw">head</span>(is_ewing_sarcoma)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">is_ewing_sarcoma &lt;-<span class="st"> </span>sample_metadata<span class="op">$</span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span>
+
+<span class="kw">head</span>(is_ewing_sarcoma)</code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">sum</span>(is_ewing_sarcoma)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(is_ewing_sarcoma)</code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p><code>sum</code> treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.</p>
-<p>We can use this logical vector to get the glioma samples from <code>sample_metadata</code>:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1">sample_metadata[is_ewing_sarcoma,]</a></code></pre></div>
+<p>We can use this logical vector to get the ewing sarcoma samples from <code>sample_metadata</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata[is_ewing_sarcoma,]</code></pre></div>
 <pre><code>## # A tibble: 7 x 6
 ##   sample       disease       age_at_dx pedaya           gender      site_id
 ##   &lt;chr&gt;        &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;  
@@ -422,10 +397,10 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <li><code>a | b</code> – “or”, TRUE if either <code>a</code> or <code>b</code> or both are TRUE.</li>
 <li><code>! a</code> – “not” , TRUE if <code>a</code> is FALSE, and FALSE if <code>a</code> is TRUE.</li>
 </ul>
-<p>The <code>age_at_dx</code> column of <code>sample_metadata</code> tells the age at which the person was diagnosed. We could see which gliomas occured in people over 65 with:</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1">ewing_sarcoma_in_male &lt;-<span class="st"> </span>is_ewing_sarcoma <span class="op">&amp;</span><span class="st"> </span>sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span></a>
-<a class="sourceLine" id="cb106-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb106-3" data-line-number="3">sample_metadata[ewing_sarcoma_in_male,]</a></code></pre></div>
+<p>The <code>age_at_dx</code> column of <code>sample_metadata</code> tells the age at which the person was diagnosed. We could see which ewing sarcomas occured in people over 65 with:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ewing_sarcoma_in_male &lt;-<span class="st"> </span>is_ewing_sarcoma <span class="op">&amp;</span><span class="st"> </span>sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span>
+
+sample_metadata[ewing_sarcoma_in_male,]</code></pre></div>
 <pre><code>## # A tibble: 4 x 6
 ##   sample        disease       age_at_dx pedaya              gender site_id
 ##   &lt;chr&gt;         &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;               &lt;chr&gt;  &lt;chr&gt;  
@@ -434,9 +409,9 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## 3 TH34_1240_S01 Ewing sarcoma        16 Yes, age &lt; 30 years male   TH34   
 ## 4 TH03_0014_S01 Ewing sarcoma         4 Yes, age &lt; 30 years male   TH03</code></pre>
 <p><code>ewing_sarcoma_in_male</code> seems like it should be kept within our <code>sample_metadata</code> data frame for future use. We can add it as a new column of the data frame with:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1">sample_metadata<span class="op">$</span>ewing_sarcoma_in_male &lt;-<span class="st"> </span>ewing_sarcoma_in_male</a>
-<a class="sourceLine" id="cb108-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb108-3" data-line-number="3">sample_metadata</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata<span class="op">$</span>ewing_sarcoma_in_male &lt;-<span class="st"> </span>ewing_sarcoma_in_male
+
+sample_metadata</code></pre></div>
 <pre><code>## # A tibble: 134 x 7
 ##    sample  disease      age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
 ##    &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;           
@@ -454,7 +429,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="challenge-logical-indexing" class="section level3 unnumbered challenge">
 <h3>Challenge: logical indexing</h3>
 <ol style="list-style-type: decimal">
-<li><p>Which samples are gliomas?</p></li>
+<li><p>Which samples are ewing sarcomas?</p></li>
 <li><p>Which samples are in neither ewing sarcoma nor from males?</p></li>
 <li><p>How many samples are from people over 65?</p></li>
 </ol>
@@ -462,7 +437,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="a-dplyr-shorthand" class="section level3">
 <h3><span class="header-section-number">2.6.1</span> A <code>dplyr</code> shorthand</h3>
 <p>The above method is a little laborious. We have to keep mentioning the name of the data frame, and there is a lot of punctuation to keep track of. <code>dplyr</code> provides a slightly magical function called <code>filter</code> which lets us write more concisely. For example:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">filter</span>(sample_metadata, sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">filter</span>(sample_metadata, sample_metadata<span class="op">$</span>gender <span class="op">==</span><span class="st"> &quot;male&quot;</span> <span class="op">&amp;</span><span class="st"> </span>disease <span class="op">==</span><span class="st"> &quot;Ewing sarcoma&quot;</span>)</code></pre></div>
 <pre><code>## # A tibble: 4 x 7
 ##   sample    disease   age_at_dx pedaya     gender site_id ewing_sarcoma_in…
 ##   &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;   &lt;lgl&gt;            
@@ -476,13 +451,13 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="factors" class="section level2">
 <h2><span class="header-section-number">2.7</span> Factors</h2>
 <p>The <code>count</code> function from <code>dplyr</code> can help us understand the contents of some of the columns in <code>sample_metadata</code>. <code>count</code> is also <em>magical</em>, we can refer to columns of the data frame directly in the arguments to <code>count</code>.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(sample_metadata, pedaya)</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   &lt;chr&gt;               &lt;int&gt;
 ## 1 No                      8
 ## 2 Yes, age &lt; 30 years   126</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, ewing_sarcoma_in_male)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(sample_metadata, ewing_sarcoma_in_male)</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   ewing_sarcoma_in_male     n
 ##   &lt;lgl&gt;                 &lt;int&gt;
@@ -490,22 +465,22 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## 2 TRUE                      4</code></pre>
 <p>Maybe you want the different categories in <code>pedaya</code> to be in a different order, with “Yes” coming first. This comes up quite often, for example when sorting or plotting categorical data. R’s solution is a further type of vector called a <em>factor</em> (think a factor of an experimental design). A factor holds categorical data, and has an associated ordered set of <em>levels</em>. It is otherwise quite similar to a character vector.</p>
 <p>Any sort of vector can be converted to a factor using the <code>factor</code> function. This function defaults to placing the levels in alphabetical order, but takes a <code>levels</code> argument that can override this.</p>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1"><span class="kw">head</span>( <span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>)) )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>( <span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>)) )</code></pre></div>
 <pre><code>## [1] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
 ## [4] Yes, age &lt; 30 years Yes, age &lt; 30 years Yes, age &lt; 30 years
 ## Levels: Yes, age &lt; 30 years No</code></pre>
 <p>We should modify the <code>pedaya</code> column of the <code>sample_metadata</code> table in order to use this:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">sample_metadata<span class="op">$</span>pedaya &lt;-<span class="st"> </span><span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya,</a>
-<a class="sourceLine" id="cb118-2" data-line-number="2">                                 <span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sample_metadata<span class="op">$</span>pedaya &lt;-<span class="st"> </span><span class="kw">factor</span>(sample_metadata<span class="op">$</span>pedaya,
+                                 <span class="kw">c</span>(<span class="st">&quot;Yes, age &lt; 30 years&quot;</span>,<span class="st">&quot;No&quot;</span>))</code></pre></div>
 <p><code>count</code> now produces the desired order of output:</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(sample_metadata, pedaya)</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   pedaya                  n
 ##   &lt;fct&gt;               &lt;int&gt;
 ## 1 Yes, age &lt; 30 years   126
 ## 2 No                      8</code></pre>
 <p>We can count two categorical columns at once.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">count</span>(sample_metadata, pedaya, ewing_sarcoma_in_male)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">count</span>(sample_metadata, pedaya, ewing_sarcoma_in_male)</code></pre></div>
 <pre><code>## # A tibble: 3 x 3
 ##   pedaya              ewing_sarcoma_in_male     n
 ##   &lt;fct&gt;               &lt;lgl&gt;                 &lt;int&gt;
@@ -520,7 +495,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="sorting" class="section level2">
 <h2><span class="header-section-number">2.8</span> Sorting</h2>
 <p>Data frames can be sorted using the <code>arrange</code> function in <code>dplyr</code>.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, age_at_dx)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(sample_metadata, age_at_dx)</code></pre></div>
 <pre><code>## # A tibble: 134 x 7
 ##    sample   disease     age_at_dx pedaya   gender  site_id ewing_sarcoma_i…
 ##    &lt;chr&gt;    &lt;chr&gt;           &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;lgl&gt;           
@@ -536,7 +511,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 ## 10 TH38_14… sarcoma          1.33 Yes, ag… male    TH38    FALSE           
 ## # … with 124 more rows</code></pre>
 <p>Numeric columns are sorted in numeric order. Character columns will be sorted in alphabetical order. Factor columns are sorted in order of their levels. The <code>desc</code> helper function can be used to sort in descending order.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">arrange</span>(sample_metadata, <span class="kw">desc</span>(disease))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">arrange</span>(sample_metadata, <span class="kw">desc</span>(disease))</code></pre></div>
 <pre><code>## # A tibble: 134 x 7
 ##    sample   disease      age_at_dx pedaya   gender site_id ewing_sarcoma_i…
 ##    &lt;chr&gt;    &lt;chr&gt;            &lt;dbl&gt; &lt;fct&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;lgl&gt;           
@@ -555,7 +530,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="joining-data-frames" class="section level2">
 <h2><span class="header-section-number">2.9</span> Joining data frames</h2>
 <p>Let’s move on to a larger data set. These are some gene expression values.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;one_gene_expression.tsv&quot;</span>) </a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expression_values &lt;-<span class="st"> </span><span class="kw">read_tsv</span>(<span class="st">&quot;one_gene_expression.tsv&quot;</span>) </code></pre></div>
 <div id="quiz" class="section level3 challenge unnumbered">
 <h3>Quiz</h3>
 <p>What is the unit of observation in this new data frame?</p>
@@ -563,8 +538,8 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 <div id="section-1" class="section level3 unnumbered">
 <h3></h3>
 <p>It would be useful to have general information about samples from <code>sample_metadata</code> available as columns when we use this data frame. <code>expression_values</code> and <code>sample_metadata</code> share a column called <code>sample</code> which can be used to match rows from one to the other.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>))</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2">expression_by_disease</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">expression_by_disease &lt;-<span class="st"> </span><span class="kw">left_join</span>(expression_values, sample_metadata, <span class="dt">by=</span><span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>))
+expression_by_disease</code></pre></div>
 <pre><code>## # A tibble: 134 x 9
 ##    Gene  sample expression disease age_at_dx pedaya gender site_id
 ##    &lt;chr&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt; &lt;fct&gt;  &lt;chr&gt;  &lt;chr&gt;  
@@ -584,7 +559,7 @@ TH34_1179_S01 colon adenocarcinoma                      24   </code></pre>
 </div>
 <div id="further-reading" class="section level2">
 <h2><span class="header-section-number">2.10</span> Further reading</h2>
-<p>We’ve covered the fundamentals of dplyr and data frames, but there is much more to learn. Notably, we haven’t covered the use of the pipe <code>%&gt;%</code> to chain <code>dplyr</code> verbs together. The <a href="http://r4ds.had.co.nz/">“R for Data Science” book</a> is an excellent source to learn more. The Monash Data Fluency <a href="https://monashdatafluency.github.io/r-progtidy/">“Programming and Tidy data analysis in R” course</a> also covers this.</p>
+<p>We’ve covered the fundamentals of dplyr and data frames, but there is much more to learn. Notably, we haven’t covered the use of the pipe <code>%&gt;%</code> to chain <code>dplyr</code> verbs together. The <a href="http://r4ds.had.co.nz/">“R for Data Science” book</a> is an excellent source to learn more.</p>
 
 </div>
 </div>
@@ -613,12 +588,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -630,6 +604,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

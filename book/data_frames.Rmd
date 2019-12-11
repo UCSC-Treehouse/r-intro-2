@@ -201,7 +201,7 @@ sum(is_ewing_sarcoma)
 
 `sum` treats TRUE as 1 and FALSE as 0, so it tells us the number of TRUE elements in the vector.
 
-We can use this logical vector to get the glioma samples from `sample_metadata`:
+We can use this logical vector to get the ewing sarcoma samples from `sample_metadata`:
 
 ```{r}
 sample_metadata[is_ewing_sarcoma,]
@@ -224,7 +224,7 @@ More complicated conditions can be constructed using logical operators:
 * `a | b ` -- "or", TRUE if either `a` or `b` or both are TRUE.
 * `! a   ` -- "not" , TRUE if `a` is FALSE, and FALSE if `a` is TRUE.
 
-The `age_at_dx` column of `sample_metadata` tells the age at which the person was diagnosed. We could see which gliomas occured in people over 65 with:
+The `age_at_dx` column of `sample_metadata` tells the age at which the person was diagnosed. We could see which ewing sarcomas occured in people over 65 with:
 
 ```{r}
 ewing_sarcoma_in_male <- is_ewing_sarcoma & sample_metadata$gender == "male"
@@ -244,7 +244,7 @@ sample_metadata
 ### Challenge: logical indexing {- .challenge}
 
 
-1. Which samples are gliomas?
+1. Which samples are ewing sarcomas?
 
 2. Which samples are in neither ewing sarcoma nor from males?
 
@@ -349,8 +349,7 @@ The "left" in "left join" refers to how rows that can't be paired up are handled
 
 ## Further reading
 
-We've covered the fundamentals of dplyr and data frames, but there is much more to learn. Notably, we haven't covered the use of the pipe `%>%` to chain `dplyr` verbs together. The ["R for Data Science" book](http://r4ds.had.co.nz/) is an excellent source to learn more. The Monash Data Fluency ["Programming and Tidy data analysis in R" course](https://monashdatafluency.github.io/r-progtidy/) also covers this. 
-
+We've covered the fundamentals of dplyr and data frames, but there is much more to learn. Notably, we haven't covered the use of the pipe `%>%` to chain `dplyr` verbs together. The ["R for Data Science" book](http://r4ds.had.co.nz/) is an excellent source to learn more. 
 
 
 
